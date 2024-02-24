@@ -42,8 +42,8 @@ export const ProjectCardSecRemove = (Card) => {
 		return (
 			<div className="relative">
 				<div className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-100 px-2 rounded-bl-xl">
-                    <i class="bi bi-trash3-fill text-gray-500 text-xs"></i>
-                    <span className="text-xs text-gray-500">Remove</span>
+                    <i class="bi bi-trash3-fill text-gray-400 text-xs"></i>
+                    <span className="text-xs text-gray-400">Remove</span>
                 </div>
 				<Card />
 			</div>

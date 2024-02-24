@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './components/Home';
 import Categories from './components/Categories';
 import MyProjects from './components/MyProjects';
+import Favorites from './components/Favorites';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path : '/myprojects',
       element : <MyProjects/>
+    },
+    {
+      path : '/favorites',
+      element : <Favorites/>
     },
   ])
   return (
