@@ -1,8 +1,10 @@
 import React from "react";
+import DomainChip from "./DomainChip";
 
 const ProjectCardMain = () => {
+	const list = ["React JS","Node JS"]
 	return (
-		<div className="border-[1px] border-gray-200 rounded-md flex">
+		<div className="border-[1px] border-gray-200 rounded-md flex relative">
 			<div className="">
 				<img
 					className="rounded-md h-44 w-full object-cover"
@@ -34,6 +36,12 @@ const ProjectCardMain = () => {
 
 					</div>
 				</div>
+			</div>
+			<div className="absolute flex justify-center items-center top-2 right-2 rounded-full h-10 w-10 bg-gray-300 p-2 bg-opacity-60">
+				<i class="bi bi-heart text-primary"></i>
+			</div>
+			<div className="flex absolute top-2 left-2 gap-2">
+				{list.map(item => <DomainChip key={item} title={item}/>)}
 			</div>
 		</div>
 	);
