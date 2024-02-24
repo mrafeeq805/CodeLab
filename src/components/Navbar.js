@@ -2,9 +2,10 @@ import React from 'react'
 
 const Navbar = ({title}) => {
   return (
-    <div className='p-2 flex justify-between'>
-        <i class="bi bi-arrow-left-circle"></i>
-        <span>{title}</span>
+    <div className='p-3 flex justify-between bg-gray-50 shadow-md'>
+        <i class="bi bi-arrow-left-circle text-2xl text-gray-400"></i>
+        <span className='text-lg font-medium'>{title}</span>
+        <div></div>
     </div>
   )
 }

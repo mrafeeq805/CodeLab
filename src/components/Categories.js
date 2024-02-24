@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 const Categories = () => {
   return (
     <div>
-        <Navbar/>
+        <Navbar title={"Categories"}/>
     </div>
   )
 }
