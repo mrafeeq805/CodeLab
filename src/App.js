@@ -5,6 +5,7 @@ import Categories from './components/Categories';
 import MyProjects from './components/MyProjects';
 import Favorites from './components/Favorites';
 import Latest from './components/Latest';
+import ProjectList from './components/ProjectList';
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ function App() {
     {
       path : '/latest',
       element : <Latest/>
+    },
+    {
+      path : '/projects',
+      element : <ProjectList/>
     },
   ])
   return (
