@@ -13,6 +13,7 @@ import ForgotPassword from './components/ForgotPassword';
 import SetPassword from './components/SetPassword';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfie';
+import DeveloperPage from './components/DeveloperPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -67,6 +68,10 @@ function App() {
     {
       path : '/editprofile',
       element : <EditProfile/>
+    },
+    {
+      path : '/developer',
+      element : <DeveloperPage/>
     },
   ])
   return (
