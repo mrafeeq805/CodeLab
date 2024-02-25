@@ -24,3 +24,25 @@ export const infoCardDetails = [
         value : "MySQL 5.0"
     }
 ]
+export const profileCardDetails = [
+    {
+        title : "My Projects",
+        icon : "bi bi-folder-fill"
+    },
+    {
+        title : "Contact Us",
+        icon : "bi bi-telephone"
+    },
+    {
+        title : "Settings",
+        icon : "bi bi-gear"
+    },
+    {
+        title : "Privacy & Policy",
+        icon : "bi bi-shield-lock"
+    },
+    {
+        title : "Logout",
+        icon : "bi bi-box-arrow-right"
+    }
+]

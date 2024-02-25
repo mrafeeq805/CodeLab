@@ -11,6 +11,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import SetPassword from './components/SetPassword';
+import Profile from './components/Profile';
 
 function App() {
   const router = createBrowserRouter([
@@ -57,6 +58,10 @@ function App() {
     {
       path : '/setpassword',
       element : <SetPassword/>
+    },
+    {
+      path : '/profile',
+      element : <Profile/>
     },
   ])
   return (
