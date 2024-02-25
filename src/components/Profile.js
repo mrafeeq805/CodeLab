@@ -13,11 +13,19 @@ const Profile = () => {
 				</div>
 				<span className=" font-medium text-center">Muhammed Rafeeq K</span>
 				<span className="text-gray-500 text-sm text-center">Web Developer</span>
+				<button className="bg-primary p-2 px-8 mt-3 rounded-full flex items-center gap-3 justify-center">
+					<i class="bi bi-pen text-white"></i>
+					<span className="text-white">Edit Profile</span>
+				</button>
 			</div>
-            <div className="bg-white rounded-lg p-4 flex flex-col gap-2 w-10/12">
-                {profileCardDetails.map(item => <ProfileMenuCard icon={item.icon} title={item.title}/>)}
-            </div>
-            <span className="absolute bottom-3 text-sm text-login_light">Designed By <span className="text-primary font-medium">Secure3</span></span>
+			<div className="bg-white rounded-lg p-4 flex flex-col gap-2 w-10/12">
+				{profileCardDetails.map((item) => (
+					<ProfileMenuCard icon={item.icon} title={item.title} />
+				))}
+			</div>
+			<span className="absolute bottom-3 text-sm text-login_light">
+				Designed By <span className="text-primary font-medium">Secure3</span>
+			</span>
 		</div>
 	);
 };

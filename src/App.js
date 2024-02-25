@@ -12,6 +12,7 @@ import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import SetPassword from './components/SetPassword';
 import Profile from './components/Profile';
+import EditProfile from './components/EditProfie';
 
 function App() {
   const router = createBrowserRouter([
@@ -62,6 +63,10 @@ function App() {
     {
       path : '/profile',
       element : <Profile/>
+    },
+    {
+      path : '/editprofile',
+      element : <EditProfile/>
     },
   ])
   return (
