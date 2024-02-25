@@ -9,6 +9,8 @@ import ProjectList from './components/ProjectList';
 import Description from './components/Description';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import ForgotPassword from './components/ForgotPassword';
+import SetPassword from './components/SetPassword';
 
 function App() {
   const router = createBrowserRouter([
@@ -47,6 +49,14 @@ function App() {
     {
       path : '/login',
       element : <Login/>
+    },
+    {
+      path : '/forgotpassword',
+      element : <ForgotPassword/>
+    },
+    {
+      path : '/setpassword',
+      element : <SetPassword/>
     },
   ])
   return (
