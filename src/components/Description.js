@@ -10,7 +10,7 @@ import DownloadCard from "./DownloadCard";
 
 const Description = () => {
 	return (
-		<div className="bg-slate-50 ">
+		<div className="bg-slate-50 relative">
 			<Navbar title={"Developer Name"} />
 			<ProjectDetails />
 			<div className="px-3">

@@ -2,7 +2,7 @@ import React from "react";
 
 const ProjectDetails = () => {
 	return (
-		<div className="mt-3 px-2">
+		<div className="mt-16 px-2">
 			<div className="flex flex-col p-3">
 				<div className="flex">
 					<span className="text-lg">

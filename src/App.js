@@ -7,6 +7,8 @@ import Favorites from './components/Favorites';
 import Latest from './components/Latest';
 import ProjectList from './components/ProjectList';
 import Description from './components/Description';
+import Signup from './components/Signup';
+import Login from './components/Login';
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +39,14 @@ function App() {
     {
       path : '/description',
       element : <Description/>
+    },
+    {
+      path : '/signup',
+      element : <Signup/>
+    },
+    {
+      path : '/login',
+      element : <Login/>
     },
   ])
   return (
