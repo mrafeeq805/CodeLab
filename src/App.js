@@ -14,6 +14,7 @@ import SetPassword from './components/SetPassword';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfie';
 import DeveloperPage from './components/DeveloperPage';
+import AddProjectPage from './components/AddProjectPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -72,6 +73,10 @@ function App() {
     {
       path : '/developer',
       element : <DeveloperPage/>
+    },
+    {
+      path : '/addproject',
+      element : <AddProjectPage/>
     },
   ])
   return (
