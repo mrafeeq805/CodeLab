@@ -1,21 +1,13 @@
 
-import React, { useState } from "react";
-import Quill from 'quill';
-
-const options = {
-    debug: 'info',
-    modules: {
-      toolbar: true,
-    },
-    placeholder: 'Compose an epic...',
-    theme: 'snow'
-  };
-const quill = new Quill('#editor',options);
-
+import React from "react";
+import RichTextEditor from "./RichTextEditor";
 const FeaturesInput = () => {
     return (
-        <div id="editor">
-             
+        <div className="mt-2" id="editor">
+             <span className="font-medium">Features</span>
+            <div className="my-2">
+                <RichTextEditor/>
+            </div>
         </div>
     )
 };

@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Screenshots from "./Screenshots";
 import UploadThumbanail from "./UploadThumbanail";
 import FeaturesInput from "./FeaturesInput";
+import RichTextEditor from "./RichTextEditor";
 
 const AddProjectPage = () => {
 	return (
@@ -28,6 +29,7 @@ const AddProjectPage = () => {
                 <Screenshots/>
                 <UploadThumbanail/>
                 <FeaturesInput/>
+                
 			</form>
 		</div>
 	);
