@@ -4,7 +4,8 @@
   "description": "project showcase application",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon index.js"
   },
   "author": "codebyte",
   "license": "ISC",
@@ -12,5 +13,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
