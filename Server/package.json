@@ -1,0 +1,16 @@
+{
+  "name": "codelab",
+  "version": "1.0.0",
+  "description": "project showcase application",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "codebyte",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^8.2.0"
+  }
+}
