@@ -81,6 +81,10 @@ const AddProjectPage = () => {
 					name="title"
 					onChange={changeInput}
 				/>
+				{<div className="mb-1">
+					<span className="text-red-500 text-xs block">Enter a valid title</span>
+				</div>}
+				
 
 				<label className="text-login font-medium ">Category</label>
 				<select
