@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addScreenshot, addScreenshotForm } from "../utils/screenshotSlice";
+import { addScreenshot, addScreenshotFilName} from "../utils/screenshotSlice";
 import SSCards from "./SSCards";
 
 const Screenshots = () => {
@@ -9,9 +9,12 @@ const Screenshots = () => {
 	const imglist = useSelector((store) => store?.screenshot?.screenshotsList);
 	const onImageChange = (event) => {
 		if (event.target.files && event.target.files[0]) {
+			const images = Array.from(event.target.files)
+			console.log(images);
 			setImage(URL.createObjectURL(event.target.files[0]));
-			dispatch(addScreenshotForm(event.target.files[0]));
-			dispatch(addScreenshot(URL.createObjectURL(event.target.files[0])))
+			//console.log(event.target.files[0].name);
+			images.map(item => dispatch(addScreenshot(URL.createObjectURL(item))))
+		
 			//console.log(image);
 		}
 	};
@@ -33,6 +36,7 @@ const Screenshots = () => {
 						<input
 							id="dropzone-file"
 							type="file"
+							multiple
 							className="hidden"
 							onChange={onImageChange}
 						/>
