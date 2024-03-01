@@ -4,8 +4,10 @@ import FeaturesInput from "./FeaturesInput";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
+import { useNavigate } from "react-router-dom";
 
 const AddProjectPage = () => {
+	const navigate = useNavigate()
 	const features = useSelector((store) => store?.feature?.features)
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
@@ -58,6 +60,8 @@ const AddProjectPage = () => {
 		try {
 			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
 			await axios.post("/user/addproject", postData);
+			navigate("/")
+			
 		} catch (error) {
 			console.log("error");
 		}
