@@ -97,6 +97,15 @@ module.exports = {
 
 		res.send("done");
 	},
+    getLatestList : async (req,res) =>{
+        try{
+            const data = await projectSchema.find()
+            res.json(data)
+        }catch(error){
+            console.log(error);
+
+        }
+    }
 };
 
 function base64ImageToBlob(str) {

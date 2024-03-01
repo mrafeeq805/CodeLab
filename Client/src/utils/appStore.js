@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import featureSlice from "./featureSlice";
+import projectSlice from "./projectSlice";
 
 const appStore = configureStore(
     {
         reducer : {
-            feature : featureSlice
+            feature : featureSlice,
+            project : projectSlice
         }
     }
 )

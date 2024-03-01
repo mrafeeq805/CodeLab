@@ -16,13 +16,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/codelab')
     console.log("error on connecting db")
 })
 
-app.use("/user",userrouter)
-
-app.get('/',(req,res)=>{
-    res.send("de")
-})
-
-
+app.use("/",userrouter)
 
 app.listen(4000,()=>{
     console.log("started");

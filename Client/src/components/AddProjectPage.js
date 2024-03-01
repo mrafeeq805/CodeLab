@@ -59,7 +59,7 @@ const AddProjectPage = () => {
 		e.preventDefault();
 		try {
 			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
-			await axios.post("/user/addproject", postData);
+			await axios.post("/addproject", postData);
 			navigate("/")
 			
 		} catch (error) {
