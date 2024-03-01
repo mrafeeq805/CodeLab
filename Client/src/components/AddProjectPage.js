@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
 
 const AddProjectPage = () => {
+	const features = useSelector((store) => store?.feature?.features)
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
 	const [thumbnail, setThumbnail] = useState(null);
@@ -16,7 +17,6 @@ const AddProjectPage = () => {
 		overview: "",
 		languages: "",
 		db: "",
-
 	});
 	const changeInput = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
@@ -46,7 +46,7 @@ const AddProjectPage = () => {
 
 		reader.onload = () => {
 			if (reader.readyState === 2) {
-				setThumbnail(reader.result)
+				setThumbnail(reader.result);
 			}
 		};
 		reader.readAsDataURL(e.target.files[0]);
@@ -55,7 +55,7 @@ const AddProjectPage = () => {
 	const formHandler = async (e) => {
 		e.preventDefault();
 		try {
-			const postData = { ...data, screenshots: images,thumbnail:thumbnail };
+			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
 			await axios.post("/addproject", postData);
 		} catch (error) {
 			console.log("error");
@@ -69,14 +69,14 @@ const AddProjectPage = () => {
 				onSubmit={formHandler}
 				encType="multipart/form-data">
 				<label className="text-login font-medium ">Title</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<input
-						className="w-full text-login_light"
-						type="text"
-						name="title"
-						onChange={changeInput}
-					/>
-				</div>
+
+				<input
+					className="w-full text-login_light border-2 rounded-lg p-2 my-2"
+					type="text"
+					name="title"
+					onChange={changeInput}
+				/>
+
 				<label className="text-login font-medium ">Category</label>
 				<select
 					className="w-full border-2 rounded-lg p-2 my-2 pr-2"
@@ -86,22 +86,22 @@ const AddProjectPage = () => {
 				</select>
 
 				<label className="text-login font-medium">Live Link</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<input
-						className="w-full text-login_light"
-						type="text"
-						name="link"
-						onChange={changeInput}
-					/>
-				</div>
+
+				<input
+					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
+					type="text"
+					name="link"
+					onChange={changeInput}
+				/>
+
 				<label className="text-login font-medium">Overview</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<textarea
-						className="w-full text-login_light min-h-24"
-						name="overview"
-						onChange={changeInput}
-					/>
-				</div>
+
+				<textarea
+					className="w-full text-login_light min-h-24 border-2 rounded-lg flex justify-between p-2 my-2"
+					name="overview"
+					onChange={changeInput}
+				/>
+
 				{/* screenshots */}
 				<div className="mt-2">
 					<span className="font-medium text-login">Screenshots</span>
@@ -160,35 +160,36 @@ const AddProjectPage = () => {
 				</div>
 				<FeaturesInput />
 				{/* project file */}
-				<label className="text-login font-medium">Project File Link (G Drive)</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<input
-						className="w-full text-login_light"
-						type="text"
-						name="project"
-						onChange={changeInput}
-					/>
-				</div>
+				<label className="text-login font-medium">
+					Project File Link (G Drive)
+				</label>
+
+				<input
+					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
+					type="text"
+					name="project"
+					onChange={changeInput}
+				/>
+
 				<label className="text-login font-medium ">Languages Used</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<input
-						className="w-full text-login_light"
-						type="text"
-						placeholder="Eg : HTML,Javascript"
-						name="languages"
-						onChange={changeInput}
-					/>
-				</div>
+
+				<input
+					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
+					type="text"
+					placeholder="Eg : HTML,Javascript"
+					name="languages"
+					onChange={changeInput}
+				/>
 				<label className="text-login font-medium ">Database</label>
-				<div className="border-2 rounded-lg flex justify-between p-2 my-2">
-					<input
-						className="w-full text-login_light"
-						type="text"
-						placeholder="Eg : MongoDB, Firebase"
-						name="db"
-						onChange={changeInput}
-					/>
-				</div>
+
+				<input
+					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
+					type="text"
+					placeholder="Eg : MongoDB, Firebase"
+					name="db"
+					onChange={changeInput}
+				/>
+
 				<button className=" bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5">
 					Submit
 				</button>

@@ -1,12 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { removeScreenshot } from '../utils/screenshotSlice'
 
 const SSCards = ({img,index}) => {
-    const dispatch = useDispatch()
-    const removeHandler = () =>{
-        dispatch(removeScreenshot(index))
-    }
+
   return (
     <div className='border-2 rounded-md p-1 h-24 relative'>
         <img className='h-full w-full' src={img} alt='icon' />

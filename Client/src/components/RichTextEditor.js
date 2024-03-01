@@ -2,12 +2,13 @@ import React from "react";
 import { Editor,EditorState,getDefaultKeyBinding,RichUtils } from "draft-js";
 import '../utils/richTextEditor.css';
 import '../../node_modules/draft-js/dist/Draft.css'
-
+import {stateToHTML} from "draft-js-export-html"
 
 class RichTextEditor extends React.Component {
     constructor(props) {
       super(props);
       this.state = {editorState: EditorState.createEmpty()};
+      
 
       this.focus = () => this.refs.editor.focus();
       this.onChange = (editorState) => this.setState({editorState});
@@ -67,6 +68,7 @@ class RichTextEditor extends React.Component {
       // either style the placeholder or hide it. Let's just hide it now.
       let className = 'RichEditor-editor';
       var contentState = editorState.getCurrentContent();
+    
       if (!contentState.hasText()) {
         if (contentState.getBlockMap().first().getType() !== 'unstyled') {
           className += ' RichEditor-hidePlaceholder';

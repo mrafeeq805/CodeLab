@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import screenshotSlice from "./screenshotSlice";
+import featureSlice from "./featureSlice";
 
 const appStore = configureStore(
     {
         reducer : {
-            screenshot : screenshotSlice
+            feature : featureSlice
         }
     }
 )
