@@ -17,6 +17,7 @@ const AddProjectPage = () => {
 		overview: "",
 		languages: "",
 		db: "",
+		project_link :""
 	});
 	const changeInput = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
@@ -56,7 +57,7 @@ const AddProjectPage = () => {
 		e.preventDefault();
 		try {
 			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
-			await axios.post("/addproject", postData);
+			await axios.post("/user/addproject", postData);
 		} catch (error) {
 			console.log("error");
 		}
@@ -167,7 +168,7 @@ const AddProjectPage = () => {
 				<input
 					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
 					type="text"
-					name="project"
+					name="project_link"
 					onChange={changeInput}
 				/>
 
