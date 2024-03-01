@@ -20,15 +20,15 @@ const ProjectCardSec = (props) => {
 					</span>
 					<span className="text-sm text-gray-400">{publisher}</span>
 					<div className="flex justify-between w-full gap-8">
-						<div className="flex gap-1 items-center">
+						<div className="flex gap-2 items-center">
 							<i class="bi bi-eye-fill text-gray-400"></i>
 							<span className="text-xs text-gray-400">{views}</span>
 						</div>
-						<div className="flex gap-1 items-center">
+						<div className="flex gap-2 items-center">
 							<i class="bi bi-arrow-down-circle text-gray-400"></i>
 							<span className="text-xs text-gray-400">{downloads}</span>
 						</div>
-						<div className="flex gap-1 items-center">
+						<div className="flex gap-2 items-center">
 							<i class="bi bi-clock-fill text-gray-400"></i>
 							<span className="text-xs text-gray-400">{published_date} </span>
 						</div>

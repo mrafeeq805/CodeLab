@@ -5,7 +5,6 @@ const {
 	getStorage,
 	ref,
 	uploadBytes,
-	uploadString,
 	getDownloadURL,
 } = require("firebase/storage");
 

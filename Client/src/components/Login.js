@@ -1,7 +1,12 @@
 import React from 'react'
 import LoginIntro from './LoginIntro'
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
+    const navigate = useNavigate()
+    const handlerSignup = () =>{
+        navigate('/signup')
+    }
   return (
     <div >
         <LoginIntro title={"User Signin"} info={"Please fill your detail to access your account."}/>
@@ -21,7 +26,7 @@ const Login = () => {
                      Signin
                 </button>
                 <div className='flex justify-center py-5'>
-                    <span className='text-login_light text-'>Don’t have an account ? <span className='text-primary font-medium'>Signup</span></span>
+                    <span className='text-login_light text-'>Don’t have an account ? <span onClick={handlerSignup} className='text-primary font-medium'>Signup</span></span>
                 </div>
             </form>
         </div>
