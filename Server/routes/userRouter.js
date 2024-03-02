@@ -13,5 +13,6 @@ router.post('/addproject',projectController.addproject)
 //login & signup
 
 router.post('/createaccount',userController.createaccount)
+router.post('/login',userController.login)
 
 module.exports = router

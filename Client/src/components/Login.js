@@ -1,27 +1,49 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import LoginIntro from './LoginIntro'
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 const Login = () => {
+    const [loginError,setLoginError] = useState(null)
     const navigate = useNavigate()
+    const email = useRef(null)
+    const password = useRef(null)
     const handlerSignup = () =>{
         navigate('/signup')
+    }
+    const formHandler = async (e) =>{
+        e.preventDefault()
+        const formData =  {
+            email : email.current.value,
+            password : password.current.value
+        }
+        await axios.post('/login',formData)
+        .then((r) => {
+            if(r.data.result === 'success'){
+                navigate('/')
+            }else{
+                setLoginError(r.data.result)
+            }
+            
+        })
+
     }
   return (
     <div >
         <LoginIntro title={"User Signin"} info={"Please fill your detail to access your account."}/>
         <div className='mt-4 px-4'>
-            <form className=''>
+            <form className='' onSubmit={formHandler}>
                 <label className='text-login font-medium '>Email</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
-                    <input className='w-full text-login_light' type='text'/>
+                    <input className='w-full text-login_light outline-none' type='text' ref={email}/>
                     <i class="bi bi-x-circle text-login_light text-lg"></i>
                 </div>
                 <label className='text-login font-medium'>Password</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
-                    <input className='w-full text-login_light' type='password'/>
+                    <input className='w-full text-login_light outline-none' type='password' ref={password}/>
                     <i class="bi bi-eye-slash text-login_light text-lg"></i>
                 </div>
+                {loginError && <span className='text-red-500 text-xs'>{loginError}</span>}
                 <button className='bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5'>
                      Signin
                 </button>
