@@ -5,12 +5,16 @@ import axios from "axios"
 
 const Signup = () => {
     const [signupError,setSignupError] = useState(null)
+    const [passwordValue,setPasswordValue] = useState(true)
     const name = useRef(null)
     const email = useRef(null)
     const password = useRef(null)
     const navigate = useNavigate()
     const handlerLogin = () =>{
         navigate('/login')
+    }
+    const togglePassword = () =>{
+        setPasswordValue(!passwordValue)
     }
     const onHandleForm =  async (e) =>{
         e.preventDefault()
@@ -19,15 +23,17 @@ const Signup = () => {
             email : email.current.value,
             password : password.current.value
         }
-        console.log(formData);
         await axios.post('/createaccount',formData)
         .then((r) =>{
             if(r.data.result === "success"){
                 navigate('/')
             }else{
-                setSignupError(r.data.result)
+                
             }
             
+        })
+        .catch((err) => {
+            setSignupError(err)
         })
 
     }   
@@ -40,17 +46,17 @@ const Signup = () => {
                 <label className='text-login font-medium'>Full Name</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
                     <input className='w-full text-login_light outline-none' type='text' ref={name}/>
-                    <i class="bi bi-x-circle text-login_light text-lg"></i>
+                   
                 </div>
                 <label className='text-login font-medium '>Email</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
                     <input className='w-full text-login_light outline-none' type='text' ref={email}/>
-                    <i class="bi bi-x-circle text-login_light text-lg"></i>
+                   
                 </div>
                 <label className='text-login font-medium'>Password</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
-                    <input className='w-full text-login_light outline-none' type='password' ref={password}/>
-                    <i class="bi bi-eye-slash text-login_light text-lg"></i>
+                    <input className='w-full text-login_light outline-none' type={passwordValue ? 'password' :'text'} ref={password} />
+                    <i class={passwordValue ? "bi bi-eye-slash text-login_light text-lg":"bi bi-eye text-login_light text-lg"} onClick={togglePassword}></i>
                 </div>
                 <button className='bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5'>
                      Signup
