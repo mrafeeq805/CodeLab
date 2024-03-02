@@ -7,7 +7,7 @@ import PopularProjects from './PopularProjects'
 import SearchBar from './SearchBar'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { addLatest } from '../utils/projectSlice'
+import { addLatest, addTopDevelopers } from '../utils/projectSlice'
 
 const Home =  () => {
   
@@ -17,6 +17,8 @@ const Home =  () => {
     async function call (){
       const list = await axios.get('/getlatest')
       dispatch(addLatest(list.data))
+      const topDevelopers = await axios.get('/getdevelopers')
+      dispatch(addTopDevelopers(topDevelopers.data))
 
     }
     call()

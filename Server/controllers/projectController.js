@@ -1,4 +1,5 @@
 const projectSchema = require("../models/project");
+const userSchema = require("../models/user");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const {
@@ -104,7 +105,16 @@ module.exports = {
             console.log(error);
 
         }
-    }
+    },
+	getTopDevelopers : async (req,res) =>{
+        try{
+            const data = await userSchema.find()
+            res.json(data)
+        }catch(error){
+            console.log(error);
+
+        }
+    },
 };
 
 function base64ImageToBlob(str) {

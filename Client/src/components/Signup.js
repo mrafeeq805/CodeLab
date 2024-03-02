@@ -56,7 +56,7 @@ const Signup = () => {
                 <label className='text-login font-medium'>Password</label>
                 <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
                     <input className='w-full text-login_light outline-none' type={passwordValue ? 'password' :'text'} ref={password} />
-                    <i class={passwordValue ? "bi bi-eye-slash text-login_light text-lg":"bi bi-eye text-login_light text-lg"} onClick={togglePassword}></i>
+                    <i className={passwordValue ? "bi bi-eye-slash text-login_light text-lg":"bi bi-eye text-login_light text-lg"} onClick={togglePassword}></i>
                 </div>
                 <button className='bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5'>
                      Signup

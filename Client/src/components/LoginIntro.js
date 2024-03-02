@@ -12,7 +12,7 @@ const LoginIntro = ({info,title}) => {
             <span className=' text-sm text-login_light'>{info}</span>
         </div>
         <button className='absolute top-2 right-2 flex justify-center items-center rounded-full h-10 w-10 p-2 bg-slate-50'>
-            <i class="bi bi-x text-xl"></i>
+            <i className="bi bi-x text-xl"></i>
         </button>
     </div>
   )
