@@ -115,6 +115,15 @@ module.exports = {
 
         }
     },
+	getDescription : async (req,res) =>{
+        try{
+            const data = await projectSchema.find({project_id : req.params.project_id})
+            res.json(data)
+        }catch(error){
+            console.log(error);
+
+        }
+    },
 };
 
 function base64ImageToBlob(str) {

@@ -19,15 +19,15 @@ const ProjectCardMain = () => {
 					<span className=" text-gray-400">Akshay Saini</span>
 					<div className="flex justify-between mt-1">
 						<div className="flex gap-1 items-center">
-							<i class="bi bi-eye-fill text-gray-400"></i>
+							<i className="bi bi-eye-fill text-gray-400"></i>
 							<span className="text-sm text-gray-400">1.5 K</span>
 						</div>
 						<div className="flex gap-1 items-center">
-							<i class="bi bi-arrow-down-circle text-gray-400"></i>
+							<i className="bi bi-arrow-down-circle text-gray-400"></i>
 							<span className="text-sm text-gray-400">1.5 K</span>
 						</div>
 						<div className="flex gap-1 items-center">
-							<i class="bi bi-clock-fill text-gray-400"></i>
+							<i className="bi bi-clock-fill text-gray-400"></i>
 							<span className="text-sm text-gray-400">1 m </span>
 						</div>
 						<div className="px-6 bg-light rounded-xs flex justify-center items-center">
@@ -38,7 +38,7 @@ const ProjectCardMain = () => {
 				</div>
 			</div>
 			<div className="absolute flex justify-center items-center top-2 right-2 rounded-full h-10 w-10 bg-gray-300 p-2 bg-opacity-60">
-				<i class="bi bi-heart text-primary"></i>
+				<i className="bi bi-heart text-primary"></i>
 			</div>
 			<div className="flex absolute top-2 left-2 gap-2">
 				{list.map(item => <DomainChip key={item} title={item}/>)}

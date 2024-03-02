@@ -12,10 +12,6 @@ export const infoCardDetails = [
         value : "19 February 2024"
     },
     {
-        name : "Files included",
-        value : ".php,.html,.sql,.xml"
-    },
-    {
         name : "Frameworks / Languages",
         value : "React JS"
     },

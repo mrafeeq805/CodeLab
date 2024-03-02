@@ -43,7 +43,7 @@ function App() {
       element : <ProjectList/>
     },
     {
-      path : '/description',
+      path : '/description/:category/:project_id',
       element : <Description/>
     },
     {

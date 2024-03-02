@@ -5,7 +5,8 @@ const DetailsCard = ({title,description}) => {
     <div className='bg-white p-3 my-3'>
         <span className='font-medium text-lg'>{title}</span>
         <hr className='my-2'></hr>
-        <p>{description}</p>
+        {title === 'Features' ? description : <p>{description}</p>}
+        
     </div>
   )
 }

@@ -9,6 +9,7 @@ const userController = require('../controllers/userController');
 router.get('/getdevelopers',projectController.getTopDevelopers)
 router.get('/getlatest',projectController.getLatestList)
 router.post('/addproject',projectController.addproject)
+router.get('/description/:project_id',projectController.getDescription)
 
 //login & signup
 

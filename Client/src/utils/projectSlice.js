@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const projectSlice = createSlice({
-    name : "features",
+    name : "project",
     initialState : {
         latestProjects : null,
         popularProjects : null,
         topDevelopers : null,
+        description : null
     },
     reducers : {
         addLatest : (state,action) =>{
@@ -16,10 +17,13 @@ const projectSlice = createSlice({
         },
         addTopDevelopers : (state,action) => {
             state.topDevelopers = action.payload
+        },
+        addDescription : (state,action) =>{
+            state.description = action.payload
         }
     }
 })
 
 export default projectSlice.reducer
 
-export const {addLatest,addPopular,addTopDevelopers} = projectSlice.actions
+export const {addLatest,addPopular,addTopDevelopers,addDescription} = projectSlice.actions

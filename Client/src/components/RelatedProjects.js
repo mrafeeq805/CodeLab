@@ -11,8 +11,8 @@ const RelatedProjects = () => {
 			</div>
 
 			<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
-				{list.map((item) => (
-					<ProjectCardMain name={"Akshay"} img={"/img/dev.png"} />
+				{list.map((item,index) => (
+					<ProjectCardMain key={index} name={"Akshay"} img={"/img/dev.png"} />
 				))}
 			</div>
 		</div>
