@@ -13,7 +13,7 @@ const LatestProjects = () => {
             </div>
             
             {list && (<div className='mt-3 grid grid-col-5 grid-flow-row gap-2'>
-                {list?.map(item => <ProjectCardSec key={item.name} data={item}/>)}
+                {list?.map((item,index) => <ProjectCardSec key={index} data={item}/>)}
             </div>)}
         </div>
     )

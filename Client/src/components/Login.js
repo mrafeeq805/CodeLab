@@ -1,63 +1,101 @@
-import React, { useRef, useState } from 'react'
-import LoginIntro from './LoginIntro'
-import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
+import React, { useRef, useState } from "react";
+import LoginIntro from "./LoginIntro";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import {useDispatch} from "react-redux"
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-    const [loginError,setLoginError] = useState(null)
-    const [passwordValue,setPasswordValue] = useState(true)
-    const navigate = useNavigate()
-    const email = useRef(null)
-    const password = useRef(null)
-    const handlerSignup = () =>{
-        navigate('/signup')
-    }
-    const togglePassword = () =>{
-        setPasswordValue(!passwordValue)
-    }
-    const formHandler = async (e) =>{
-        e.preventDefault()
-        const formData =  {
-            email : email.current.value,
-            password : password.current.value
-        }
-        await axios.post('/login',formData)
-        .then((r) => {
-            if(r.data.result === 'success'){
-                navigate('/')
-            }else{
-                setLoginError(r.data.result)
-            }
-            
-        })
+    const dispatch = useDispatch()
+	const [loginError, setLoginError] = useState(null);
+	const [passwordValue, setPasswordValue] = useState(true);
+	const navigate = useNavigate();
+	const email = useRef(null);
+	const password = useRef(null);
+	const handlerSignup = () => {
+		navigate("/signup");
+	};
+	const togglePassword = () => {
+		setPasswordValue(!passwordValue);
+	};
+	const formHandler = async (e) => {
+		e.preventDefault();
+		const formData = {
+			email: email.current.value,
+			password: password.current.value,
+		};
+		await axios.post("/login", formData).then((r) => {
+			if (r.data.result === "success") {
 
-    }
-  return (
-    <div >
-        <LoginIntro title={"User Signin"} info={"Please fill your detail to access your account."}/>
-        <div className='mt-4 px-4'>
-            <form className='' onSubmit={formHandler}>
-                <label className='text-login font-medium '>Email</label>
-                <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
-                    <input className='w-full text-login_light outline-none' type='text' ref={email}/>
-                   
-                </div>
-                <label className='text-login font-medium'>Password</label>
-                <div className='border-2 rounded-lg flex justify-between p-2 my-3'>
-                    <input className='w-full text-login_light outline-none' type={passwordValue ? 'password' : 'text'} ref={password}/>
-                    <i onClick={togglePassword} class={passwordValue ? "bi bi-eye-slash text-login_light text-lg" : "bi bi-eye text-login_light text-lg"}></i>
-                </div>
-                {loginError && <span className='text-red-500 text-xs'>{loginError}</span>}
-                <button className='bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5'>
-                     Signin
-                </button>
-                <div className='flex justify-center py-5'>
-                    <span className='text-login_light text-'>Don’t have an account ? <span onClick={handlerSignup} className='text-primary font-medium'>Signup</span></span>
-                </div>
-            </form>
-        </div>
-    </div>
-  )
-}
+				signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+					.then((userCredential) => {
+						const user = userCredential.user;
+                        dispatch(addUser(user))
+                        navigate("/");
+					})
+					.catch((error) => {
+                        setLoginError(error)
+					});
 
-export default Login
+				
+			} else {
+				setLoginError(r.data.result);
+			}
+		});
+	};
+	return (
+		<div>
+			<LoginIntro
+				title={"User Signin"}
+				info={"Please fill your detail to access your account."}
+			/>
+			<div className="mt-4 px-4">
+				<form className="" onSubmit={formHandler}>
+					<label className="text-login font-medium ">Email</label>
+					<div className="border-2 rounded-lg flex justify-between p-2 my-3">
+						<input
+							className="w-full text-login_light outline-none"
+							type="text"
+							ref={email}
+						/>
+					</div>
+					<label className="text-login font-medium">Password</label>
+					<div className="border-2 rounded-lg flex justify-between p-2 my-3">
+						<input
+							className="w-full text-login_light outline-none"
+							type={passwordValue ? "password" : "text"}
+							ref={password}
+						/>
+						<i
+							onClick={togglePassword}
+							class={
+								passwordValue
+									? "bi bi-eye-slash text-login_light text-lg"
+									: "bi bi-eye text-login_light text-lg"
+							}></i>
+					</div>
+					{loginError && (
+						<span className="text-red-500 text-xs">{loginError}</span>
+					)}
+					<button className="bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5">
+						Signin
+					</button>
+					<div className="flex justify-center py-5">
+						<span className="text-login_light text-">
+							Don’t have an account ?{" "}
+							<span
+								onClick={handlerSignup}
+								className="text-primary font-medium">
+								Signup
+							</span>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	);
+};
+
+export default Login;
