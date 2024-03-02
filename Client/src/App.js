@@ -1,5 +1,5 @@
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
 import Home from './components/Home';
 import Categories from './components/Categories';
 import MyProjects from './components/MyProjects';
@@ -15,8 +15,30 @@ import Profile from './components/Profile';
 import EditProfile from './components/EditProfie';
 import DeveloperPage from './components/DeveloperPage';
 import AddProjectPage from './components/AddProjectPage';
+import { useEffect } from 'react';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./utils/firebase";
+import { useDispatch } from 'react-redux';
+import { addUser, removeUser } from './utils/userSlice';
 
 function App() {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const { uid, email, displayName, photoURL } = user;
+				dispatch(
+					addUser(user)
+				);
+        		
+			} else {
+				dispatch(removeUser());
+        		
+			}
+		});
+    return () => unsubscribe()
+	}, []);
   const router = createBrowserRouter([
     {
       path : '/',
