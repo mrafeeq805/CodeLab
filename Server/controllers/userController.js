@@ -19,8 +19,14 @@ module.exports = {
 					title: "",
 				});
 				newuser.save();
-				res.json();
+				res.json({
+					result : "success"
+				});
 			});
+		}else{
+			res.json({
+				result : "account aleady exist !"
+			})
 		}
 	},
     login : async (req, res) => {

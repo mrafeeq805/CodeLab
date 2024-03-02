@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import LoginIntro from './LoginIntro'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios"
 
 const Signup = () => {
+    const [signupError,setSignupError] = useState(null)
     const name = useRef(null)
     const email = useRef(null)
     const password = useRef(null)
@@ -20,9 +21,13 @@ const Signup = () => {
         }
         console.log(formData);
         await axios.post('/createaccount',formData)
-        .then(() =>{
-            console.log("created account");
-            navigate('/')
+        .then((r) =>{
+            if(r.data.result === "success"){
+                navigate('/')
+            }else{
+                setSignupError(r.data.result)
+            }
+            
         })
 
     }   
@@ -50,6 +55,7 @@ const Signup = () => {
                 <button className='bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5'>
                      Signup
                 </button>
+                {signupError && <span className='text-red-500 text-xs'>{signupError}</span>}
                 <div className='flex justify-center py-5'>
                     <span className='text-login_light text-'>Already have an account ? <span onClick={handlerLogin} className='text-primary font-medium'>Log in</span></span>
                 </div>
