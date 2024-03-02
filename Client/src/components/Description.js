@@ -12,39 +12,41 @@ import axios from "axios";
 import { addDescription } from "../utils/projectSlice";
 
 const Description = () => {
-	const description = useSelector((store) => store?.project?.description)
-	const {project_id} = useParams()
-	const dispatch = useDispatch()
-	useEffect(() =>{
-		async function call (){
-			await axios.get("/description/"+project_id)
-			.then((res) =>{
-				dispatch(addDescription(res?.data?.[0]))
-				
-			})
+	const description = useSelector((store) => store?.project?.description);
+	const { project_id } = useParams();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		async function call() {
+			await axios.get("/description/" + project_id).then((res) => {
+				dispatch(addDescription(res?.data?.[0]));
+			});
 		}
-		call()
-	},[])
+		call();
+	}, []);
 
 	return (
 		<div className="bg-slate-50 relative">
 			<Navbar title={"Developer Name"} />
 			<ProjectDetails />
 			<div className="px-3">
-				<DetailsCard
-					title={"Overview"}
-					description={description?.overview}
-				/>
-				<DetailsCard
-					title={"Features"}
-					description={description?.features}
-				/>
-                <InfoCard/>
-                <DeveloperProfileCard/>
+				<div className="bg-white p-3 my-3">
+					<span className="font-medium text-lg">Overview</span>
+					<hr className="my-2"></hr>
+					<p>{description?.overview}</p>
+				</div>
+				<div className="bg-white p-3 my-3">
+					<span className="font-medium text-lg">Features</span>
+					<hr className="my-2"></hr>
+					
+					<div dangerouslySetInnerHTML={{__html: description?.features}}></div>
+					
+					
+				</div>
+				<InfoCard data={description} />
+				<DeveloperProfileCard />
 			</div>
-            <RelatedProjects/>
-            <DownloadCard/>
-            
+			<RelatedProjects />
+			<DownloadCard />
 		</div>
 	);
 };
