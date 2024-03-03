@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const projectSlice = createSlice({
     name : "project",
     initialState : {
+        myProjects : null,
+        developerProjects : null,
         latestProjects : null,
         popularProjects : null,
         topDevelopers : null,
@@ -15,6 +17,12 @@ const projectSlice = createSlice({
         addPopular : (state,action) =>{
             state.popularProjects = action.payload
         },
+        addMyProjects : (state,action) =>{
+            state.myProjects = action.payload
+        },
+        addDeveloperProjects : (state,action) =>{
+            state.developerProjects = action.payload
+        },
         addTopDevelopers : (state,action) => {
             state.topDevelopers = action.payload
         },
@@ -26,4 +34,4 @@ const projectSlice = createSlice({
 
 export default projectSlice.reducer
 
-export const {addLatest,addPopular,addTopDevelopers,addDescription} = projectSlice.actions
+export const {addDeveloperProjects,addMyProjects,addLatest,addPopular,addTopDevelopers,addDescription} = projectSlice.actions

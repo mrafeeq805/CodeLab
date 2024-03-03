@@ -124,6 +124,16 @@ module.exports = {
 
         }
     },
+	getDeveloperProjects : async (req,res) =>{
+        try{
+            const data = await projectSchema.find({publisher : 'rafeeq'})
+            res.json(data)
+			console.log(data);
+        }catch(error){
+            console.log(error);
+
+        }
+    },
 };
 
 function base64ImageToBlob(str) {

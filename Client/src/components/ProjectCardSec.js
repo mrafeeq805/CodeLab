@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProjectCardSec = (props) => {
-	console.log(props);
 	const {
 		project_id,
 		title,

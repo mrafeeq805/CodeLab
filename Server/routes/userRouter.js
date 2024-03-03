@@ -7,6 +7,7 @@ const userController = require('../controllers/userController');
 
 //projects
 router.get('/getdevelopers',projectController.getTopDevelopers)
+router.get('/getDeveloperProjects',projectController.getDeveloperProjects)
 router.get('/getlatest',projectController.getLatestList)
 router.post('/addproject',projectController.addproject)
 router.get('/description/:project_id',projectController.getDescription)
