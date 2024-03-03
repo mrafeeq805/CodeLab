@@ -1,7 +1,6 @@
 import React from "react";
 import DeveloperCard from "./DeveloperCard";
 import { useSelector } from "react-redux";
-import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import DevelopersLoader from "./skelton/DevelopersLoader";
 
 const TopDevelopers = () => {
@@ -16,7 +15,7 @@ const TopDevelopers = () => {
 
 			<div className="mt-3 grid grid-cols-5 grid-flow-col">
 				{list?.map((item, index) => (
-					<DeveloperCard key={index} name={item.name} avatar={item.avatar} />
+					<DeveloperCard key={index} name={item?.name} avatar={item?.avatar} />
 				))}
 			</div>
 		</div>

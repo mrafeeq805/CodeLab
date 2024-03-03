@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import ProjectCardSec from "./ProjectCardSec";
 import { useSelector } from "react-redux";
-import { ShimmerButton, ShimmerContentBlock, ShimmerText, ShimmerThumbnail, ShimmerTitle } from "react-shimmer-effects";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 
 const LatestProjects = () => {
@@ -14,7 +13,7 @@ const LatestProjects = () => {
 				<span className="text-primary font-medium text-xs">More</span>
 			</div>
 			
-			{!list && count.map(item => <ProjectCardSecLoader key={item}/>)}
+			{!list && count?.map(item => <ProjectCardSecLoader key={item}/>)}
 			
 
 			{list && (

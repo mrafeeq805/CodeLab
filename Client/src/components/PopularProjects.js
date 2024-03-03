@@ -12,7 +12,7 @@ const PopularProjects = () => {
                 <span className=' font-medium'>Popular Projects</span>
                 <span className='text-primary font-medium text-xs'>More</span>
             </div>
-            {!list && count.map(item => <ProjectCardSecLoader key={item}/>)}
+            {!list && count?.map(item => <ProjectCardSecLoader key={item}/>)}
             
             {list && (<div className='mt-3 grid grid-col-5 grid-flow-row gap-2'>
                 {list?.map((item,index) => <ProjectCardSec key={index} data={item}/>)}

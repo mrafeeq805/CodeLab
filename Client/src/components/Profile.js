@@ -19,8 +19,8 @@ const Profile = () => {
 				</button>
 			</div>
 			<div className="bg-white rounded-lg p-4 flex flex-col gap-2 w-10/12">
-				{profileCardDetails.map((item) => (
-					<ProfileMenuCard icon={item.icon} title={item.title} />
+				{profileCardDetails?.map((item) => (
+					<ProfileMenuCard icon={item?.icon} title={item?.title} />
 				))}
 			</div>
 			<span className="absolute bottom-3 text-sm text-login_light">

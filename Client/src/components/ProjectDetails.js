@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const ProjectDetails = () => {
-	const details = useSelector((store) => store?.project?.description)
+const ProjectDetails = ({details}) => {
+
 	return (
 		<div className="mt-16 px-2">
 			<div className="flex flex-col p-3 w-full">

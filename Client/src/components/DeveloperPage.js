@@ -17,7 +17,7 @@ const DeveloperPage = () => {
             await axios.get('/getDeveloperProjects')
             .then((res) =>{
                 console.log(res.data);
-                dispatch(addDeveloperProjects(res.data))
+                dispatch(addDeveloperProjects(res?.data))
             })
             .catch((err) =>{
                 console.log(err);

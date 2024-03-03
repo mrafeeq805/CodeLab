@@ -13,7 +13,7 @@ export const Domains = () => {
             {!list && <DomainCardLoader/>}
             
             <div className='mt-3 grid grid-cols-5 gap-3'>
-                {list.map((item,index) => <DomainCard key={index} name={"Akshay"} img={"/img/dev.png"}/>)}
+                {list?.map((item,index) => <DomainCard key={index} name={"Akshay"} img={"/img/dev.png"}/>)}
             </div>
         </div>
     )

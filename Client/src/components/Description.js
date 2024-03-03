@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import ProjectDetails from "./ProjectDetails";
-import DetailsCard from "./DetailsCard";
 import InfoCard from "./InfoCard";
 import DeveloperProfileCard from "./DeveloperProfileCard";
 import RelatedProjects from "./RelatedProjects";
 import DownloadCard from "./DownloadCard";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { addDescription } from "../utils/projectSlice";
 
 const Description = () => {
-	const description = useSelector((store) => store?.project?.description);
+	const [description,setDiscription] = useState(null)
 	const { project_id } = useParams();
-	const dispatch = useDispatch();
 	useEffect(() => {
 		async function call() {
 			await axios.get("/description/" + project_id).then((res) => {
-				dispatch(addDescription(res?.data?.[0]));
+				setDiscription(res?.data?.[0]);
+				
 			});
 		}
 		call();
@@ -27,7 +24,7 @@ const Description = () => {
 	return (
 		<div className="bg-slate-50 relative">
 			<Navbar title={"Developer Name"} />
-			<ProjectDetails />
+			<ProjectDetails details={description} />
 			<div className="px-3">
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Overview</span>
