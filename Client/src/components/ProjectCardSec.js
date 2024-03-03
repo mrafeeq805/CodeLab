@@ -37,7 +37,7 @@ const ProjectCardSec = (props) => {
 								<span className="text-xs text-gray-400">{downloads}</span>
 							</div>
 							<div className="flex gap-2 items-center">
-								<i className="bi bi-clock-fill text-gray-400"></i>
+								<i className="bi bi-clock text-gray-400"></i>
 								<span className="text-xs text-gray-400">{published_date} </span>
 							</div>
 						</div>

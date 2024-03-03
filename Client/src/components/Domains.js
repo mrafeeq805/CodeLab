@@ -1,5 +1,6 @@
 import React from 'react'
 import DomainCard from './DomainCard'
+import DomainCardLoader from './skelton/DomainCardLoader'
 
 export const Domains = () => {
     const list = ['1','2','3','1','3','3']
@@ -9,6 +10,7 @@ export const Domains = () => {
                 <span className=' font-medium'>Projects by Domains</span>
                 <span className='text-primary font-medium text-xs'>More</span>
             </div>
+            {!list && <DomainCardLoader/>}
             
             <div className='mt-3 grid grid-cols-5 gap-3'>
                 {list.map((item,index) => <DomainCard key={index} name={"Akshay"} img={"/img/dev.png"}/>)}
