@@ -43,7 +43,7 @@ const Description = () => {
 				<DeveloperProfileCard name={description?.publisher}/>
 			</div>
 			<RelatedProjects />
-			<DownloadCard />
+			<DownloadCard id={description?.project_id} />
 		</div>
 	);
 };

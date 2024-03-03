@@ -134,6 +134,16 @@ module.exports = {
 
         }
     },
+	getFavoriteProjects : async (req,res) =>{
+        try{
+            const data = await projectSchema.find({project_id : {"$in":req.body.id}})
+            res.json(data)
+			console.log(data);
+        }catch(error){
+            console.log(error);
+
+        }
+    },
 };
 
 function base64ImageToBlob(str) {

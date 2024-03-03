@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import ProjectCardSec, { ProjectCardSecRemove } from "./ProjectCardSec";
 import axios from "axios";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
+import { useSelector } from "react-redux";
 
 const FavoriteSection = () => {
     const list = ['1','2']
 	const [favoriteProjects,setFavoriteProjects] = useState([])
+	const favorites = useSelector((store) => store?.favorite?.favoriteProjects)
 	useEffect(() => {
 		async function call() {
-			await axios.get("/getlatest").then((res) => {
+			await axios.post("/getfavorite",{id:favorites}).then((res) => {
 				setFavoriteProjects(res?.data);
 			});
 		}
