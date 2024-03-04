@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { calcDate } from "../utils/dateDifference";
 
 const ProjectCardSec = (props) => {
 	const {
@@ -38,7 +39,7 @@ const ProjectCardSec = (props) => {
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>
-								<span className="text-xs text-gray-400">{published_date} </span>
+								<span className="text-xs text-gray-400">{ calcDate(published_date).result} </span>
 							</div>
 						</div>
 					</div>

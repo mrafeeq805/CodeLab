@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { calcDate } from "../utils/dateDifference";
 
 const ProjectDetails = ({details}) => {
 
@@ -21,8 +22,8 @@ const ProjectDetails = ({details}) => {
 					</div>
 
 					<div className="flex gap-1 items-center">
-						<i className="bi bi-clock-fill text-gray-400"></i>
-						<span className="text-sm text-gray-400">{details?.published_date}</span>
+						<i className="bi bi-clock text-gray-400"></i>
+						<span className="text-sm text-gray-400">{calcDate(details?.published_date).result+" ago"}</span>
 					</div>
 				</div>
 				<div className="mt-4">

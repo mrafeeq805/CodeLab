@@ -1,6 +1,7 @@
 import React from "react";
 import DomainChip from "./DomainChip";
 import { Link } from "react-router-dom";
+import { calcDate } from "../utils/dateDifference";
 
 const ProjectCardMain = ({ data }) => {
 	const list = ["React JS", "Node JS"];
@@ -39,7 +40,7 @@ const ProjectCardMain = ({ data }) => {
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>
-								<span className="text-sm text-gray-400">{published_date} </span>
+								<span className="text-sm text-gray-400">{calcDate(published_date).result} </span>
 							</div>
 							<div className="px-6 bg-light rounded-xs flex justify-center items-center">
 								<span className="text-primary">{price}</span>
