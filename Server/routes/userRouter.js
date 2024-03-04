@@ -15,6 +15,7 @@ router.get('/description/:project_id',projectController.getDescription)
 
 //login & signup ,profile
 
+router.post('/getprofile',userController.getProfile)
 router.post('/editprofiledata',userController.editProfile)
 router.post('/createaccount',userController.createaccount)
 router.post('/login',userController.login)
