@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
 import { Skeleton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../utils/favoriteSlice";
 
 const ProjectCardSec = (props) => {
 	const [load,setLoad] = useState(false)
@@ -59,14 +61,18 @@ const ProjectCardSec = (props) => {
 };
 
 export const ProjectCardSecRemove = (Card) => {
-	return (...props) => {
+	const dispatch = useDispatch()
+	return (props) => {
+		const onClickHandler = (id) => {
+			dispatch(removeItem(id))
+		}
 		return (
 			<div className="relative">
-				<div className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-100 px-2 rounded-bl-xl">
+				<button onClick={() => onClickHandler(props?.data?.project_id)} className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-100 px-2 rounded-bl-xl">
 					<i class="bi bi-trash3-fill text-gray-400 text-xs"></i>
 					<span className="text-xs text-gray-400">Remove</span>
-				</div>
-				<Card />
+				</button>
+				<Card {...props} />
 			</div>
 		);
 	};

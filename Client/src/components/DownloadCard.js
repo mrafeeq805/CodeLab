@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../utils/favoriteSlice";
-import { extractId } from "../utils/getDownloadFile";
+import { addItem, removeItem } from "../utils/favoriteSlice";
 
 const DownloadCard = ({id , url}) => {
 	
@@ -9,6 +8,8 @@ const DownloadCard = ({id , url}) => {
 	const favoriteHandler = () => {
 		if (!favorites.includes(id)) {
 			dispatch(addItem(id));
+		}else{
+			dispatch(removeItem(id));
 		}
 	};
 	const favorites = useSelector((store) => store?.favorite?.favoriteProjects);

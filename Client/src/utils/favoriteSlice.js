@@ -11,7 +11,8 @@ const favoriteSlice = createSlice({
             localStorage.setItem('id',JSON.stringify(state.favoriteProjects))
         },
         removeItem : (state,action) =>{
-            state.favoriteProjects.splice(action.payload,1)
+            //console.log(state.favoriteProjects.indexOf(action.payload));
+            state.favoriteProjects.splice(state.favoriteProjects.indexOf(action.payload),1)
             localStorage.setItem('id',JSON.stringify(state.favoriteProjects))
         },
         clearAll : (state,action) =>{
