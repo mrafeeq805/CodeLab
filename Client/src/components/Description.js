@@ -7,6 +7,7 @@ import RelatedProjects from "./RelatedProjects";
 import DownloadCard from "./DownloadCard";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Skeleton } from "@mui/material";
 
 const Description = () => {
 	const [description,setDiscription] = useState(null)
@@ -29,13 +30,22 @@ const Description = () => {
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Overview</span>
 					<hr className="my-2"></hr>
-					<p>{description?.overview}</p>
+					{!description && (<div className="flex flex-col gap-2">
+						<Skeleton variant="rounded" width={300} height={5} sx={{ fontSize: "0.8rem" }} />
+						<Skeleton variant="rounded" width={250} height={5} sx={{ fontSize: "0.8rem" }} />
+					</div>)}
+					
+					{description && <p>{description?.overview}</p>}
 				</div>
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Features</span>
 					<hr className="my-2"></hr>
+					{!description && (<div className="flex flex-col gap-2">
+						<Skeleton variant="rounded" width={300} height={5} sx={{ fontSize: "0.8rem" }} />
+						<Skeleton variant="rounded" width={250} height={5} sx={{ fontSize: "0.8rem" }} />
+					</div>)}
 					
-					<div dangerouslySetInnerHTML={{__html: description?.features}}></div>
+					{description && <div dangerouslySetInnerHTML={{__html: description?.features}}></div>}
 					
 					
 				</div>

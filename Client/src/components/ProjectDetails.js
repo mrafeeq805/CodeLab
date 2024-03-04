@@ -1,12 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { calcDate } from "../utils/dateDifference";
+import ProjectDetailsLoader from "./skelton/ProjectDetailsLoader";
 
 const ProjectDetails = ({details}) => {
 
 	return (
+		
 		<div className="mt-16 px-2">
-			<div className="flex flex-col p-3 w-full">
+			{!details && <ProjectDetailsLoader/>}
+			{details && (<div className="flex flex-col p-3 w-full">
 				<div className="flex justify-between">
 					<span className="text-lg">
 						{details?.title}
@@ -33,17 +36,20 @@ const ProjectDetails = ({details}) => {
 						alt=""
 					/>
                     <div className="flex mt-3 gap-5">
-                        <button className="bg-primary p-2 w-full rounded-md flex items-center gap-3 justify-center">
-                            <i className="bi bi-laptop text-white"></i>
-                            <span className="text-white">Live Demo</span>
-                        </button>
+						<a className="w-full" href={details?.live_link} target="_blank" rel="noreferrer">
+							<button className="bg-primary p-2 w-full rounded-md flex items-center gap-3 justify-center">
+                            	<i className="bi bi-laptop text-white"></i>
+                            	<span className="text-white">Live Demo</span>
+                        	</button>
+						</a>
+                        
                         <button className="bg-gray-400 p-2 w-full rounded-md flex items-center gap-3 justify-center">
                             <i className="bi bi-card-image text-white"></i>
                             <span className="text-white">Screenshots</span>
                         </button>
                     </div>
 				</div>
-			</div>
+			</div>)}
 		</div>
 	);
 };
