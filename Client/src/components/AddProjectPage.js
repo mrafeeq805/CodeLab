@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
 import { useNavigate } from "react-router-dom";
+import { extractId } from "../utils/getDownloadFile";
 
 const AddProjectPage = () => {
 	const navigate = useNavigate()
@@ -23,6 +24,7 @@ const AddProjectPage = () => {
 	});
 	const changeInput = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
+		data.project_link = extractId(data.project_link)
 	};
 	const handleProductImageChange = (e) => {
 		const files = Array.from(e.target.files);
