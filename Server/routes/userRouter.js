@@ -13,8 +13,9 @@ router.get('/getlatest',projectController.getLatestList)
 router.post('/addproject',projectController.addproject)
 router.get('/description/:project_id',projectController.getDescription)
 
-//login & signup
+//login & signup ,profile
 
+router.post('/editprofiledata',userController.editProfile)
 router.post('/createaccount',userController.createaccount)
 router.post('/login',userController.login)
 

@@ -2,8 +2,13 @@ import React from "react";
 import Navbar from "./Navbar";
 import { profileCardDetails } from "../utils/constants";
 import ProfileMenuCard from "./ProfileMenuCard";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+	const navigate = useNavigate()
+	const navigateEditProfile = () => {
+		navigate('/editprofile')
+	}
 	return (
 		<div className="bg-slate-50 flex items-center flex-col h-screen">
 			<Navbar title={"Profile"} />
@@ -13,7 +18,7 @@ const Profile = () => {
 				</div>
 				<span className=" font-medium text-center">Muhammed Rafeeq K</span>
 				<span className="text-gray-500 text-sm text-center">Web Developer</span>
-				<button className="bg-primary p-2 px-8 mt-3 rounded-full flex items-center gap-3 justify-center">
+				<button onClick={navigateEditProfile} className="bg-primary p-2 px-8 mt-3 rounded-full flex items-center gap-3 justify-center">
 					<i class="bi bi-pen text-white"></i>
 					<span className="text-white">Edit Profile</span>
 				</button>

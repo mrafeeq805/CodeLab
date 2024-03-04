@@ -51,4 +51,22 @@ module.exports = {
 			})
 		}
 	},
+	editProfile : async (req, res) => {
+		const { name, headline, bio , email } = req.body;
+		try{
+			const user = await userSchema.findOneAndUpdate({ email: email },{
+				name : name,
+				bio : bio,
+				title : headline
+			});
+			res.json({
+				result : "updated"
+			})
+		}catch (err){
+			console.log(err);
+			res.json({
+				result : err
+			})
+		}
+	}
 };
