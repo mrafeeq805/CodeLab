@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
+import { Skeleton } from "@mui/material";
 
 const ProjectCardSec = (props) => {
+	const [load,setLoad] = useState(false)
+	const onLoadImage = () => {
+		console.log("loaded");
+		setLoad(true)
+	}
 	const {
 		project_id,
 		title,
@@ -17,11 +23,14 @@ const ProjectCardSec = (props) => {
 		<Link to={"/description/"+category+"/"+project_id}>
 			<div className="border-[1px] border-gray-200 rounded-md p-2 flex">
 				<div className="flex gap-3">
+					{!load && <Skeleton variant="rounded" width={150} height={90} />}
 					<img
-						className="rounded-md w-2/5 h-26 object-cover"
+						className={load ? "rounded-md w-2/5 h-26 object-cover" : "hidden rounded-md w-2/5 h-26 object-cover" }
 						src={thumbnail}
 						alt="thumb"
+						onLoad={onLoadImage}
 					/>
+
 					<div className="flex flex-col">
 						<span className="text-primary text-xs uppercase tracking-wider font-medium">
 							{category}

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import DomainChip from "./DomainChip";
 import { Link } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
+import { Skeleton } from "@mui/material";
 
 const ProjectCardMain = ({ data }) => {
+	const [load,setLoad] = useState(false)
+	const onImagLoad = () => {
+		setLoad(true)
+	}
 	const list = ["React JS", "Node JS"];
 	const {
 		title,
@@ -21,10 +26,12 @@ const ProjectCardMain = ({ data }) => {
 		<Link to={"/description/" + category + "/" + project_id}>
 			<div className="border-[1px] border-gray-200 rounded-md flex relative w-full">
 				<div className="w-full">
+					{!load && <Skeleton variant="rounded" width={350} height={170} />}
 					<img
-						className="rounded-md h-44 w-full object-cover"
+						className={load ? "rounded-md h-44 w-full object-cover" : "hidden rounded-md h-44 w-full object-cover"}
 						src={thumbnail}
 						alt=""
+						onLoad={onImagLoad}
 					/>
 					<div className="flex flex-col p-2">
 						<span className="text-lg">{title}</span>
