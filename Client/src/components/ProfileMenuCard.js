@@ -3,8 +3,10 @@ import { signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { removeUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileMenuCard = ({icon,title}) => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleLogout = () =>{
     signOut(auth).then(() => {
@@ -15,7 +17,9 @@ const ProfileMenuCard = ({icon,title}) => {
     });
   }
   const handlePages = () =>{
-    
+    if(title === "My Projects"){
+      navigate('/myprojects')
+    }
   }
   return (
     <div onClick={title === 'Logout' ? handleLogout : handlePages} className='flex items-center gap-8'>

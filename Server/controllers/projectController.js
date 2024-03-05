@@ -9,7 +9,7 @@ const {
 	getDownloadURL,
 } = require("firebase/storage");
 const OpenAI = require("openai");
-require('dotenv').config();
+require("dotenv").config();
 
 const openai = new OpenAI({
 	apiKey: process.env.OPEN_AI_API,
@@ -104,10 +104,10 @@ module.exports = {
 					top_p: 1,
 				});
 
-
 				const newProject = new projectSchema({
+					publisher_email: req.session.email,
 					title: title,
-					project_id : lastid + 1,
+					project_id: lastid + 1,
 					category: category,
 					live_link: link,
 					overview: overview,
@@ -124,7 +124,10 @@ module.exports = {
 					downloads: 0,
 					status: "Pending",
 					price: "Free",
-					keywords: title.split(" ").join(",") +" , "+ response?.choices[0]?.message?.content,
+					keywords:
+						title.split(" ").join(",") +
+						" , " +
+						response?.choices[0]?.message?.content,
 				});
 				newProject.save();
 				console.log(newProject);
@@ -135,7 +138,7 @@ module.exports = {
 	},
 	getLatestList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({ _id: -1 }).limit(10)
+			const data = await projectSchema.find().sort({ _id: -1 }).limit(10);
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -151,20 +154,22 @@ module.exports = {
 	},
 	getDescription: async (req, res) => {
 		try {
-			
 			const data = await projectSchema.find({
 				project_id: req.params.project_id,
 			});
-			const views = data?.[0]?.views + 1
+			const views = data?.[0]?.views + 1;
 			if (!req.session.viewed_posts) {
 				req.session.viewed_posts = {};
 			}
 			if (!req.session.viewed_posts[req.params.project_id]) {
-				req.session.viewed_posts[req.params.project_id] = 1; 
+				req.session.viewed_posts[req.params.project_id] = 1;
 				//update session
 				//increment post count in posts table with post id
-				//update 'viewed_posts' column with new session 
-				const update = await projectSchema.findOneAndUpdate({project_id : req.params.project_id},{views:views})
+				//update 'viewed_posts' column with new session
+				const update = await projectSchema.findOneAndUpdate(
+					{ project_id: req.params.project_id },
+					{ views: views }
+				);
 			}
 			res.json(data);
 		} catch (error) {
@@ -173,9 +178,33 @@ module.exports = {
 	},
 	getDeveloperProjects: async (req, res) => {
 		try {
-			const data = await projectSchema.find({ publisher: "rafeeq" });
-			res.json(data);
-			console.log(data);
+			const data = await projectSchema.find({ publisher_id: req.params.id });
+			const userDetails = await userSchema.find(
+				{ publisher_id: req.params.id },
+				{ name: 1, title: 1, bio: 1, avatar: 1, _id: 0 }
+			);
+			const user = await projectSchema.aggregate([
+				{
+					$match: {
+						publisher_id: req.params.id,
+					},
+				},
+				{
+					$group: {
+						_id: null,
+						totalViews: { $sum: "$views" },
+						projectsCount : {$sum:1}
+					},
+				},
+				{"$unset": ["_id"]}
+			]);
+			console.log(user);
+			res.json({
+				projects: data,
+				details: userDetails[0],
+				views : user[0].totalViews,
+				projectsCount : user[0].projectsCount
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -193,8 +222,10 @@ module.exports = {
 	},
 	searchProjects: async (req, res) => {
 		try {
-			const search = req.params.search
-			const data = await projectSchema.find({ keywords: { $regex: new RegExp(search, 'i') } });
+			const search = req.params.search;
+			const data = await projectSchema.find({
+				keywords: { $regex: new RegExp(search, "i") },
+			});
 			res.json(data);
 			console.log(data);
 		} catch (error) {
@@ -206,24 +237,25 @@ module.exports = {
 			const data = await projectSchema.find({
 				project_id: req.body.id,
 			});
-			const downloads = data?.[0]?.downloads + 1
+			const downloads = data?.[0]?.downloads + 1;
 			if (!req.session.downloaded_posts) {
 				req.session.downloaded_posts = {};
 			}
 			if (!req.session.downloaded_posts[req.body.id]) {
-				req.session.downloaded_posts[req.body.id] = 1; 
+				req.session.downloaded_posts[req.body.id] = 1;
 				//update session
 				//increment post count in posts table with post id
-				//update 'viewed_posts' column with new session 
-				const update = await projectSchema.findOneAndUpdate({project_id : req.body.id},{downloads:downloads})
+				//update 'viewed_posts' column with new session
+				const update = await projectSchema.findOneAndUpdate(
+					{ project_id: req.body.id },
+					{ downloads: downloads }
+				);
 			}
 			res.json(data);
 		} catch (error) {
 			console.log(error);
 		}
-	}
-
-
+	},
 };
 
 function base64ImageToBlob(str) {

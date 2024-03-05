@@ -6,7 +6,6 @@ import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 const MyProjecSection = () => {
 
 	const developerProjects = useSelector((store) => store?.project?.developerProjects)
-    const ProjectCardSecNew = ProjectCardSecRemove(ProjectCardSec)
 	const count = [1,2]
 	return (
 		<div className="px-2 mt-4">

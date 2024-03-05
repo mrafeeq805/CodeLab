@@ -31,6 +31,14 @@ module.exports = {
 	createaccount: async (req, res) => {
 		const { name, email, password } = req.body;
 		const user = await userSchema.find({ email: email });
+		let lastid;
+		const id = await userSchema.find().sort({ _id: -1 }).limit(1);
+		if (id.length > 0) {
+			lastid = id[0].project_id.split('CD')[0]
+
+		} else {
+			lastid = 'CD1';
+		}
 		if (user.length === 0) {
 			bcrypt.hash(password, saltRounds, function (err, hash) {
 				const newuser = new userSchema({
@@ -41,6 +49,7 @@ module.exports = {
 					projects: [],
 					bio: "",
 					title: "",
+					publisher_id : "CD"+(lastid+1)
 				});
 				newuser.save();
 				req.session.user = email

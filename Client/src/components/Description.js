@@ -53,7 +53,7 @@ const Description = () => {
 					
 				</div>
 				<InfoCard data={description} />
-				<DeveloperProfileCard name={description?.publisher}/>
+				<DeveloperProfileCard name={description?.publisher} publisher_id={description?.publisher_id}/>
 			</div>
 			<RelatedProjects />
 			{!ssvisible && <DownloadCard id={description?.project_id} url={description?.project_link} />} 

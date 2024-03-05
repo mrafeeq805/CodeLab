@@ -93,7 +93,7 @@ function App() {
       element : <EditProfile/>
     },
     {
-      path : '/developerinfo',
+      path : '/developerinfo/:id',
       element : <DeveloperPage/>
     },
     {

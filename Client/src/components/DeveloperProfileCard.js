@@ -3,10 +3,10 @@ import DevInfo from "./DevInfo";
 import { useNavigate } from "react-router-dom";
 import DeveloperProfileCardLoader from "./skelton/DeveloperProfileCardLoader";
 
-const DeveloperProfileCard = ({ name }) => {
+const DeveloperProfileCard = ({ name,publisher_id }) => {
 	const navigate = useNavigate();
 	const handleNavigate = () => {
-		navigate("/developerinfo");
+		navigate("/developerinfo/"+publisher_id);
 	};
 	return (
 		<div>

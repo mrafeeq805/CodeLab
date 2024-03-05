@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DevProjecInfo = () => {
+const DevProjecInfo = ({views,projects}) => {
   return (
     <div className='px-8'>
         <div className='rounded-lg bg-primary  p-2 flex '>
@@ -10,7 +10,7 @@ const DevProjecInfo = () => {
                 </div>
                 <div className='flex flex-col'>
                     <span className='text-white '>Projects</span>
-                    <span className='text-white font-bold'>14</span>
+                    <span className='text-white font-bold'>{projects}</span>
                 </div>
             </div>
             <div className='flex gap-3 items-center w-full px-3'>
@@ -19,7 +19,7 @@ const DevProjecInfo = () => {
                 </div>
                 <div className='flex flex-col'>
                     <span className='text-white '>Views</span>
-                    <span className='text-white font-bold'>14</span>
+                    <span className='text-white font-bold'>{views}</span>
                 </div>
             </div>
         </div>
