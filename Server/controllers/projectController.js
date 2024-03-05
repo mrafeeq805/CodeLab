@@ -151,9 +151,21 @@ module.exports = {
 	},
 	getDescription: async (req, res) => {
 		try {
+			
 			const data = await projectSchema.find({
 				project_id: req.params.project_id,
 			});
+			const views = data?.[0]?.views + 1
+			if (!req.session.viewed_posts) {
+				req.session.viewed_posts = {};
+			}
+			if (!req.session.viewed_posts[req.params.project_id]) {
+				req.session.viewed_posts[req.params.project_id] = 1; 
+				//update session
+				//increment post count in posts table with post id
+				//update 'viewed_posts' column with new session 
+				const update = await projectSchema.findOneAndUpdate({project_id : req.params.project_id},{views:views})
+			}
 			res.json(data);
 		} catch (error) {
 			console.log(error);

@@ -43,6 +43,7 @@ module.exports = {
 					title: "",
 				});
 				newuser.save();
+				req.session.user = email
 				res.json({
 					result : "success"
 				});
@@ -60,6 +61,7 @@ module.exports = {
             const hash = user[0].password
 			bcrypt.compare(password, hash, function(err, result) {
                 if(result){
+					req.session.user = email
                     res.json({
 						result : "success",
 					})

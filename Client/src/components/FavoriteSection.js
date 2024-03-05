@@ -21,7 +21,7 @@ const FavoriteSection = () => {
     const ProjectCardSecNew = ProjectCardSecRemove(ProjectCardSec)
 	return (
 		<div className="px-2 mt-16">
-            <span className="font-medium">Projects (2)</span>
+            <span className="font-medium">Projects ({favorites ? favorites.length : 0})</span>
 
 			<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
 				{favoriteProjects.length === 0 && list?.map(item => <ProjectCardSecLoader key={item}/>)}
