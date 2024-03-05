@@ -200,7 +200,29 @@ module.exports = {
 		} catch (error) {
 			console.log(error);
 		}
+	},
+	download: async (req, res) => {
+		try {
+			const data = await projectSchema.find({
+				project_id: req.body.id,
+			});
+			const downloads = data?.[0]?.downloads + 1
+			if (!req.session.downloaded_posts) {
+				req.session.downloaded_posts = {};
+			}
+			if (!req.session.downloaded_posts[req.body.id]) {
+				req.session.downloaded_posts[req.body.id] = 1; 
+				//update session
+				//increment post count in posts table with post id
+				//update 'viewed_posts' column with new session 
+				const update = await projectSchema.findOneAndUpdate({project_id : req.body.id},{downloads:downloads})
+			}
+			res.json(data);
+		} catch (error) {
+			console.log(error);
+		}
 	}
+
 
 };
 

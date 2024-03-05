@@ -6,6 +6,7 @@ const projectController = require('../controllers/projectController');
 const userController = require('../controllers/userController');
 
 //projects
+router.post('/download',projectController.download)
 router.get('/search/:search',projectController.searchProjects)
 router.get('/getdevelopers',projectController.getTopDevelopers)
 router.post('/getfavorite',projectController.getFavoriteProjects)
