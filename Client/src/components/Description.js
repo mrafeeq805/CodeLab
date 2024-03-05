@@ -8,10 +8,12 @@ import DownloadCard from "./DownloadCard";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
+import ScreenshotsCarousel from "./ScreenshotsCarousel";
 
 const Description = () => {
 	const [description,setDiscription] = useState(null)
 	const { project_id } = useParams();
+	const [ssvisible,setSSVisible] = useState(false)
 	useEffect(() => {
 		async function call() {
 			await axios.get("/description/" + project_id).then((res) => {
@@ -23,9 +25,10 @@ const Description = () => {
 	}, []);
 
 	return (
-		<div className="bg-slate-50 relative">
+		<div className="bg-slate-50 ">
 			<Navbar title={"Developer Name"} />
-			<ProjectDetails details={description} />
+			<ProjectDetails details={description} setSSVisible={setSSVisible} />
+			{ssvisible && <ScreenshotsCarousel screenshots={description?.screenshots} setSSVisible={setSSVisible} />}
 			<div className="px-3">
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Overview</span>
@@ -53,7 +56,7 @@ const Description = () => {
 				<DeveloperProfileCard name={description?.publisher}/>
 			</div>
 			<RelatedProjects />
-			<DownloadCard id={description?.project_id} url={description?.project_link} />
+			{!ssvisible && <DownloadCard id={description?.project_id} url={description?.project_link} />} 
 		</div>
 	);
 };

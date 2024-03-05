@@ -35,9 +35,9 @@ const ProjectCardMain = ({ data }) => {
 		project_id
 	} = data;
 	return (
-		<Link to={"/description/" + category + "/" + project_id}>
-			<div className="border-[1px] border-gray-200 rounded-md flex relative w-full">
-				<div className="w-full">
+		<Link  to={"/description/" + category + "/" + project_id}>
+			<div className="border-[1px] border-gray-200 rounded-md flex w-full">
+				<div className="w-full relative">
 					{!load && <Skeleton variant="rounded" width={350} height={170} />}
 					<img
 						className={load ? "rounded-md h-44 w-full object-cover" : "hidden rounded-md h-44 w-full object-cover"}
@@ -45,6 +45,11 @@ const ProjectCardMain = ({ data }) => {
 						alt=""
 						onLoad={onImagLoad}
 					/>
+					<div className="flex absolute top-2 left-2 gap-2">
+					{list?.map((item) => (
+						<DomainChip key={item} title={item} />
+					))}
+					</div>
 					<div className="flex flex-col p-2">
 						<span className="text-lg">{title}</span>
 						<span className=" text-gray-400">{publisher}</span>
@@ -70,11 +75,7 @@ const ProjectCardMain = ({ data }) => {
 				{/* <button onClick={favoriteHandler} className="absolute flex justify-center items-center top-2 right-2 rounded-full h-10 w-10 bg-gray-500 p-2 bg-opacity-40">
 					<i className="bi bi-heart text-white"></i>
 				</button> */}
-				<div className="flex absolute top-2 left-2 gap-2">
-					{list?.map((item) => (
-						<DomainChip key={item} title={item} />
-					))}
-				</div>
+				
 			</div>
 		</Link>
 	);

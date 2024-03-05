@@ -15,7 +15,7 @@ const RelatedProjects = () => {
 		call();
 	}, []);
 	return (
-		<div className="px-2 mt-4 mb-24">
+		<div className="px-2 mt-4 mb-24 ">
 			<div className="flex justify-between items-center">
 				<span className=" font-medium">Related Projects</span>
 				

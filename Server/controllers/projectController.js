@@ -135,7 +135,7 @@ module.exports = {
 	},
 	getLatestList: async (req, res) => {
 		try {
-			const data = await projectSchema.find();
+			const data = await projectSchema.find().sort({ _id: -1 }).limit(10)
 			res.json(data);
 		} catch (error) {
 			console.log(error);

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { calcDate } from "../utils/dateDifference";
 import ProjectDetailsLoader from "./skelton/ProjectDetailsLoader";
 
-const ProjectDetails = ({details}) => {
+const ProjectDetails = ({details,setSSVisible}) => {
+	
 
 	return (
 		
@@ -26,7 +27,7 @@ const ProjectDetails = ({details}) => {
 
 					<div className="flex gap-1 items-center">
 						<i className="bi bi-clock text-gray-400"></i>
-						<span className="text-sm text-gray-400">{calcDate(details?.published_date).result+" ago"}</span>
+						<span className="text-sm text-gray-400">{calcDate(details?.published_date).result+" ago" || "New"}</span>
 					</div>
 				</div>
 				<div className="mt-4">
@@ -43,7 +44,7 @@ const ProjectDetails = ({details}) => {
                         	</button>
 						</a>
                         
-                        <button className="bg-gray-400 p-2 w-full rounded-md flex items-center gap-3 justify-center">
+                        <button onClick={() => setSSVisible(true)} className="bg-gray-400 p-2 w-full rounded-md flex items-center gap-3 justify-center">
                             <i className="bi bi-card-image text-white"></i>
                             <span className="text-white">Screenshots</span>
                         </button>
