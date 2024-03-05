@@ -50,7 +50,7 @@ const ProjectCardSec = (props) => {
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>
-								<span className="text-xs text-gray-400">{ calcDate(published_date).result} </span>
+								<span className="text-xs text-gray-400">{ calcDate(published_date).result || "New"} </span>
 							</div>
 						</div>
 					</div>

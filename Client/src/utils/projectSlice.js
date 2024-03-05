@@ -8,11 +8,15 @@ const projectSlice = createSlice({
         latestProjects : null,
         popularProjects : null,
         topDevelopers : null,
-        description : null
+        description : null,
+        searchResults : null
     },
     reducers : {
         addLatest : (state,action) =>{
             state.latestProjects = action.payload
+        },
+        addSearchResult : (state,action) =>{
+            state.searchResults = action.payload
         },
         addPopular : (state,action) =>{
             state.popularProjects = action.payload
@@ -34,4 +38,4 @@ const projectSlice = createSlice({
 
 export default projectSlice.reducer
 
-export const {addDeveloperProjects,addMyProjects,addLatest,addPopular,addTopDevelopers,addDescription} = projectSlice.actions
+export const {addSearchResult,addDeveloperProjects,addMyProjects,addLatest,addPopular,addTopDevelopers,addDescription} = projectSlice.actions

@@ -59,7 +59,7 @@ const ProjectCardMain = ({ data }) => {
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>
-								<span className="text-sm text-gray-400">{calcDate(published_date).result} </span>
+								<span className="text-sm text-gray-400">{calcDate(published_date).result || "New" }</span>
 							</div>
 							<div className="px-6 bg-light rounded-xs flex justify-center items-center">
 								<span className="text-primary">{price}</span>

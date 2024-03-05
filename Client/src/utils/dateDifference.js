@@ -39,7 +39,6 @@ export const calcDate = (date1) => {
     const yrsTxt = ["year", "years"];
     const mnthsTxt = ["month", "mnth"];
     const daysTxt = ["day", "days"];
-
     //Convert to days and sum together
     const total_days = (years_passed * 365) + (months_passed * 30.417) + days_passed;
     const total_secs = total_days * 24 * 60 * 60;
@@ -62,7 +61,7 @@ export const calcDate = (date1) => {
         "total_hours" : Math.round(total_hours),
         "total_minutes" : Math.round(total_mins),
         "total_seconds": Math.round(total_secs),
-        "result": result.trim().split(' ').slice(0,2).join(" ")
+        "result": result.trim().split(' ').slice(0,2).join(" ") 
     }
 
 }

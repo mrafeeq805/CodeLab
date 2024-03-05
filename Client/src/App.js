@@ -1,5 +1,5 @@
 
-import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, useNavigate, useParams } from 'react-router-dom';
 import Home from './components/Home';
 import Categories from './components/Categories';
 import MyProjects from './components/MyProjects';
@@ -20,9 +20,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
 import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from './utils/userSlice';
+import SearchProjectList from './components/SearchProjectList';
 
 function App() {
-
   const dispatch = useDispatch()
   useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -99,6 +99,10 @@ function App() {
     {
       path : '/addproject',
       element : <AddProjectPage/>
+    },
+    {
+      path : '/search/:search',
+      element : <SearchProjectList/>
     },
   ])
   return (
