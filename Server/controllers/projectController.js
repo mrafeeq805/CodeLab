@@ -262,6 +262,16 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	getMyProjects: async (req, res) => {
+		try {
+			
+			const data = await projectSchema.find({publisher_id:req.params.id})
+			res.json(data);
+			console.log(data);
+		} catch (error) {
+			console.log(error);
+		}
+	},
 };
 
 function base64ImageToBlob(str) {

@@ -78,4 +78,25 @@ export const ProjectCardSecRemove = (Card) => {
 	};
 };
 
+export const ProjectCardSecMy = (Card) => {
+	const dispatch = useDispatch()
+	return (props) => {
+		const onClickHandler = (id) => {
+			//code to remove item from myprojects
+		}
+		return (
+			<div className="relative">
+				<button onClick={() => onClickHandler(props?.data?.project_id)} className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-100 px-2 rounded-bl-xl">
+					<i class="bi bi-trash3-fill text-gray-400 text-xs"></i>
+					<span className="text-xs text-gray-400">Remove</span>
+				</button>
+				<button className={props?.data?.status === 'Pending' ? "bg-red-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl " : "bg-green-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl "}>
+					
+					<span className="text-xs text-white">{props?.data?.status}</span>
+				</button>
+				<Card {...props} />
+			</div>
+		);
+	};
+};
 export default ProjectCardSec;

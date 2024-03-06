@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addDeveloperProjects, addMyProjects } from "../utils/projectSlice";
 import { useParams } from "react-router-dom";
+import DeveloperProjecSection from "./DeveloperProjecSection";
 
 const DeveloperPage = () => {
     const user = useSelector((store) => store?.user?.user)
@@ -38,7 +39,7 @@ const DeveloperPage = () => {
             <DevProjecInfo views = {devinfo?.views} projects={devinfo?.projectsCount}/>
             <TechStackSection/>
             
-            <MyProjects/>
+            <DeveloperProjecSection/>
 		</div>
 	);
 };
