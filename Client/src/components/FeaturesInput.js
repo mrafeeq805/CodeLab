@@ -5,8 +5,9 @@ import 'react-quill/dist/quill.snow.css';
 import { useDispatch } from "react-redux";
 import { addFeatures } from "../utils/featureSlice";
 
-const FeaturesInput = () => {
-    const [value,setValue] = useState(null)
+const FeaturesInput = ({val}) => {
+    const [value,setValue] = useState(val)
+    //setValue(val)
     const dispatch = useDispatch()
 
     const onChangeHandler = (e) =>{

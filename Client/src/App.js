@@ -21,6 +21,7 @@ import { auth } from "./utils/firebase";
 import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from './utils/userSlice';
 import SearchProjectList from './components/SearchProjectList';
+import EditProjectPage from './components/EditProjectPage';
 
 function App() {
   const dispatch = useDispatch()
@@ -99,6 +100,10 @@ function App() {
     {
       path : '/addproject',
       element : <AddProjectPage/>
+    },
+    {
+      path : '/editproject/:id',
+      element : <EditProjectPage/>
     },
     {
       path : '/search/:search',

@@ -2,6 +2,7 @@ const projectSchema = require("../models/project");
 const userSchema = require("../models/user");
 const mongoose = require("mongoose");
 const multer = require("multer");
+var isBase64 = require('is-base64');
 const {
 	getStorage,
 	ref,
@@ -61,7 +62,7 @@ module.exports = {
 			languages,
 			db,
 			features,
-			project_link
+			project_link,
 		} = req.body;
 		fileList.map((item) => {
 			const file = base64ImageToBlob(item);
@@ -104,8 +105,8 @@ module.exports = {
 					top_p: 1,
 				});
 
-				const newProject  = new projectSchema({
-					publisher_id : "CD1" ,
+				const newProject = new projectSchema({
+					publisher_id: "CD1",
 					title: title,
 					project_id: lastid + 1,
 					category: category,
@@ -156,10 +157,13 @@ module.exports = {
 		try {
 			const data = await projectSchema.findOne({
 				project_id: req.params.project_id,
-			})
-			const publisher = await userSchema.findOne({
-				publisher_id: data?.publisher_id,
-			},{_id:0,email:0,password:0,title:0});
+			});
+			const publisher = await userSchema.findOne(
+				{
+					publisher_id: data?.publisher_id,
+				},
+				{ _id: 0, email: 0, password: 0, title: 0 }
+			);
 			const views = data?.views + 1;
 			if (!req.session.viewed_posts) {
 				req.session.viewed_posts = {};
@@ -175,8 +179,8 @@ module.exports = {
 				);
 			}
 			res.json({
-				details : data,
-				publisher : publisher
+				details: data,
+				publisher: publisher,
 			});
 		} catch (error) {
 			console.log(error);
@@ -199,17 +203,17 @@ module.exports = {
 					$group: {
 						_id: null,
 						totalViews: { $sum: "$views" },
-						projectsCount : {$sum:1}
+						projectsCount: { $sum: 1 },
 					},
 				},
-				{"$unset": ["_id"]}
+				{ $unset: ["_id"] },
 			]);
 			console.log(user);
 			res.json({
 				projects: data,
 				details: userDetails[0],
-				views : user[0].totalViews,
-				projectsCount : user[0].projectsCount
+				views: user[0].totalViews,
+				projectsCount: user[0].projectsCount,
 			});
 		} catch (error) {
 			console.log(error);
@@ -264,13 +268,111 @@ module.exports = {
 	},
 	getMyProjects: async (req, res) => {
 		try {
-			
-			const data = await projectSchema.find({publisher_id:req.params.id})
+			const data = await projectSchema.find({ publisher_id: req.params.id });
 			res.json(data);
 			console.log(data);
 		} catch (error) {
 			console.log(error);
 		}
+	},
+	editproject: async (req, res) => {
+		const currentDate = new Date();
+		const day = currentDate.getDate();
+		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
+		const year = currentDate.getFullYear();
+		const date2 = `${month}-${day}-${year}`;
+
+		const fileList = req.body.screenshots;
+		var screenshotsLinks = [];
+		var thumbnailLink = "";
+		const {
+			title,
+			category,
+			live_link,
+			overview,
+			frameworks_used,
+			db_used,
+			features,
+			project_link,
+			project_id
+		} = req.body;
+		fileList.map((item) => {
+			if (isBase64(item, { allowMime: true })) {
+				const file = base64ImageToBlob(item);
+				const storageRef = ref(
+					storage,
+					"screenshots/" + Date.now() + "." + file.type.split("/")[1]
+				);
+				uploadBytes(storageRef, file).then((snapshot) => {
+					console.log("uploaded");
+					getDownloadURL(snapshot.ref).then((item) => {
+						screenshotsLinks.push(item);
+					});
+				});
+			}
+		});
+		if(screenshotsLinks.length > 0){
+			screenshotsLinks = [...screenshotsLinks,...fileList]
+		}else{
+			screenshotsLinks = fileList
+		}
+		if(isBase64(req.body.thumbnail,{allowMime: true})){
+			const file = base64ImageToBlob(req.body.thumbnail);
+			const storageRef = ref(
+				storage,
+				"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
+			);
+			uploadBytes(storageRef, file).then((snapshot) => {
+				console.log("Uploaded file!");
+				getDownloadURL(snapshot.ref).then(async (item) => {
+					thumbnailLink = item;
+					callUpdate()
+					
+				});
+			});
+		}else{
+			thumbnailLink = req.body.thumbnail
+		}
+		async function callUpdate(){
+			const response = await openai.chat.completions.create({
+				model: "gpt-3.5-turbo",
+				messages: [
+					{
+						role: "system",
+						content:
+							"You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
+					},
+					{
+						role: "user",
+						content: overview,
+					},
+				],
+				temperature: 0.5,
+				max_tokens: 64,
+				top_p: 1,
+			});
+	
+			const update = await projectSchema.updateOne({project_id:project_id},{
+				title : title,
+				category : category,
+				live_link : live_link,
+				overview : overview,
+				frameworks_used : frameworks_used,
+				db_used : db_used,
+				screenshots : screenshotsLinks,
+				thumbnail : thumbnailLink,
+				features : features,
+				project_link : project_link,
+				last_updated : date2,
+				keywords:
+					title.split(" ").join(",") +
+					" , " +
+					response?.choices[0]?.message?.content,
+	
+			})
+			res.send("done");
+		}
+		
 	},
 };
 

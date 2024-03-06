@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
 import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../utils/favoriteSlice";
+import { useNavigate } from "react-router-dom"
+import axios from "axios";
+import { addDescription } from "../utils/projectSlice";
 
 const ProjectCardSec = (props) => {
+	
 	const [load,setLoad] = useState(false)
 	const onLoadImage = () => {
 		console.log("loaded");
@@ -79,16 +83,22 @@ export const ProjectCardSecRemove = (Card) => {
 };
 
 export const ProjectCardSecMy = (Card) => {
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
+	
 	return (props) => {
-		const onClickHandler = (id) => {
+		
+		const onClickHandler = async (id) => {
 			//code to remove item from myprojects
+			navigate('/editproject/'+id)
+			
+			
 		}
 		return (
 			<div className="relative">
 				<button onClick={() => onClickHandler(props?.data?.project_id)} className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-100 px-2 rounded-bl-xl">
-					<i class="bi bi-trash3-fill text-gray-400 text-xs"></i>
-					<span className="text-xs text-gray-400">Remove</span>
+					<i class="bi bi-pen text-gray-400 text-xs"></i>
+					<span className="text-xs text-gray-400">Modify</span>
 				</button>
 				<button className={props?.data?.status === 'Pending' ? "bg-red-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl " : "bg-green-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl "}>
 					

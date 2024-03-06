@@ -14,6 +14,7 @@ router.get('/getDeveloperProjects/:id',projectController.getDeveloperProjects)
 router.get('/getMyProjects/:id',projectController.getMyProjects)
 router.get('/getlatest',projectController.getLatestList)
 router.post('/addproject',projectController.addproject)
+router.post('/editproject',projectController.editproject)
 router.get('/description/:project_id',projectController.getDescription)
 
 //login & signup ,profile

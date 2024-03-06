@@ -9,62 +9,101 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
 import ScreenshotsCarousel from "./ScreenshotsCarousel";
+import { useDispatch, useSelector } from "react-redux";
+import { addMyProjects } from "../utils/projectSlice";
 
 const Description = () => {
-	const [description,setDiscription] = useState(null)
-	const [publisher,setPublisher] = useState(null)
+
+	const [description, setDiscription] = useState(null);
+	const [publisher, setPublisher] = useState(null);
 	const { project_id } = useParams();
-	const [ssvisible,setSSVisible] = useState(false)
+	const [ssvisible, setSSVisible] = useState(false);
 	useEffect(() => {
 		async function call() {
-			await axios.get("/description/" + project_id)
-			.then((res) => {
-
-				setDiscription(res?.data?.details);
-				setPublisher(res?.data?.publisher);
-				console.log();
-			})
-			.catch((err) => {
-				console.log(err);
-			})
+			await axios
+				.get("/description/" + project_id)
+				.then(async (res) => {
+					setDiscription(res?.data?.details);
+					setPublisher(res?.data?.publisher);
+					
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
 		call();
-		
-	},[]);
+	}, []);
 
 	return (
 		<div className="bg-slate-50 ">
+			
 			<Navbar title={"Developer Name"} />
 			<ProjectDetails details={description} setSSVisible={setSSVisible} />
-			{ssvisible && <ScreenshotsCarousel screenshots={description?.screenshots} setSSVisible={setSSVisible} />}
+			{ssvisible && (
+				<ScreenshotsCarousel
+					screenshots={description?.screenshots}
+					setSSVisible={setSSVisible}
+				/>
+			)}
+			
 			<div className="px-3">
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Overview</span>
 					<hr className="my-2"></hr>
-					{!description && (<div className="flex flex-col gap-2">
-						<Skeleton variant="rounded" width={300} height={5} sx={{ fontSize: "0.8rem" }} />
-						<Skeleton variant="rounded" width={250} height={5} sx={{ fontSize: "0.8rem" }} />
-					</div>)}
-					
+					{!description && (
+						<div className="flex flex-col gap-2">
+							<Skeleton
+								variant="rounded"
+								width={300}
+								height={5}
+								sx={{ fontSize: "0.8rem" }}
+							/>
+							<Skeleton
+								variant="rounded"
+								width={250}
+								height={5}
+								sx={{ fontSize: "0.8rem" }}
+							/>
+						</div>
+					)}
+
 					{description && <p>{description?.overview}</p>}
 				</div>
 				<div className="bg-white p-3 my-3">
 					<span className="font-medium text-lg">Features</span>
 					<hr className="my-2"></hr>
-					{!description && (<div className="flex flex-col gap-2">
-						<Skeleton variant="rounded" width={300} height={5} sx={{ fontSize: "0.8rem" }} />
-						<Skeleton variant="rounded" width={250} height={5} sx={{ fontSize: "0.8rem" }} />
-					</div>)}
-					
-					{description && <div dangerouslySetInnerHTML={{__html: description?.features}}></div>}
-					
-					
+					{!description && (
+						<div className="flex flex-col gap-2">
+							<Skeleton
+								variant="rounded"
+								width={300}
+								height={5}
+								sx={{ fontSize: "0.8rem" }}
+							/>
+							<Skeleton
+								variant="rounded"
+								width={250}
+								height={5}
+								sx={{ fontSize: "0.8rem" }}
+							/>
+						</div>
+					)}
+
+					{description && (
+						<div
+							dangerouslySetInnerHTML={{ __html: description?.features }}></div>
+					)}
 				</div>
 				<InfoCard data={description} />
-				<DeveloperProfileCard publisher={publisher}/>
+				<DeveloperProfileCard publisher={publisher} />
 			</div>
 			<RelatedProjects />
-			{!ssvisible && <DownloadCard id={description?.project_id} url={description?.project_link} />} 
+			{!ssvisible && (
+				<DownloadCard
+					id={description?.project_id}
+					url={description?.project_link}
+				/>
+			)}
 		</div>
 	);
 };
