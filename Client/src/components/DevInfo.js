@@ -7,7 +7,7 @@ const DevInfo = ({data}) => {
 				<img className="h-full w-full rounded-full object-cover" src={data?.avatar} alt="icon" />
 			</div>
 			<span className=" font-medium text-center">{data?.name}</span>
-			<span className="text-gray-500 text-sm text-center">{data?.title}</span>
+			
 		</div>
 	);
 };

@@ -20,6 +20,7 @@ const DeveloperPage = () => {
             .then((res) =>{
                 dispatch(addDeveloperProjects(res?.data?.projects))
                 setDevinfo(res?.data)
+                console.log(devinfo);
             })
             .catch((err) =>{
                 console.log(err);

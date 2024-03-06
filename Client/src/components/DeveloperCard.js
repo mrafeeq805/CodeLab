@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const DeveloperCard = ({name,avatar}) => {
+const DeveloperCard = ({name,avatar,id}) => {
   const navigate = useNavigate()
   const navigateDeveloperPage = () =>{
-    navigate('/developerinfo')
+    navigate('/developerinfo/'+id)
   }
   return (
     <div onClick={navigateDeveloperPage} className='flex flex-col items-center justify-center'>

@@ -61,7 +61,7 @@ module.exports = {
 			languages,
 			db,
 			features,
-			project_link,
+			project_link
 		} = req.body;
 		fileList.map((item) => {
 			const file = base64ImageToBlob(item);
@@ -104,8 +104,8 @@ module.exports = {
 					top_p: 1,
 				});
 
-				const newProject = new projectSchema({
-					publisher_email: req.session.email,
+				const newProject  = new projectSchema({
+					publisher_id : "CD1" ,
 					title: title,
 					project_id: lastid + 1,
 					category: category,
@@ -154,10 +154,13 @@ module.exports = {
 	},
 	getDescription: async (req, res) => {
 		try {
-			const data = await projectSchema.find({
+			const data = await projectSchema.findOne({
 				project_id: req.params.project_id,
-			});
-			const views = data?.[0]?.views + 1;
+			})
+			const publisher = await userSchema.findOne({
+				publisher_id: data?.publisher_id,
+			},{_id:0,email:0,password:0,title:0});
+			const views = data?.views + 1;
 			if (!req.session.viewed_posts) {
 				req.session.viewed_posts = {};
 			}
@@ -171,7 +174,10 @@ module.exports = {
 					{ views: views }
 				);
 			}
-			res.json(data);
+			res.json({
+				details : data,
+				publisher : publisher
+			});
 		} catch (error) {
 			console.log(error);
 		}

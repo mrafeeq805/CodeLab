@@ -12,17 +12,25 @@ import ScreenshotsCarousel from "./ScreenshotsCarousel";
 
 const Description = () => {
 	const [description,setDiscription] = useState(null)
+	const [publisher,setPublisher] = useState(null)
 	const { project_id } = useParams();
 	const [ssvisible,setSSVisible] = useState(false)
 	useEffect(() => {
 		async function call() {
-			await axios.get("/description/" + project_id).then((res) => {
-				setDiscription(res?.data?.[0]);
-				
-			});
+			await axios.get("/description/" + project_id)
+			.then((res) => {
+
+				setDiscription(res?.data?.details);
+				setPublisher(res?.data?.publisher);
+				console.log();
+			})
+			.catch((err) => {
+				console.log(err);
+			})
 		}
 		call();
-	}, []);
+		
+	},[]);
 
 	return (
 		<div className="bg-slate-50 ">
@@ -53,7 +61,7 @@ const Description = () => {
 					
 				</div>
 				<InfoCard data={description} />
-				<DeveloperProfileCard name={description?.publisher} publisher_id={description?.publisher_id}/>
+				<DeveloperProfileCard publisher={publisher}/>
 			</div>
 			<RelatedProjects />
 			{!ssvisible && <DownloadCard id={description?.project_id} url={description?.project_link} />} 

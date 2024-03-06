@@ -9,6 +9,7 @@ const projectSlice = createSlice({
         popularProjects : null,
         topDevelopers : null,
         description : null,
+        developer : null,
         searchResults : null
     },
     reducers : {

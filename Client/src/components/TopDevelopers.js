@@ -15,7 +15,7 @@ const TopDevelopers = () => {
 
 			<div className="mt-3 grid grid-cols-5 grid-flow-col">
 				{list?.map((item, index) => (
-					<DeveloperCard key={index} name={item?.name} avatar={item?.avatar} />
+					<DeveloperCard key={index} name={item?.name} avatar={item?.avatar} id={item?.publisher_id} />
 				))}
 			</div>
 		</div>
