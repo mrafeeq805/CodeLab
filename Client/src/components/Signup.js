@@ -1,16 +1,16 @@
-import React, { useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { addUser } from "../utils/userSlice";
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
 	const [signupError, setSignupError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
-    const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const name = useRef(null);
 	const email = useRef(null);
 	const password = useRef(null);
@@ -23,6 +23,15 @@ const Signup = () => {
 	};
 	const onHandleForm = async (e) => {
 		e.preventDefault();
+		if (name.current.value === "") {
+			return setSignupError("Enter a valid name !");
+		}
+		if (email.current.value === "") {
+			return setSignupError("Enter a email id !");
+		}
+		if (password.current.value === "") {
+			return setSignupError("Enter a password !");
+		}
 		const formData = {
 			name: name.current.value,
 			email: email.current.value,
@@ -32,19 +41,7 @@ const Signup = () => {
 			.post("/createaccount", formData)
 			.then((r) => {
 				if (r.data.result === "success") {
-					createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-						.then((userCredential) => {
-							const user = userCredential.user;
-                            dispatch(addUser(user))
-                            navigate("/");
-						})
-						.catch((error) => {
-							const errorCode = error.code;
-                            console.log(error);
-							
-						});
-
-					
+					navigate("/");
 				} else {
 					setSignupError(r.data.result);
 				}

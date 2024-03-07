@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-    const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const [loginError, setLoginError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
 	const navigate = useNavigate();
@@ -17,33 +17,35 @@ const Login = () => {
 	const handlerSignup = () => {
 		navigate("/signup");
 	};
+	const handlerForgot = () => {
+		navigate("/forgotpassword");
+	};
 	const togglePassword = () => {
 		setPasswordValue(!passwordValue);
 	};
 	const formHandler = async (e) => {
 		e.preventDefault();
+		if (email.current.value === "") {
+			return setLoginError("Enter valid email id !");
+		}
+		if (password.current.value === "") {
+			return setLoginError("Enter valid password !");
+		}
+
 		const formData = {
 			email: email.current.value,
 			password: password.current.value,
 		};
 		await axios.post("/login", formData).then((r) => {
 			if (r.data.result === "success") {
-
-				signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-					.then((userCredential) => {
-						const user = userCredential.user;
-                        dispatch(addUser(user))
-                        navigate("/");
-					})
-					.catch((error) => {
-                        setLoginError(error)
-					});
-
-				
+				navigate("/");
 			} else {
 				setLoginError(r.data.result);
 			}
-		});
+		})
+		.catch((err) => {
+			setLoginError(err);
+		})
 	};
 	return (
 		<div>
@@ -76,6 +78,9 @@ const Login = () => {
 									: "bi bi-eye text-login_light text-lg"
 							}></i>
 					</div>
+					<span onClick={handlerForgot} className="text-primary font-medium">
+						Forgot Password ?
+					</span>
 					{loginError && (
 						<span className="text-red-500 text-xs">{loginError}</span>
 					)}

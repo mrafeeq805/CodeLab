@@ -11,14 +11,9 @@ const ProfileMenuCard = ({icon,title}) => {
   const dispatch = useDispatch()
   const [cookies, removeCookie] = useCookies([]);
   const handleLogout = () =>{
-    signOut(auth).then(() => {
-      dispatch(removeUser())
-      console.log("logot successfully");
-      removeCookie("token");
-      navigate('/login')
-    }).catch((error) => {
-      console.log(error);
-    });
+    removeCookie("token");
+    navigate('/login')
+    
   }
   const handlePages = () =>{
     if(title === "My Projects"){

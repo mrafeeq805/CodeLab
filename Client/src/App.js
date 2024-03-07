@@ -25,21 +25,7 @@ import EditProjectPage from './components/EditProjectPage';
 
 function App() {
   const dispatch = useDispatch()
-  useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) {
-				const { uid, email, displayName, photoURL } = user;
-				dispatch(
-					addUser(user)
-				);
-        		
-			} else {
-				dispatch(removeUser());
-        		
-			}
-		});
-    return () => unsubscribe()
-	}, []);
+  
   const router = createBrowserRouter([
     {
       path : '/',

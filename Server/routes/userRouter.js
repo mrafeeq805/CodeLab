@@ -22,6 +22,9 @@ router.get('/editinfo/:project_id',authVerify,projectController.getEdiInfo)
 
 //login & signup ,profile
 
+router.post('/sendotp',userController.sendOtp)
+router.post('/verifyotp',userController.verifyOtp)
+router.post('/setpassword',userController.setPassword)
 router.post('/getprofile',authVerify,userController.getProfile)
 router.post('/editprofiledata',userController.editProfile)
 router.post('/createaccount',userController.createaccount)

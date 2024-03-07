@@ -1,5 +1,6 @@
 const userSchema = require("../models/user");
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const {
@@ -8,6 +9,13 @@ const {
 	uploadBytes,
 	getDownloadURL,
 } = require("firebase/storage");
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+	  user: 'codelabzsolutions@gmail.com',
+	  pass: 'oztr esvf zkxw egpc'
+	}
+  });
 
 const firebase = require("firebase/app");
 
@@ -43,10 +51,11 @@ module.exports = {
 			let lastid;
 			const id = await userSchema.find().sort({ _id: -1 }).limit(1);
 			if (id.length > 0) {
-				lastid = id[0].project_id.split("CD")[0];
+				lastid = Number(id[0].publisher_id.replace("CD",""))+1;
 			} else {
 				lastid = "CD1";
 			}
+			console.log(lastid);
 			bcrypt.hash(password, saltRounds, async function (err, hash) {
 				const newuser = new userSchema({
 					name: name,
@@ -56,7 +65,7 @@ module.exports = {
 					projects: [],
 					bio: "",
 					title: "",
-					publisher_id: "CD" + (lastid + 1),
+					publisher_id: "CD"+lastid,
 				});
 				newuser.save();
 				const user = await userSchema.find({ email: email });
@@ -159,6 +168,112 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	sendOtp : async (req, res) => {
+		try {
+			const {email} = req.body
+			const user = await userSchema.findOne({email:email})
+			if(!user){
+				return res.json({
+					result : "user not found"
+				})
+			}
+			req.session.otp = generateOTP()
+			req.session.email_entered = email
+			const mailOptions = {
+				from: 'codelabzsolutions@gmail.com',
+				to: email,
+				subject: 'Reset Password OTP',
+				text: `${req.session.otp} is your OTP to reset your account password`
+			  };
+			  transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+				  return res.json({
+					result : error
+				  })
+				} else {
+				  res.json({
+					result : "email sent"
+				  })
+				}
+			  });
+		} catch (error) {
+			return res.json({
+				result : error
+			})
+		}
+	},
+	verifyOtp : async (req, res) => {
+		try {
+			const {otp} = req.body
+			const user = await userSchema.findOne({email:req.session.email_entered})
+			if(!user){
+				return res.json({
+					result : "not authorized"
+				})
+			}
+			console.log(req.session.otp)
+			if(otp === req.session.otp){
+				req.session.verified = true
+				res.json({
+					result : "verified"
+				})
+			}else{
+				res.json({
+					result : "invalid otp"
+				})
+			}
+		} catch (error) {
+			return res.json({
+				result : error
+			})
+		}
+	},
+	setPassword : async (req, res) => {
+		try {
+			const {password} = req.body
+			const user = await userSchema.findOne({email:req.session.email_entered})
+			if(!user){
+				return res.json({
+					result : "not authorized"
+				})
+			}
+			console.log(req.session.verified)
+			if(req.session.verified){
+				bcrypt.hash(password, saltRounds, async function (err, hash) {
+					try {
+						const user = await userSchema.findOneAndUpdate(
+							{
+								email : req.session.email_entered
+							},
+							{
+								password : hash
+							}
+						)
+						req.session.email_entered = ''
+						req.session.verified = false
+						res.json({
+							result : "updated",
+							email : user.email
+						})
+					}catch (err){
+						res.json({
+							result : err
+						})
+					}
+					
+				})
+				
+			}else{
+				res.json({
+					result : "something went wrong !"
+				})
+			}
+		} catch (error) {
+			return res.json({
+				result : error
+			})
+		}
+	},
 };
 
 function base64ImageToBlob(str) {
@@ -183,4 +298,15 @@ function base64ImageToBlob(str) {
 	var blob = new Blob([buffer], { type: type });
 
 	return blob;
+}
+function generateOTP() {
+ 
+    // Declare a digits variable
+    // which stores all digits 
+    let digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 6; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
 }
