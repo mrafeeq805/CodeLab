@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import ProjectListSection from "./ProjectListSection";
@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectCardMain from "./ProjectCardMain";
 import axios from "axios";
 import { addSearchResult } from "../utils/projectSlice";
+import EmptyCard from "./EmptyCard";
 
 const SearchProjectList = () => {
+	const [emptyData,setEmptyData] = useState(false)
 	const dispatch = useDispatch();
 	const list = [1, 2];
 	const projectList = useSelector((store) => store?.project?.searchResults);
@@ -19,7 +21,13 @@ const SearchProjectList = () => {
 			await axios
 				.get("/search/" + search.toLowerCase())
 				.then((res) => {
-					dispatch(addSearchResult(res?.data));
+					if(res?.data.length === 0){
+						setEmptyData(true)
+					}else{
+						dispatch(addSearchResult(res?.data));
+						setEmptyData(false)
+					}
+					
 				});
 		}
     call()
@@ -28,8 +36,13 @@ const SearchProjectList = () => {
 		<div>
 			<Navbar title={search} />
 			<SearchBar title={"Search Projects..."} />
+			{ emptyData &&  (<EmptyCard 
+					title={"No results found"} 
+					img={"/img/no_results.png"} 
+					des={"No results found. Please try again "}
+			/>)}
 			<div className="px-4">
-				<div className="flex justify-between items-center">
+				{!emptyData && (<div className="flex justify-between items-center">
 					<span className="font-medium">
 						Search Results ({projectList ? projectList.length : 0})
 					</span>
@@ -37,10 +50,10 @@ const SearchProjectList = () => {
 						<i class="bi bi-sort-down text-primary"></i>
 						<span className="text-primary text-sm">SORT</span>
 					</div>
-				</div>
+				</div>)}
 
 				<div className="mt-3 grid grid-cols-1 gap-3">
-					{!projectList &&
+					{!projectList && !emptyData &&
 						list?.map((item, index) => <ProjectCardMainLoader key={index} />)}
 					{projectList &&
 						projectList?.map((item, index) => (

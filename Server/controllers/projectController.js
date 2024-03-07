@@ -329,6 +329,22 @@ module.exports = {
 			project_link,
 			project_id
 		} = req.body;
+		const publisher = await projectSchema.findOne(
+			{
+				publisher_id: req.session.publisher_id,
+				project_id : req.params.project_id
+			},
+
+			{ _id: 0, email: 0, password: 0, title: 0 }
+		);
+		console.log(publisher);
+		if(!publisher ){
+			return res.json(
+				{
+					status : "unauthorized"
+				}
+			)
+		}
 	
 		const currentDate = new Date();
 		const day = currentDate.getDate();
@@ -417,8 +433,10 @@ module.exports = {
 					response?.choices[0]?.message?.content,
 	
 			})
-			console.log("edited");
-			res.send("done");
+			
+			res.json({
+				status : "ok"
+			});
 			
 		}
 		

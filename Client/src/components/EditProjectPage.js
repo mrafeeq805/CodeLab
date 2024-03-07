@@ -104,9 +104,17 @@ const EditProjectPage = () => {
 				features: features,
 				project_id: id,
 			};
-			console.log(postData);
-			await axios.post("/editproject", postData);
-			navigate("/");
+			await axios.post("/editproject", postData)
+			.then((res) => {
+				if(res?.data?.status === "ok"){
+					navigate("/");
+				}else{
+					setNotFound(true)
+				}
+				
+			})
+
+			
 		} catch (error) {
 			console.log("error");
 		}
