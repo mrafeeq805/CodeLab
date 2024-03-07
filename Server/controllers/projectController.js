@@ -185,6 +185,37 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	getEdiInfo: async (req, res) => {
+		try {
+			
+			const publisher = await projectSchema.findOne(
+				{
+					publisher_id: req.session.publisher_id,
+					project_id : req.params.project_id
+				},
+
+				{ _id: 0, email: 0, password: 0, title: 0 }
+			);
+			console.log(publisher);
+			if(!publisher ){
+				return res.json(
+					{
+						status : "unauthorized"
+					}
+				)
+			}
+			const data = await projectSchema.findOne({
+				project_id: req.params.project_id,
+			});
+			res.json({
+				status : "ok",
+				details: data,
+				publisher: publisher,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	},
 	getDeveloperProjects: async (req, res) => {
 		try {
 			const data = await projectSchema.find({ publisher_id: req.params.id });
@@ -287,16 +318,6 @@ module.exports = {
 		}
 	},
 	editproject: async (req, res) => {
-	
-		const currentDate = new Date();
-		const day = currentDate.getDate();
-		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
-		const year = currentDate.getFullYear();
-		const date2 = `${month}-${day}-${year}`;
-
-		const fileList = req.body.screenshots;
-		var screenshotsLinks = [];
-		var thumbnailLink = "";
 		const {
 			title,
 			category,
@@ -308,6 +329,17 @@ module.exports = {
 			project_link,
 			project_id
 		} = req.body;
+	
+		const currentDate = new Date();
+		const day = currentDate.getDate();
+		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
+		const year = currentDate.getFullYear();
+		const date2 = `${month}-${day}-${year}`;
+
+		const fileList = req.body.screenshots;
+		var screenshotsLinks = [];
+		var thumbnailLink = "";
+
 		fileList.map((item) => {
 			if (isBase64(item, { allowMime: true })) {
 				const file = base64ImageToBlob(item);

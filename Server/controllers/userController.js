@@ -47,7 +47,7 @@ module.exports = {
 			} else {
 				lastid = "CD1";
 			}
-			bcrypt.hash(password, saltRounds, function (err, hash) {
+			bcrypt.hash(password, saltRounds, async function (err, hash) {
 				const newuser = new userSchema({
 					name: name,
 					email: email,
@@ -59,8 +59,14 @@ module.exports = {
 					publisher_id: "CD" + (lastid + 1),
 				});
 				newuser.save();
-				req.session.user = email;
-				req.session.id = "CD" + (lastid + 1);
+				const user = await userSchema.find({ email: email });
+				const token = createSecretToken(user._id);
+				res.cookie("token", token, {
+					withCredentials: true,
+					httpOnly: false,
+				});
+				req.session.email = email;
+				req.session.publisher_id = "CD" + (lastid + 1);
 				res.json({
 					result: "success",
 				});
@@ -84,10 +90,9 @@ module.exports = {
 			bcrypt.compare(password, hash, function (err, result) {
 				if (result) {
 					req.session.email = email;
-					req.session.publisher_id = user[0].publisher_id
+					req.session.publisher_id = user[0].publisher_id;
 					res.json({
 						result: "success",
-						token : token
 					});
 				} else {
 					res.json({
@@ -98,7 +103,6 @@ module.exports = {
 		} else {
 			res.json({
 				result: "account not found",
-
 			});
 		}
 	},
@@ -138,16 +142,18 @@ module.exports = {
 	},
 	getProfile: async (req, res) => {
 		try {
-			const data = await userSchema.findOne({ email: req.session.email },
+			const data = await userSchema.findOne(
+				{ email: req.session.email },
 				{
-					password : 0,
-					_id : 0,
-					email : 0
-				});
+					password: 0,
+					_id: 0,
+					email: 0,
+				}
+			);
 			console.log(data);
 			res.json({
-				status : true,
-				data : data
+				status: true,
+				data: data,
 			});
 		} catch (error) {
 			console.log(error);
