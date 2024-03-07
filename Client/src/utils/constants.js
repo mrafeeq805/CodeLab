@@ -42,3 +42,13 @@ export const profileCardDetails = [
         icon : "bi bi-box-arrow-right"
     }
 ]
+export const domains = [
+    {
+        name : "React JS",
+        img : "/img/react.png"
+    },
+    {
+        name : "Laravel",
+        img : "/img/laravel.png"
+    }
+]

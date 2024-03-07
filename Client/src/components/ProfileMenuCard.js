@@ -4,14 +4,18 @@ import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { removeUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 const ProfileMenuCard = ({icon,title}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [cookies, removeCookie] = useCookies([]);
   const handleLogout = () =>{
     signOut(auth).then(() => {
       dispatch(removeUser())
       console.log("logot successfully");
+      removeCookie("token");
+      navigate('/login')
     }).catch((error) => {
       console.log(error);
     });

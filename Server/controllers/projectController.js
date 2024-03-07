@@ -131,7 +131,6 @@ module.exports = {
 						response?.choices[0]?.message?.content,
 				});
 				newProject.save();
-				console.log(newProject);
 			});
 		});
 
@@ -208,7 +207,6 @@ module.exports = {
 				},
 				{ $unset: ["_id"] },
 			]);
-			console.log(user);
 			res.json({
 				projects: data,
 				details: userDetails[0],
@@ -225,7 +223,6 @@ module.exports = {
 				project_id: { $in: req.body.id },
 			});
 			res.json(data);
-			console.log(data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -237,7 +234,6 @@ module.exports = {
 				keywords: { $regex: new RegExp(search, "i") },
 			});
 			res.json(data);
-			console.log(data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -266,16 +262,32 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	getRelatedProjects: async (req, res) => {
+		try {
+			const data = await projectSchema.find({ category: req.params.category });
+			console.log(data);
+			res.json(data);
+		} catch (error) {
+			console.log(error);
+		}
+	},
 	getMyProjects: async (req, res) => {
 		try {
-			const data = await projectSchema.find({ publisher_id: req.params.id });
-			res.json(data);
-			console.log(data);
+			const data = await projectSchema.find({ publisher_id: req.session.publisher_id },
+				{
+					_id : 0
+				}
+			);
+			res.json({
+				status : true,
+				data : data
+			});
 		} catch (error) {
 			console.log(error);
 		}
 	},
 	editproject: async (req, res) => {
+	
 		const currentDate = new Date();
 		const day = currentDate.getDate();
 		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
@@ -316,6 +328,7 @@ module.exports = {
 		}else{
 			screenshotsLinks = fileList
 		}
+
 		if(isBase64(req.body.thumbnail,{allowMime: true})){
 			const file = base64ImageToBlob(req.body.thumbnail);
 			const storageRef = ref(
@@ -332,8 +345,10 @@ module.exports = {
 			});
 		}else{
 			thumbnailLink = req.body.thumbnail
+			callUpdate()
 		}
 		async function callUpdate(){
+			console.log('d');
 			const response = await openai.chat.completions.create({
 				model: "gpt-3.5-turbo",
 				messages: [
@@ -370,7 +385,9 @@ module.exports = {
 					response?.choices[0]?.message?.content,
 	
 			})
+			console.log("edited");
 			res.send("done");
+			
 		}
 		
 	},

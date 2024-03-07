@@ -12,6 +12,8 @@ const {
 const firebase = require("firebase/app");
 
 const { FirebaseError, initializeApp } = require("firebase/app");
+const { createSecretToken } = require("../util/secretToken");
+const { use } = require("../routes/userRouter");
 const firebaseConfig = {
 	apiKey: "AIzaSyCtvC3uDcF6gaftbArQBpzvOZGSbpEfFL4",
 	authDomain: "codelab-95a3d.firebaseapp.com",
@@ -31,15 +33,20 @@ module.exports = {
 	createaccount: async (req, res) => {
 		const { name, email, password } = req.body;
 		const user = await userSchema.find({ email: email });
-		let lastid;
-		const id = await userSchema.find().sort({ _id: -1 }).limit(1);
-		if (id.length > 0) {
-			lastid = id[0].project_id.split('CD')[0]
 
-		} else {
-			lastid = 'CD1';
-		}
 		if (user.length === 0) {
+			const token = createSecretToken(user._id);
+			res.cookie("token", token, {
+				withCredentials: true,
+				httpOnly: false,
+			});
+			let lastid;
+			const id = await userSchema.find().sort({ _id: -1 }).limit(1);
+			if (id.length > 0) {
+				lastid = id[0].project_id.split("CD")[0];
+			} else {
+				lastid = "CD1";
+			}
 			bcrypt.hash(password, saltRounds, function (err, hash) {
 				const newuser = new userSchema({
 					name: name,
@@ -49,45 +56,54 @@ module.exports = {
 					projects: [],
 					bio: "",
 					title: "",
-					publisher_id : "CD"+(lastid+1)
+					publisher_id: "CD" + (lastid + 1),
 				});
 				newuser.save();
-				req.session.user = email
+				req.session.user = email;
+				req.session.id = "CD" + (lastid + 1);
 				res.json({
-					result : "success"
+					result: "success",
 				});
 			});
-		}else{
+		} else {
 			res.json({
-				result : "account aleady exist !"
-			})
+				result: "account aleady exist !",
+			});
 		}
 	},
-    login : async (req, res) => {
+	login: async (req, res) => {
 		const { email, password } = req.body;
 		const user = await userSchema.find({ email: email });
 		if (user.length === 1) {
-            const hash = user[0].password
-			bcrypt.compare(password, hash, function(err, result) {
-                if(result){
-					req.session.user = email
-                    res.json({
-						result : "success",
-					})
-                }else{
+			const hash = user[0].password;
+			const token = createSecretToken(user._id);
+			res.cookie("token", token, {
+				withCredentials: true,
+				httpOnly: false,
+			});
+			bcrypt.compare(password, hash, function (err, result) {
+				if (result) {
+					req.session.email = email;
+					req.session.publisher_id = user[0].publisher_id
 					res.json({
-						result : "incorrect password",
-					})
+						result: "success",
+						token : token
+					});
+				} else {
+					res.json({
+						result: "incorrect password",
+					});
 				}
-            });
-		}else{
+			});
+		} else {
 			res.json({
-				result : "account not found",
-			})
+				result: "account not found",
+
+			});
 		}
 	},
-	editProfile : async (req, res) => {
-		const { name, headline, bio , email , avatar } = req.body;
+	editProfile: async (req, res) => {
+		const { name, headline, bio, email, avatar } = req.body;
 		const file = base64ImageToBlob(avatar);
 		const storageRef = ref(
 			storage,
@@ -98,39 +114,46 @@ module.exports = {
 			console.log("Uploaded file!");
 			getDownloadURL(snapshot.ref).then(async (item) => {
 				thumbnailLink = item;
-				try{
-					const user = await userSchema.findOneAndUpdate({ email: email },{
-						name : name,
-						bio : bio,
-						title : headline,
-						avatar : item
-					});
+				try {
+					const user = await userSchema.findOneAndUpdate(
+						{ email: email },
+						{
+							name: name,
+							bio: bio,
+							title: headline,
+							avatar: item,
+						}
+					);
 					res.json({
-						result : "updated"
-					})
-				}catch (err){
+						result: "updated",
+					});
+				} catch (err) {
 					console.log(err);
 					res.json({
-						result : err
-					})
+						result: err,
+					});
 				}
-			})
-		})
-		
+			});
+		});
 	},
-	getProfile : async (req,res) =>{
-        try{
-            const data = await userSchema.find({email : req.body.email})
-			console.log(data)
-            res.json(data)
-        }catch(error){
-            console.log(error);
-
-        }
-    },
-
+	getProfile: async (req, res) => {
+		try {
+			const data = await userSchema.findOne({ email: req.session.email },
+				{
+					password : 0,
+					_id : 0,
+					email : 0
+				});
+			console.log(data);
+			res.json({
+				status : true,
+				data : data
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	},
 };
-
 
 function base64ImageToBlob(str) {
 	// extract content type and base64 payload from original string
@@ -155,4 +178,3 @@ function base64ImageToBlob(str) {
 
 	return blob;
 }
-

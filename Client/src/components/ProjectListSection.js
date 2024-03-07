@@ -3,12 +3,15 @@ import ProjectCardMain from "./ProjectCardMain";
 import { useSelector } from "react-redux";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
 import axios from "axios"
+import { useParams } from "react-router-dom";
 
 const ProjectListSection = () => {
 	const [projectList,setProjectList] = useState([])
+	const {category} = useParams()
+	console.log(category);
 	useEffect(() =>{
 		async function call (){
-			await axios.get('/getlatest')
+			await axios.get('/getrelated/'+category)
 			.then((res) => {
 				console.log(res.data);
 				setProjectList(res.data)

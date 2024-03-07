@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import ProjectCardMain from "./ProjectCardMain";
 import axios from "axios";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
+import { useParams } from "react-router-dom";
 
 const RelatedProjects = () => {
     const list = ["1",'2']
+	const {category} = useParams()
 	const [relatedProjects,setRelatedProjects] = useState([])
 	useEffect(() => {
 		async function call() {
-			await axios.get("/getlatest").then((res) => {
+			await axios.get("/getrelated/"+category).then((res) => {
 				setRelatedProjects(res?.data);
 			});
 		}

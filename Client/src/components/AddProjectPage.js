@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import FeaturesInput from "./FeaturesInput";
 import axios from "axios";
@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
 import { useNavigate } from "react-router-dom";
 import { extractId } from "../utils/getDownloadFile";
+import { useCookies } from "react-cookie";
 
 const AddProjectPage = () => {
+	const [cookies, removeCookie] = useCookies([]);
 	const navigate = useNavigate()
 	const features = useSelector((store) => store?.feature?.features)
 	const [images, setImages] = useState([]);
@@ -68,6 +70,12 @@ const AddProjectPage = () => {
 			console.log("error");
 		}
 	};
+	useEffect(() => {
+		console.log(cookies.token);
+		if (cookies.token === "undefined" ) {
+			navigate("/login");
+		}
+	},[])
 	return (
 		<div className="mt-16">
 			<Navbar title={"Add Project"} />

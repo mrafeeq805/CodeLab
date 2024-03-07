@@ -4,23 +4,34 @@ import { profileCardDetails } from "../utils/constants";
 import ProfileMenuCard from "./ProfileMenuCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const Profile = () => {
 	const [name,setName] = useState(null)
 	const [avatar,setAvatar] = useState(null)
 	const [bio,setBio] = useState(null)
+	const [cookies, removeCookie] = useCookies([]);
 	const navigate = useNavigate()
 	const navigateEditProfile = () => {
 		navigate('/editprofile')
 	}
 	useEffect(() => {
+
+		if (!cookies.token) {
+			navigate("/login");
+		}
 		async function call() {
 			await axios
-				.post("/getprofile", { email: "muhammedrafeeqvr805@gmail.com" })
-				.then((res) => {
-					setName(res?.data[0]?.name)
-					setAvatar(res?.data[0]?.avatar)
-					setBio(res?.data[0]?.bio)
+				.post("/getprofile")
+				.then(({data}) => {
+					if(data?.status){
+						setName(data?.data?.name)
+						setAvatar(data?.data?.avatar)
+						setBio(data?.data?.bio)
+					}else{
+						navigate('/login')
+					}
+					
 				});
 		}
 		call();

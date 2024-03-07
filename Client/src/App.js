@@ -62,7 +62,7 @@ function App() {
       element : <Latest/>
     },
     {
-      path : '/projects',
+      path : '/projects/:category',
       element : <ProjectList/>
     },
     {
