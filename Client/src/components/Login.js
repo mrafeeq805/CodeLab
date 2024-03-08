@@ -8,8 +8,6 @@ import { useCookies } from "react-cookie";
 
 
 
-
-
 const Login = () => {
 	const cookies = new Cookies();
 	const [cookie, removeCookie,setCookie] = useCookies([]);
