@@ -44,6 +44,7 @@ module.exports = {
 		const year = currentDate.getFullYear();
 		const date2 = `${month}-${day}-${year}`;
 		let lastid;
+		console.log(req.body);
 		const id = await projectSchema.find().sort({ _id: -1 }).limit(1);
 		if (id.length > 0) {
 			lastid = id[0].project_id;
@@ -64,6 +65,7 @@ module.exports = {
 			features,
 			project_link,
 		} = req.body;
+
 		fileList.map((item) => {
 			const file = base64ImageToBlob(item);
 			const storageRef = ref(
@@ -138,7 +140,15 @@ module.exports = {
 	},
 	getLatestList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({ _id: -1 }).limit(10);
+			const data = await projectSchema.find().sort({ _id: -1 }).limit(2);
+			res.json(data);
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	getPopularList: async (req, res) => {
+		try {
+			const data = await projectSchema.find().sort({ _id: -1 }).limit(2);
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -223,6 +233,7 @@ module.exports = {
 				{ publisher_id: req.params.id },
 				{ name: 1, title: 1, bio: 1, avatar: 1, _id: 0 }
 			);
+			const stacks_used = await projectSchema.distinct('category',{publisher_id:req.params.id})
 			const user = await projectSchema.aggregate([
 				{
 					$match: {
@@ -234,6 +245,7 @@ module.exports = {
 						_id: null,
 						totalViews: { $sum: "$views" },
 						projectsCount: { $sum: 1 },
+						stacks_used : {$sum: 1}
 					},
 				},
 				{ $unset: ["_id"] },
@@ -243,6 +255,7 @@ module.exports = {
 				details: userDetails[0],
 				views: user[0].totalViews,
 				projectsCount: user[0].projectsCount,
+				stacks_used : stacks_used
 			});
 		} catch (error) {
 			console.log(error);

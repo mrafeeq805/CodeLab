@@ -7,6 +7,7 @@ import { addFeatures } from "../utils/featureSlice";
 
 const FeaturesInput = ({val}) => {
     const [value,setValue] = useState(val)
+
     //setValue(val)
     const dispatch = useDispatch()
 

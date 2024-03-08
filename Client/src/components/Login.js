@@ -2,10 +2,8 @@ import React, { useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+
 
 const Login = () => {
 	const dispatch = useDispatch();

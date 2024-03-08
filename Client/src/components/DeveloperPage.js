@@ -30,6 +30,7 @@ const DeveloperPage = () => {
 						//dispatch(addDeveloperProjects(res?.data?.projects))
 						setProjects(res?.data?.projects);
 						setDevinfo(res?.data);
+						console.log(res?.data);
 					}
 				})
 				.catch((err) => {
@@ -48,7 +49,7 @@ const DeveloperPage = () => {
 				</p>
 			</div>
 			<DevProjecInfo views={devinfo?.views} projects={devinfo?.projectsCount} />
-			<TechStackSection />
+			<TechStackSection data={devinfo?.stacks_used} />
 
 			{!emptyData && (<div className="px-2 mt-4">
 				<span className="font-medium">

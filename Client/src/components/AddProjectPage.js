@@ -10,6 +10,14 @@ import { useCookies } from "react-cookie";
 
 const AddProjectPage = () => {
 	const [cookies, removeCookie] = useCookies([]);
+	const [titleError,setTitleError] = useState(false)
+	const [languageError,setlanguageError] = useState(false)
+	const [overviewError,setOverviewError] = useState(false)
+	const [project_linkError,setProjectLINKError] = useState(false)
+	const [thumbnailError,setThumbnailError] = useState(false)
+	const [screenshotError,setScreenshotError] = useState(false)
+	const [featuresError,setFeaturesError] = useState(false)
+
 	const navigate = useNavigate()
 	const features = useSelector((store) => store?.feature?.features)
 	const [images, setImages] = useState([]);
@@ -17,11 +25,11 @@ const AddProjectPage = () => {
 	const [thumbnail, setThumbnail] = useState(null);
 	const [data, setData] = useState({
 		title: "",
-		category: "",
+		category: "React JS",
 		link: "",
 		overview: "",
 		languages: "",
-		db: "",
+		db: "No DB used",
 		project_link :""
 	});
 	const changeInput = (e) => {
@@ -30,7 +38,6 @@ const AddProjectPage = () => {
 	};
 	const handleProductImageChange = (e) => {
 		const files = Array.from(e.target.files);
-		console.log(files);
 		setImages([]);
 		setImagesPreview([]);
 
@@ -58,9 +65,46 @@ const AddProjectPage = () => {
 		};
 		reader.readAsDataURL(e.target.files[0]);
 	};
+	const isValidUrl = (str) => {
+		const pattern = new RegExp(
+		  '^([a-zA-Z]+:\\/\\/)?' + // protocol
+			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+			'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IP (v4) address
+			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+			'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+			'(\\#[-a-z\\d_]*)?$', // fragment locator
+		  'i'
+		);
+		return pattern.test(str);
+	  }
 
 	const formHandler = async (e) => {
+		
 		e.preventDefault();
+		console.log(features);
+		setTitleError(false)
+		setlanguageError(false)
+		setOverviewError(false)
+		setProjectLINKError(false)
+		setScreenshotError(false)
+		setThumbnailError(false)
+		setFeaturesError(false)
+		if(data.title === '') {
+			return setTitleError(true)
+		}else if(data.overview === ''){
+			return setOverviewError(true)
+		}else if (images.length === 0) {
+			return setScreenshotError(true)
+		}else if (!thumbnail) {
+			return setThumbnailError(true)
+		}else if (features === null) {
+			return setFeaturesError(true)
+		}else if(data.project_link=== '' || !isValidUrl(data.project_link)){
+			return setProjectLINKError(true)
+		}else if (data.languages === '') {
+			return setlanguageError(true)
+		}
+		
 		try {
 			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
 			await axios.post("/addproject", postData);
@@ -86,25 +130,26 @@ const AddProjectPage = () => {
 				<label className="text-login font-medium ">Title</label>
 
 				<input
+
 					className="w-full text-login_light border-2 rounded-lg p-2 my-2"
 					type="text"
 					name="title"
 					onChange={changeInput}
 				/>
-				{<div className="mb-1">
+				{titleError && (<div className="mb-1">
 					<span className="text-red-500 text-xs block">Enter a valid title</span>
-				</div>}
+				</div>)}
 				
 
 				<label className="text-login font-medium ">Category</label>
 				<select
 					className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 					name="category"
-					onClick={changeInput}>
+					onChange={changeInput}>
 					<option value={"React JS"}>React JS</option>
 				</select>
 
-				<label className="text-login font-medium">Live Link</label>
+				<label className="text-login font-medium">Live Link (optional)</label>
 
 				<input
 					className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
@@ -112,6 +157,7 @@ const AddProjectPage = () => {
 					name="link"
 					onChange={changeInput}
 				/>
+				
 
 				<label className="text-login font-medium">Overview</label>
 
@@ -120,6 +166,9 @@ const AddProjectPage = () => {
 					name="overview"
 					onChange={changeInput}
 				/>
+				{overviewError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Enter a valid overview</span>
+				</div>)}
 
 				{/* screenshots */}
 				<div className="mt-2">
@@ -150,6 +199,9 @@ const AddProjectPage = () => {
 						))}
 					</div>
 				</div>
+				{screenshotError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Select atleast one screenshot !</span>
+				</div>)}
 				{/* thumbnail */}
 				<div className="mt-2">
 					<span className="font-medium text-login">Cover Page Thumbnail</span>
@@ -177,7 +229,13 @@ const AddProjectPage = () => {
 						</label>
 					</div>
 				</div>
+				{thumbnailError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Pick a thumbnail image !</span>
+				</div>)}
 				<FeaturesInput />
+				{featuresError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Enter a valid features</span>
+				</div>)}
 				{/* project file */}
 				<label className="text-login font-medium">
 					Project File Link (G Drive)
@@ -189,6 +247,9 @@ const AddProjectPage = () => {
 					name="project_link"
 					onChange={changeInput}
 				/>
+				{project_linkError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Enter a valid project link</span>
+				</div>)}
 
 				<label className="text-login font-medium ">Languages Used</label>
 
@@ -199,6 +260,9 @@ const AddProjectPage = () => {
 					name="languages"
 					onChange={changeInput}
 				/>
+				{languageError && (<div className="mb-1">
+					<span className="text-red-500 text-xs block">Enter a valid languages used</span>
+				</div>)}
 				<label className="text-login font-medium ">Database</label>
 
 				<input
