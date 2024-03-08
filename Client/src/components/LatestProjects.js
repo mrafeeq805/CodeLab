@@ -10,7 +10,7 @@ const LatestProjects = () => {
 		<div className="px-2 mt-4">
 			<div className="flex justify-between items-center">
 				<span className=" font-medium">Latest Projects</span>
-				<span className="text-primary font-medium text-xs">More</span>
+				<span className="text-primary font-medium text-xs ">More</span>
 			</div>
 			
 			{!list && count?.map(item => <ProjectCardSecLoader key={item}/>)}

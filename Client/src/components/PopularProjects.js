@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux'
 import ProjectCardSecLoader from './skelton/ProjectCardSecLoader'
 
 const PopularProjects = () => {
-    const list = useSelector((store) => store?.project?.latestProjects)
+    const list = useSelector((store) => store?.project?.popularProjects)
     const count = [1,2]
     return (
         <div className='px-2 mt-4'>
             <div className='flex justify-between items-center'>
                 <span className=' font-medium'>Popular Projects</span>
-                <span className='text-primary font-medium text-xs'>More</span>
+                <span className='text-primary font-medium text-xs '>More</span>
             </div>
             {!list && count?.map(item => <ProjectCardSecLoader key={item}/>)}
             

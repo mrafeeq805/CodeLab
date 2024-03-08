@@ -51,6 +51,7 @@ const EditProjectPage = () => {
 						setThumbnail(details?.thumbnail);
 						setFeatures(details?.features);
 						setImagesPreview(details?.screenshots);
+						
 					} else {
 						setNotFound(true);
 					}
@@ -158,6 +159,7 @@ const EditProjectPage = () => {
 							name="category"
 							onClick={changeInput}>
 							<option value={"React JS"}>React JS</option>
+							<option value={"Laravel"}>Laravel</option>
 						</select>
 
 						<label className="text-login font-medium">Live Link</label>

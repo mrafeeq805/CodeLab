@@ -148,7 +148,7 @@ module.exports = {
 	},
 	getPopularList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({ _id: -1 }).limit(2);
+			const data = await projectSchema.find().sort({views: -1 }).limit(2);
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -309,7 +309,6 @@ module.exports = {
 	getRelatedProjects: async (req, res) => {
 		try {
 			const data = await projectSchema.find({ category: req.params.category });
-			console.log(data);
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -345,12 +344,13 @@ module.exports = {
 		const publisher = await projectSchema.findOne(
 			{
 				publisher_id: req.session.publisher_id,
-				project_id : req.params.project_id
+				project_id : project_id
 			},
 
 			{ _id: 0, email: 0, password: 0, title: 0 }
 		);
 		console.log(publisher);
+		console.log(req.session.publisher_id);
 		if(!publisher ){
 			return res.json(
 				{
@@ -427,20 +427,21 @@ module.exports = {
 				max_tokens: 64,
 				top_p: 1,
 			});
+			const exist = await projectSchema.findOne({project_id:project_id})
 	
 			const update = await projectSchema.updateOne({project_id:project_id},{
-				title : title,
+				title : title === '' ? exist.title : title,
 				category : category,
 				live_link : live_link,
-				overview : overview,
-				frameworks_used : frameworks_used,
+				overview : overview === '' ? exist.overview : overview,
+				frameworks_used : frameworks_used === '' ? exist.frameworks_used : frameworks_used,
 				db_used : db_used,
-				screenshots : screenshotsLinks,
-				thumbnail : thumbnailLink,
-				features : features,
-				project_link : project_link,
+				screenshots : screenshotsLinks.length === 0 ? exist.screenshots : screenshotsLinks,
+				thumbnail : thumbnailLink === '' ? exist.thumbnail : thumbnailLink,
+				features : features === '<p><br></p>' ? exist.features : features,
+				project_link : project_link === '' ? exist.project_link : project_link,
 				last_updated : date2,
-				keywords:
+				keywords: title === '' || overview === '' ? exist.keywords :
 					title.split(" ").join(",") +
 					" , " +
 					response?.choices[0]?.message?.content,
