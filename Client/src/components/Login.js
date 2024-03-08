@@ -3,17 +3,17 @@ import LoginIntro from "./LoginIntro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 import { useCookies } from "react-cookie";
-
-
+import FormLoading from "./skelton/FormLoading";
 
 const Login = () => {
 	const cookies = new Cookies();
-	const [cookie, removeCookie,setCookie] = useCookies([]);
+	const [cookie, removeCookie, setCookie] = useCookies([]);
 	const dispatch = useDispatch();
 	const [loginError, setLoginError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
+	const [submitted,setSubmitted] = useState(false)
 	const navigate = useNavigate();
 	const email = useRef(null);
 	const password = useRef(null);
@@ -34,38 +34,46 @@ const Login = () => {
 		if (password.current.value === "") {
 			return setLoginError("Enter valid password !");
 		}
+		setSubmitted(true)
 
 		const formData = {
 			email: email.current.value,
 			password: password.current.value,
 		};
-		await axios.post("/login", formData).then((r) => {
-			if (r.data.result === "success") {
-				cookies.set('token', r?.data?.token, { path: '/' });
-				console.log(cookies.token);
-				navigate("/");
-			} else {
-				setLoginError(r.data.result);
-			}
-		})
-		.catch((err) => {
-			setLoginError(err);
-		})
+		await axios
+			.post("/login", formData)
+			.then((r) => {
+				if (r.data.result === "success") {
+					cookies.set("token", r?.data?.token, { path: "/" });
+					console.log(cookies.token);
+					navigate("/");
+					setSubmitted(false)
+				} else {
+					setLoginError(r.data.result);
+					setSubmitted(false)
+				}
+			})
+			.catch((err) => {
+				setLoginError(err);
+				setSubmitted(false)
+			});
 	};
 	useEffect(() => {
-        const isAuth = cookie.token
+		const isAuth = cookie.token;
 		console.log(cookie.token);
 		//const isAuth = localStorage.getItem('user');
-        if(isAuth && isAuth !== "undefined") {
-            navigate("/");
-        }
-    }, []);
+		if (isAuth && isAuth !== "undefined") {
+			navigate("/");
+		}
+	}, []);
 	return (
-		<div>
+		<div className="relative">
 			<LoginIntro
 				title={"User Signin"}
 				info={"Please fill your detail to access your account."}
 			/>
+			{submitted && <FormLoading/>}
+
 			<div className="mt-4 px-4">
 				<form className="" onSubmit={formHandler}>
 					<label className="text-login font-medium ">Email</label>

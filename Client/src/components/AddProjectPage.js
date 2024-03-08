@@ -7,6 +7,7 @@ import SSCards from "./SSCards";
 import { useNavigate } from "react-router-dom";
 import { extractId } from "../utils/getDownloadFile";
 import { useCookies } from "react-cookie";
+import FormLoading from "./skelton/FormLoading";
 
 const AddProjectPage = () => {
 	const [cookies, removeCookie] = useCookies([]);
@@ -17,6 +18,7 @@ const AddProjectPage = () => {
 	const [thumbnailError,setThumbnailError] = useState(false)
 	const [screenshotError,setScreenshotError] = useState(false)
 	const [featuresError,setFeaturesError] = useState(false)
+	const [submitted,setSubmitted] = useState(false)
 
 	const navigate = useNavigate()
 	const features = useSelector((store) => store?.feature?.features)
@@ -104,13 +106,16 @@ const AddProjectPage = () => {
 		}else if (data.languages === '') {
 			return setlanguageError(true)
 		}
+		setSubmitted(true)
 		
 		try {
 			const postData = { ...data, screenshots: images, thumbnail: thumbnail,features:features };
 			await axios.post("/addproject", postData);
 			navigate("/")
+			setSubmitted(false)
 			
 		} catch (error) {
+			setSubmitted(false)
 			console.log("error");
 		}
 	};
@@ -121,8 +126,9 @@ const AddProjectPage = () => {
 		}
 	},[])
 	return (
-		<div className="mt-16">
+		<div className="mt-16 relative">
 			<Navbar title={"Add Project"} />
+			{submitted && <FormLoading/>}
 			<form
 				className="px-3"
 				onSubmit={formHandler}

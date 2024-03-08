@@ -15,6 +15,7 @@ const EditProjectPage = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [submitted,setSubmitted] = useState(false)
 	const [notFound, setNotFound] = useState(false);
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
@@ -53,7 +54,9 @@ const EditProjectPage = () => {
 						setImagesPreview(details?.screenshots);
 						
 					} else {
+						
 						setNotFound(true);
+						navigate("/login");
 					}
 				})
 				.catch((err) => {
@@ -97,6 +100,7 @@ const EditProjectPage = () => {
 
 	const formHandler = async (e) => {
 		e.preventDefault();
+		setSubmitted(true)
 		try {
 			const postData = {
 				...data,
@@ -108,9 +112,12 @@ const EditProjectPage = () => {
 			await axios.post("/editproject", postData)
 			.then((res) => {
 				if(res?.data?.status === "ok"){
+					setSubmitted(false)
 					navigate("/");
 				}else{
 					setNotFound(true)
+					setSubmitted(false)
+					navigate("/login");
 				}
 				
 			})
@@ -126,10 +133,10 @@ const EditProjectPage = () => {
 		setImagesPreview([...imagesPreview]);
 	};
 	return (
-		<div className="mt-16">
+		<div className="mt-16 relative">
 			<Navbar title={"Modify Project"} />
 			{notFound && <NotFound />}
-			{!notFound && (
+			{!notFound && submitted && (
 				<div>
 					<form
 						className="px-3"

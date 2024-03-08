@@ -8,12 +8,14 @@ import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import Cookies from 'universal-cookie';
 import { useCookies } from "react-cookie";
+import FormLoading from "./skelton/FormLoading";
 
 const Signup = () => {
 	const cookies = new Cookies();
 	const [cookie, removeCookie,setCookie] = useCookies([]);
 	const [signupError, setSignupError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
+	const [submitted,setSubmitted] = useState(false)
 	const dispatch = useDispatch();
 	const name = useRef(null);
 	const email = useRef(null);
@@ -36,6 +38,7 @@ const Signup = () => {
 		if (password.current.value === "") {
 			return setSignupError("Enter a password !");
 		}
+		setSubmitted(true)
 		const formData = {
 			name: name.current.value,
 			email: email.current.value,
@@ -47,12 +50,15 @@ const Signup = () => {
 				if (r.data.result === "success") {
 					cookies.set('token', r?.data?.token, { path: '/' });
 					navigate("/");
+					setSubmitted(false)
 				} else {
 					setSignupError(r.data.result);
+					setSubmitted(false)
 				}
 			})
 			.catch((err) => {
 				setSignupError(err);
+				setSubmitted(false)
 			});
 	};
 	useEffect(() => {
@@ -64,11 +70,12 @@ const Signup = () => {
         }
     }, []);
 	return (
-		<div>
+		<div className="relative">
 			<LoginIntro
 				title={"User Signup"}
 				info={"Please fill your detail to create your account."}
 			/>
+			{submitted && <FormLoading/>}
 			<div className="mt-4 px-4">
 				<form className="" onSubmit={onHandleForm}>
 					<label className="text-login font-medium">Full Name</label>

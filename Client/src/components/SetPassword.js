@@ -4,12 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { updatePassword,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import FormLoading from "./skelton/FormLoading";
 
 const SetPassword = () => {
     const navigate = useNavigate()
 	const [passwordValue, setPasswordValue] = useState(true);
     const password = useRef(null)
     const confirm = useRef(null)
+	const [submitted,setSubmitted] = useState(false)
     const [passwordError,setPasswordError] = useState(null)
 	const togglePassword = () => {
 		setPasswordValue(!passwordValue);
@@ -21,12 +23,15 @@ const SetPassword = () => {
         }else if(password.current.value !== confirm.current.value){
             return setPasswordError('Both passwords should be same !')
         }
+		setSubmitted(true)
         axios.post('/setpassword',{password : confirm.current.value})
         .then(({data}) => {
             if(data?.result === 'updated'){
+				setSubmitted(false)
                 navigate('/login')
                 console.log('password successfully changed');
             }else{
+				setSubmitted(false)
                 setPasswordError(data?.result)
             }
         })
@@ -39,6 +44,7 @@ const SetPassword = () => {
 				title={"Set Password"}
 				info={"Enter New Password for your account"}
 			/>
+			{submitted && <FormLoading/>}
 			<div className="mt-4 px-4">
 				<form className="" onSubmit={handleForm}>
 					<label className="text-login font-medium ">New Password</label>
