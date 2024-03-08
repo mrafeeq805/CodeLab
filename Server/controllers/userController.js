@@ -78,6 +78,7 @@ module.exports = {
 				req.session.publisher_id = "CD" + (lastid + 1);
 				res.json({
 					result: "success",
+					token : token
 				});
 			});
 		} else {
@@ -102,6 +103,7 @@ module.exports = {
 					req.session.publisher_id = user[0].publisher_id;
 					res.json({
 						result: "success",
+						token : token
 					});
 				} else {
 					res.json({

@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const ForgotPassword = () => {
+	const [cookie, removeCookie,setCookie] = useCookies([]);
 	const email = useRef(null);
     const otp = useRef(null)
 	const [forgotError, setForgotError] = useState(null);
@@ -54,6 +56,14 @@ const ForgotPassword = () => {
 				});
 		}
 	};
+	useEffect(() => {
+        const isAuth = cookie.token
+		console.log(cookie.token);
+		//const isAuth = localStorage.getItem('user');
+        if(isAuth && isAuth !== "undefined") {
+            navigate("/");
+        }
+    }, []);
 	return (
 		<div>
 			<LoginIntro

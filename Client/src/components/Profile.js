@@ -6,19 +6,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
+
 const Profile = () => {
 	const [name,setName] = useState(null)
 	const [avatar,setAvatar] = useState(null)
 	const [bio,setBio] = useState(null)
-	const [cookies, removeCookie] = useCookies([]);
+	const [cookies, removeCookie,setCookie] = useCookies([]);
 	const navigate = useNavigate()
 	const navigateEditProfile = () => {
 		navigate('/editprofile')
 	}
 	useEffect(() => {
-
+		console.log(cookies.token);
 		if (!cookies.token) {
-			navigate("/login");
+			return navigate("/login");
 		}
 		async function call() {
 			await axios
@@ -29,6 +30,7 @@ const Profile = () => {
 						setAvatar(data?.data?.avatar)
 						setBio(data?.data?.bio)
 					}else{
+						console.log(data?.status);
 						navigate('/login')
 					}
 					

@@ -1,11 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Cookies from 'universal-cookie';
+import { useCookies } from "react-cookie";
+
+
+
 
 
 const Login = () => {
+	const cookies = new Cookies();
+	const [cookie, removeCookie,setCookie] = useCookies([]);
 	const dispatch = useDispatch();
 	const [loginError, setLoginError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
@@ -36,6 +43,8 @@ const Login = () => {
 		};
 		await axios.post("/login", formData).then((r) => {
 			if (r.data.result === "success") {
+				cookies.set('token', r?.data?.token, { path: '/' });
+				console.log(cookies.token);
 				navigate("/");
 			} else {
 				setLoginError(r.data.result);
@@ -45,6 +54,14 @@ const Login = () => {
 			setLoginError(err);
 		})
 	};
+	useEffect(() => {
+        const isAuth = cookie.token
+		console.log(cookie.token);
+		//const isAuth = localStorage.getItem('user');
+        if(isAuth && isAuth !== "undefined") {
+            navigate("/");
+        }
+    }, []);
 	return (
 		<div>
 			<LoginIntro

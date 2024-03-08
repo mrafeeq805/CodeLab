@@ -18,13 +18,11 @@ const NoInternet = () => {
 							
 						</div>
 					</div>
-					<div>
-						<img src="https://i.ibb.co/G9DC8S0/404-2.png" />
-					</div>
+					
 				</div>
 			</div>
 			<div>
-				<img src="https://i.ibb.co/ck1SGFJ/Group.png" />
+				<img src="/img/Group.png" alt="emty"/>
 			</div>
 		</div>
 	);

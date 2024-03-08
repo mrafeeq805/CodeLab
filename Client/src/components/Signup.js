@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,8 +6,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import Cookies from 'universal-cookie';
+import { useCookies } from "react-cookie";
 
 const Signup = () => {
+	const cookies = new Cookies();
+	const [cookie, removeCookie,setCookie] = useCookies([]);
 	const [signupError, setSignupError] = useState(null);
 	const [passwordValue, setPasswordValue] = useState(true);
 	const dispatch = useDispatch();
@@ -41,6 +45,7 @@ const Signup = () => {
 			.post("/createaccount", formData)
 			.then((r) => {
 				if (r.data.result === "success") {
+					cookies.set('token', r?.data?.token, { path: '/' });
 					navigate("/");
 				} else {
 					setSignupError(r.data.result);
@@ -50,6 +55,14 @@ const Signup = () => {
 				setSignupError(err);
 			});
 	};
+	useEffect(() => {
+        const isAuth = cookie.token
+		console.log(cookie.token);
+		//const isAuth = localStorage.getItem('user');
+        if(isAuth && isAuth !== "undefined") {
+            navigate("/");
+        }
+    }, []);
 	return (
 		<div>
 			<LoginIntro

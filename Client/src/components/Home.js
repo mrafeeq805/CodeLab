@@ -10,11 +10,12 @@ import { useDispatch } from 'react-redux'
 import { addLatest, addPopular, addTopDevelopers } from '../utils/projectSlice'
 
 
+
 const Home =  () => {
   
   const dispatch = useDispatch()
-
    useEffect(() =>{
+
     async function call (){
       const list = await axios.get('/getlatest')
       dispatch(addLatest(list.data))
