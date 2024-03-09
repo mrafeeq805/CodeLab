@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideMenu from "./SideMenu";
+import UserData from "./UserData";
+import axios from "axios";
 
 const Customers = () => {
-    const list = [
-        "#","ID","Name","Email","Projects","Status","Action"
-    ]
+    const [userList, setUserList] = useState(null);
+	useEffect(() => {
+		axios.get("/admin/getallusers").then(({ data }) => {
+			setUserList(data);
+			console.log(data);
+		});
+	}, []);
 	return (
 		<div className="flex">
             <SideMenu />
@@ -71,15 +77,7 @@ const Customers = () => {
 					</div>
 				</div>
 
-				<table className="w-full border-separate border-spacing-y-3">
-					<tr className="text-left border-b-2 ">
-                        {list.map(item=>(
-						<th className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-							<span className="">{item}</span>
-						</th>))}
-						
-					</tr>
-				</table>
+				<UserData userList={userList}/>
 			</div>
 		</div>
 	);

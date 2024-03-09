@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
 import SideMenu from "./SideMenu";
 import axios from "axios";
+import ProjectData from "./ProjectData";
 
 const Projects = () => {
-    const list = [
-        "#","ID","Title","Publisher","Category","Published Date","Views","Status","Action"
-    ]
-    const [projectList,setProjectList] = useState(null)
-    useEffect(() => {
-        axios.get('/admin/getallprojects')
-        .then(({data}) => {
-            setProjectList(data)
-            console.log(data);
-        })
-    },[])
+	
+	const [projectList, setProjectList] = useState(null);
+	useEffect(() => {
+		axios.get("/admin/getallprojects").then(({ data }) => {
+			setProjectList(data);
+			console.log(data);
+		});
+	}, []);
 	return (
 		<div className="flex">
-            <SideMenu />
+			<SideMenu />
 			<div className="w-full p-4">
-				
 				<div className="">
 					<span className="text-3xl font-semibold ">Projects</span>
 					<span className="text-xs ml-6 text-[#00000080]"> projects found</span>
 				</div>
 				<div className="flex gap-3 justify-end">
-                    <div className="flex items-center ">
+					<div className="flex items-center ">
 						<select
 							onchange="filterCustomer(this)"
 							className="border-2 rounded-md py-2 bg-inherit text-gray-500 px-8"
@@ -36,11 +33,15 @@ const Projects = () => {
 							<option value="New">New</option>
 							<option value="Old">Old</option>
 							<option value="Ascending : Name">Ascending : Name</option>
-                            <option value="Decending : Name">Decending : Name</option>
-                            <option value="Ascending : Email">Ascending : Email</option>
-                            <option value="Decending : Email">Decending : Email</option>
-                            <option value="Ascending : Project Count">Ascending : Project Count</option>
-                            <option value="Decending : Project Count">Decending : Project Count</option>
+							<option value="Decending : Name">Decending : Name</option>
+							<option value="Ascending : Email">Ascending : Email</option>
+							<option value="Decending : Email">Decending : Email</option>
+							<option value="Ascending : Project Count">
+								Ascending : Project Count
+							</option>
+							<option value="Decending : Project Count">
+								Decending : Project Count
+							</option>
 						</select>
 					</div>
 					<div className="flex items-center ">
@@ -64,8 +65,8 @@ const Projects = () => {
 							name="customer_search_type">
 							<option value="name">Name</option>
 							<option value="email">Project ID</option>
-                            <option value="Title">Title</option>
-                            <option value="Publisher">Publisher</option>
+							<option value="Title">Title</option>
+							<option value="Publisher">Publisher</option>
 						</select>
 						<input
 							id="customer_search"
@@ -77,20 +78,15 @@ const Projects = () => {
 						<button
 							onclick="searchCustomer()"
 							className="bg-primary flex justify-center items-center p-2 ">
-							<span className="material-symbols-outlined text-white">search</span>
+							<span className="material-symbols-outlined text-white">
+								search
+							</span>
 						</button>
 					</div>
 				</div>
+                <ProjectData projectList={projectList}/>
 
-				<table className="w-full border-separate border-spacing-y-3">
-					<tr className="text-left border-b-2 ">
-                        {list.map(item=>(
-						<th className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-							<span className="">{item}</span>
-						</th>))}
-						
-					</tr>
-				</table>
+				
 			</div>
 		</div>
 	);
