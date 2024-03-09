@@ -29,6 +29,11 @@ import appStore from "./utils/appStore";
 import ReactDOM from 'react-dom/client';
 import useGetOnlineStatus from "./hooks/useOnlineStatus";
 import NoInternet from "./components/NoInternet";
+import LoginAdmin from "./components/Admin/LoginAdmin";
+import DashBoard from "./components/Admin/DashBoard";
+import Customers from "./components/Admin/Customers";
+import Projects from "./components/Admin/Projects";
+import Category from "./components/Admin/Category";
 
 const App = () => {
 
@@ -51,6 +56,26 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/admin/login",
+        element: <LoginAdmin />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "/admin/users",
+        element: <Customers />,
+      },
+      {
+        path: "/admin/projects",
+        element: <Projects />,
+      },
+      {
+        path: "/admin/categories",
+        element: <Category />,
       },
       {
         path: "/categories",

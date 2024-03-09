@@ -3,6 +3,7 @@ const app = express()
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const userrouter = require('./routes/userRouter')
+const adminrouter = require('./routes/adminRouter')
 const mongoose = require("mongoose")
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
@@ -27,6 +28,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/codelab')
 
 
 app.use("/",userrouter)
+app.use("/admin",adminrouter)
 
 app.listen(4000,()=>{
     console.log("started");
