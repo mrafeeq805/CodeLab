@@ -11,7 +11,10 @@ router.post('/login',loginController.Login)
 
 //projects
 router.get('/getallprojects',projectController.getAllProjects)
-
+router.post('/getprojectdetails',projectController.getProjectDetails)
+router.post('/deleteproject',projectController.deleteProject)
+router.post('/approveproject',projectController.approveProject)
+router.post('/rejectproject',projectController.rejectProject)
 //customers
 router.get('/getallusers',userController.getAllUsers)
 

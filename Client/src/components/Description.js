@@ -91,7 +91,9 @@ const Description = () => {
 
 					{description && (
 						<div
-							dangerouslySetInnerHTML={{ __html: description?.features }}></div>
+							dangerouslySetInnerHTML={{ __html: description?.features }}>
+								
+							</div>
 					)}
 				</div>
 				<InfoCard data={description} />

@@ -2,18 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import SideMenu from "./SideMenu";
 import axios from "axios";
 import ProjectData from "./ProjectData";
+import ShowProjectDetails from "./ShowProjectDetails";
+import DeleteProject from "./DeleteProject";
 
 
 const Projects = () => {
 	const [projectList, setProjectList] = useState(null);
 	const [projectListPer, setProjectListPer] = useState(null);
+    const [showData, setShowData] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+    const [id,setId] = useState(null)
 	const [searchType, setSearchType] = useState("Title");
     const search = useRef(null)
+
 	const filterHandler = (e) => {
 		const type = e.target.value;
 		if (type === "Approved" || type === "Pending") {
 			const list = projectListPer.filter((item) => item.status === type);
 			setProjectList(list);
+		}else{
+			const list = projectList
+			setProjectList(list)
 		}
 	};
 	const sortHandler = (e) => {
@@ -77,6 +86,8 @@ const Projects = () => {
 	return (
 		<div className="flex">
 			<SideMenu />
+            {showData && <ShowProjectDetails setShowData={setShowData} id={id} setProjectList={setProjectList}/>}
+            {showDelete && <DeleteProject projectList={projectList} setProjectList={setProjectList} setShowDelete={setShowDelete} id={id}/>}
 			<div className="w-full p-4">
 				<div className="my-4">
 					<span className="text-3xl font-semibold ">Projects</span>
@@ -132,7 +143,7 @@ const Projects = () => {
 						</form>
 					</div>
 				</div>
-				<ProjectData projectList={projectList} />
+				<ProjectData projectList={projectList} setShowData={setShowData} setId={setId} setShowDelete={setShowDelete} />
 			</div>
 		</div>
 	);
