@@ -16,12 +16,13 @@ const Projects = () => {
     const search = useRef(null)
 
 	const filterHandler = (e) => {
+		
 		const type = e.target.value;
-		if (type === "Approved" || type === "Pending") {
+		if (type === "Approved" || type === "Pending" || type === 'Rejected') {
 			const list = projectListPer.filter((item) => item.status === type);
 			setProjectList(list);
 		}else{
-			const list = projectList
+			const list = projectListPer.filter((item) => true);
 			setProjectList(list)
 		}
 	};
@@ -56,10 +57,10 @@ const Projects = () => {
 			setProjectList(list);
 		} else if (type === "Descending : Name") {
 			const list = [...projectListPer].sort(function (a, b) {
-				if (a.firstname < b.firstname) {
+				if (a.publisher < b.publisher) {
 					return 1;
 				}
-				if (a.firstname > b.firstname) {
+				if (a.publisher > b.publisher) {
 					return -1;
 				}
 				return 0;
@@ -119,6 +120,7 @@ const Projects = () => {
 							<option value="All">All</option>
 							<option value="Approved">Approved</option>
 							<option value="Pending">Pending</option>
+							<option value="Rejected">Rejected</option>
 						</select>
 					</div>
 					<div className="rounded-md bg-transparent border-gray-200 border-2 flex">

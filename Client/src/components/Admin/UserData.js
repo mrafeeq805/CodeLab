@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserData = ({userList}) => {
     const list = [
-        "#","ID","Name","Email","Projects","Status","Action"
+        "#","Name","Publisher ID","Email","Projects","Status","Action"
     ]
   return (
     <div>
@@ -19,19 +19,20 @@ const UserData = ({userList}) => {
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
 								<span className="">{index + 1}</span>
 							</td>
-							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-								<span className="">{item.publisher_id}</span>
-							</td>
+							
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
 								<span className="">{item.name}</span>
 							</td>
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-								<span className="">{item.email}</span>
+								<span className="">{item.publisher_id}</span>
 							</td>
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-								<span className="">{item.password}</span>
+								<span className="">{item.email}</span>
 							</td>
 							
+							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
+								<span className="">{item.project_count}</span>
+							</td>
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
 								<span className="">{item.status}</span>
 							</td>

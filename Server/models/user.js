@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
   email : String,
   password : String,
   avatar: String,
-  publisher_id : String
-
+  publisher_id : String,
+  status : String
 })
 
 

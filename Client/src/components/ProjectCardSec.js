@@ -100,7 +100,7 @@ export const ProjectCardSecMy = (Card) => {
 					<i class="bi bi-pen text-gray-400 text-xs"></i>
 					<span className="text-xs text-gray-400">Modify</span>
 				</button>
-				<button className={props?.data?.status === 'Pending' ? "bg-red-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl " : "bg-green-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl "}>
+				<button className={props?.data?.status === 'Pending'  ? "bg-primary absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl " : props?.data?.status === 'Rejected' ? "bg-red-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl" : "bg-green-500 absolute top-0 left-0 flex items-center gap-2 p-1 px-2 rounded-br-xl"}>
 					
 					<span className="text-xs text-white">{props?.data?.status}</span>
 				</button>

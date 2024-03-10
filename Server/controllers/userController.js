@@ -66,6 +66,7 @@ module.exports = {
 					bio: "",
 					title: "",
 					publisher_id: "CD"+lastid,
+					status : "Active"
 				});
 				newuser.save();
 				const user = await userSchema.find({ email: email });
@@ -99,6 +100,7 @@ module.exports = {
 			});
 			bcrypt.compare(password, hash, function (err, result) {
 				if (result) {
+					if(user[0].status === 'Blocked') return res.json({result:"user blocked"})
 					req.session.email = email;
 					req.session.publisher_id = user[0].publisher_id;
 					res.json({
