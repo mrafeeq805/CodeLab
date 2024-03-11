@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SideMenu from "./SideMenu";
+import CategoryData from "./CategoryData";
+import axios from "axios";
+import AddCategory from "./AddCategory";
+import DeleteCategory from "./DeleteCategory";
 
 const Category = () => {
-    const list = [
-        "#","ID","Name","Domain","Projects","Status","Action"
-    ]
+	const [categoryList, setCategoryList] = useState(null);
+	const [categoryListPer, setCategoryListPer] = useState(null);
+	const [showAdd, setShowAdd] = useState(false);
+	const [showDelete, setShowDelete] = useState(false);
+	const [id,setId] = useState(null)
+	const [name,setName] = useState(null)
+	const [searchType, setSearchType] = useState("Name");
+	const search = useRef(null);
+	useEffect(() => {
+		axios.get("/admin/getallcategories").then(({ data }) => {
+			setCategoryListPer(data);
+			setCategoryList(data);
+			console.log(data);
+		});
+	}, []);
 	return (
 		<div className="flex">
             <SideMenu />
+			{showAdd && <AddCategory setShowAdd={setShowAdd} setCategoryList={setCategoryList}/>}
+			{showDelete && <DeleteCategory id={id} name={name} setShowDelete={setShowDelete} setCategoryList={setCategoryList}/>}
 			<div className="w-full p-4">
 				
-				<div className="">
+				<div className="my-5">
 					<span className="text-3xl font-semibold ">Categories</span>
 					<span className="text-xs ml-6 text-[#00000080]"> categories found</span>
 				</div>
 				<div className="flex gap-3 justify-end">
+					<button onClick={() => setShowAdd(true)} className="border-2 rounded-md p-2 bg-primary text-white"> Add Category</button>
                     <div className="flex items-center ">
 						<select
 							onchange="filterCustomer(this)"
@@ -62,15 +81,7 @@ const Category = () => {
 					</div>
 				</div>
 
-				<table className="w-full border-separate border-spacing-y-3">
-					<tr className="text-left border-b-2 ">
-                        {list.map(item=>(
-						<th className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
-							<span className="">{item}</span>
-						</th>))}
-						
-					</tr>
-				</table>
+				<CategoryData categoryList={categoryList} setShowDelete={setShowDelete} setId={setId} setName={setName}/>
 			</div>
 		</div>
 	);
