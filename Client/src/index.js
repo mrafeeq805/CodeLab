@@ -34,6 +34,8 @@ import DashBoard from "./components/Admin/DashBoard";
 import Customers from "./components/Admin/Customers";
 import Projects from "./components/Admin/Projects";
 import Category from "./components/Admin/Category";
+import Developers from "./components/Developers";
+
 
 const App = () => {
 
@@ -80,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <Categories />,
+      },
+      {
+        path: "/developers",
+        element: <Developers />,
       },
       {
         path: "/myprojects",

@@ -27,11 +27,11 @@ const ProjectCardSec = (props) => {
 	} = props.data;
 	return (
 		<Link to={"/description/"+category+"/"+project_id}>
-			<div className="border-[1px] border-gray-200 rounded-md p-2 flex">
-				<div className="flex gap-3">
+			<div className="border-[1px] border-gray-200 rounded-md p-2 flex md:flex-col">
+				<div className="flex gap-3 sm:flex-col">
 					{!load && <Skeleton variant="rounded" width={150} height={90} />}
 					<img
-						className={load ? "rounded-md w-2/5 h-26 object-cover" : "hidden rounded-md w-2/5 h-26 object-cover" }
+						className={load ? "rounded-md w-2/5 h-26 object-cover sm:w-full" : "hidden rounded-md w-2/5 h-26 object-cover" }
 						src={thumbnail}
 						alt="thumb"
 						onLoad={onLoadImage}

@@ -34,7 +34,7 @@ const RelatedProjects = () => {
 			{!emptyData && (<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
 				{relatedProjects.length === 0 && list?.map(item => <ProjectCardMainLoader key={item}/>)}
 				{relatedProjects && relatedProjects?.map((item,index) => (
-					<ProjectCardMain key={index} data={item} />
+					<ProjectCardMain key={index} data={item} type={'related'} />
 				))}
 			</div>)}
 		</div>

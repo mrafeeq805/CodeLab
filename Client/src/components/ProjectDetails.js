@@ -32,7 +32,7 @@ const ProjectDetails = ({details,setSSVisible}) => {
 				</div>
 				<div className="mt-4">
 					<img
-						className="rounded-md h-44 w-full object-cover"
+						className="rounded-md h-44 w-full object-cover md:h-96"
 						src={details?.thumbnail}
 						alt=""
 					/>

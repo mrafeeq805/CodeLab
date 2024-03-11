@@ -6,7 +6,7 @@ import { Skeleton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../utils/favoriteSlice";
 
-const ProjectCardMain = ({ data }) => {
+const ProjectCardMain = ({ data,type }) => {
 	const [load,setLoad] = useState(false)
 	const onImagLoad = () => {
 		setLoad(true)
@@ -35,7 +35,7 @@ const ProjectCardMain = ({ data }) => {
 		project_id
 	} = data;
 	return (
-		<Link  to={"/description/" + category + "/" + project_id}>
+		<Link  to={type  === 'related' ? "/description/"+category + "/" + project_id + '/type=related' : "/description/" + category + "/" + project_id}>
 			<div className="border-[1px] border-gray-200 rounded-md flex w-full">
 				<div className="w-full relative">
 					{!load && <Skeleton variant="rounded" width={350} height={170} />}

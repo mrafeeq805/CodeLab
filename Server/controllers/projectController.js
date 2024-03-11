@@ -243,7 +243,8 @@ module.exports = {
 				{ publisher_id: req.params.id },
 				{ name: 1, title: 1, bio: 1, avatar: 1, _id: 0 }
 			);
-			const stacks_used = await projectSchema.distinct('category',{publisher_id:req.params.id})
+			const stacks = await projectSchema.distinct('category',{publisher_id:req.params.id})
+			const stacks_used = await categorySchema.find({title: {"$in":stacks}},{title:1,icon:1})
 			const user = await projectSchema.aggregate([
 				{
 					$match: {

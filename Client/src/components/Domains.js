@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import DomainCard from './DomainCard'
 import DomainCardLoader from './skelton/DomainCardLoader'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
+import {  useSelector } from 'react-redux'
+
 
 export const Domains = () => {
-    const [domains,setDomains] = useState(null)
-    useEffect(() => {
-        axios.get('/getallcategories')
-        .then(({data}) => {
-            setDomains(data)
-        })
-    },[])
+    const domains = useSelector((store) => store?.project?.category)
     return (
         <div className='px-2 mt-4'>
             <div className='flex justify-between items-center'>

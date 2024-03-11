@@ -17,7 +17,7 @@ const LatestProjects = () => {
 			
 
 			{list && (
-				<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
+				<div className="mt-3 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 grid-flow-row gap-2">
 					{list?.map((item, index) => (
 						<ProjectCardSec key={index} data={item} />
 					))}

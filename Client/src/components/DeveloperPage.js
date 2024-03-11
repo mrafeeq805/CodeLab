@@ -41,7 +41,7 @@ const DeveloperPage = () => {
 	}, []);
 	return (
 		<div className="bg-slate-50 flex-col mt-16 ">
-			<Navbar title={"Developer Name"} />
+			<Navbar title={devinfo?.details?.name} />
 			<DevInfo data={devinfo?.details} />
 			<div className=" p-4 px-8">
 				<p className="text-gray-500 text-sm text-center">
