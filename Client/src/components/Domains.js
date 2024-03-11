@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DomainCard from './DomainCard'
 import DomainCardLoader from './skelton/DomainCardLoader'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export const Domains = () => {
     const [domains,setDomains] = useState(null)
@@ -15,7 +16,10 @@ export const Domains = () => {
         <div className='px-2 mt-4'>
             <div className='flex justify-between items-center'>
                 <span className=' font-medium'>Projects by Domains</span>
-                <span className='text-primary font-medium text-xs'>More</span>
+                <Link to={'/categories'}>
+                    <span className='text-primary font-medium text-xs'>More</span>
+                </Link>
+                
             </div>
             {!domains && <DomainCardLoader/>}
             

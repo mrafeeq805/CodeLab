@@ -19,8 +19,6 @@ module.exports = {
 				},
 				{ $addFields: { project_count: { $size: "$project_count" } } },
 			]);
-
-			console.log(count);
 			res.json(count);
 		} catch (error) {
 			res.json({
