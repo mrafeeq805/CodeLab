@@ -1,6 +1,15 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
-const EditCustomer = () => {
+const EditCustomer = ({email,status,setStatus,id,setShowEdit,setUserList}) => {
+    const formHandler = (e) => {
+		e.preventDefault()
+		axios.post('/admin/updateuser',{id:id,status:status})
+		.then(({data}) => {
+			setShowEdit(false)
+			setUserList(data)
+		})
+	}
 	return (
 		<div
 			className="transition ease-out duration-3000 w-full justify-center items-center flex fixed inset-0 z-50 bg-[rgba(0,0,0,0.2)]">
@@ -10,7 +19,7 @@ const EditCustomer = () => {
 						<div className="border-b-2 pb-2 w-max">
 							<span className="text-xl font-semibold ">Update Customer Data</span>
 						</div>
-						<form action="/admin/editcustomer" method="post">
+						<form onSubmit={formHandler}>
 							<input
 								className="border rounded-md p-2 w-full"
 								type="hidden"
@@ -19,22 +28,13 @@ const EditCustomer = () => {
 								readonly
 							/>
 							<div className="w-full gap-4 space-y-5 mt-4">
-								<div className="w-full flex gap-6 justify-between">
-									<label className="block my-2 text-[#00000080]" for="">
-										Name
-									</label>
-									<input
-										className="border rounded-md p-2 w-full"
-										type="text"
-										readonly
-									/>
-								</div>
 								
 								<div className="w-full flex gap-6 justify-between">
 									<label className="block my-2 text-[#00000080]" for="">
 										Email
 									</label>
 									<input
+                                        value={email}
 										className="border rounded-md p-2 w-full"
 										type="text"
 										readonly
@@ -45,6 +45,10 @@ const EditCustomer = () => {
 										Status
 									</label>
 									<select
+                                    o   onChange={(e) => {
+                                        setStatus(e.target.value)
+                                    }}
+                                        value={status }
 										className="border rounded-md p-2 w-full"
 										>
 										<option value="Active">Active</option>

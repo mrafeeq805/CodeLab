@@ -3,14 +3,17 @@ import SideMenu from "./SideMenu";
 import UserData from "./UserData";
 import axios from "axios";
 import DeleteCustomer from "./DeleteCutomer";
+import EditCustomer from "./EditCustomer";
 
 const Customers = () => {
 	const [userList, setUserList] = useState(null);
 	const [userListPer, setUserListPer] = useState(null);
 	const [searchType, setSearchType] = useState("Name");
 	const [showDelete, setShowDelete] = useState(false);
+	const [showEdit, setShowEdit] = useState(false);
 	const [id, setId] = useState(null);
 	const [email, setEmail] = useState(null);
+	const [status, setStatus] = useState(null);
 	const search = useRef(null);
 	const filterHandler = (e) => {
 		const type = e.target.value;
@@ -133,6 +136,7 @@ const Customers = () => {
 					setUsersList={setUserList}
 				/>
 			)}
+			{showEdit && <EditCustomer email={email} status={status} setStatus={setStatus} id={id} setShowEdit={setShowEdit} setUserList={setUserList}/>}
 			<div className="w-full p-4">
 				<div className="">
 					<span className="text-3xl font-semibold ">Customers</span>
@@ -205,7 +209,9 @@ const Customers = () => {
 				<UserData userList={userList}
 					setShowDelete={setShowDelete}
 					setId={setId}
-					setEmail={setEmail}/>
+					setEmail={setEmail}
+					setStatus = {setStatus}
+					setShowEdit={setShowEdit}/>
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserData = ({userList,setShowDelete,setId,setEmail}) => {
+const UserData = ({userList,setShowDelete,setId,setEmail,setShowEdit,setStatus}) => {
     const list = [
         "#","Name","Publisher ID","Email","Projects","Status","Action"
     ]
@@ -38,7 +38,12 @@ const UserData = ({userList,setShowDelete,setId,setEmail}) => {
 							</td>
 							<td className="text-[#00000070] border-b-[1px] border-slate-300 mr-2">
 								<div className="flex gap-4">
-									<button>
+									<button onClick={() => {
+										setShowEdit(true)
+										setEmail(item.email)
+										setId(item._id)
+										setStatus(item.status)
+									}}>
 										<i class="bi bi-pencil-fill text-primary text-xl"></i>
 									</button>
 									<button onClick={() => {
