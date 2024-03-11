@@ -8,6 +8,7 @@ const { authVerify } = require('../middleware/authJWT');
 const { auth } = require('../middleware/auth');
 
 //projects
+router.get('/getallcategories',auth,projectController.getCategoryList)
 router.post('/download',auth,projectController.download)
 router.get('/search/:search',auth,projectController.searchProjects)
 router.get('/getrelated/:category',auth,projectController.getRelatedProjects)

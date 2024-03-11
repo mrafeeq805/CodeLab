@@ -1,5 +1,6 @@
 const projectSchema = require("../models/project");
 const userSchema = require("../models/user");
+const categorySchema = require("../models/category");
 const mongoose = require("mongoose");
 const multer = require("multer");
 var isBase64 = require('is-base64');
@@ -150,6 +151,14 @@ module.exports = {
 	getPopularList: async (req, res) => {
 		try {
 			const data = await projectSchema.find().sort({views: -1 }).limit(2);
+			res.json(data);
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	getCategoryList: async (req, res) => {
+		try {
+			const data = await categorySchema.find()
 			res.json(data);
 		} catch (error) {
 			console.log(error);
