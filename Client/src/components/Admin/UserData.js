@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserData = ({userList}) => {
+const UserData = ({userList,setShowDelete,setId,setEmail}) => {
     const list = [
         "#","Name","Publisher ID","Email","Projects","Status","Action"
     ]
@@ -41,7 +41,11 @@ const UserData = ({userList}) => {
 									<button>
 										<i class="bi bi-pencil-fill text-primary text-xl"></i>
 									</button>
-									<button>
+									<button onClick={() => {
+										setShowDelete(true)
+										setEmail(item.email)
+										setId(item._id)
+									}}>
 										<i class="bi bi-trash3-fill text-red-500 text-xl"></i>
 									</button>
 								</div>

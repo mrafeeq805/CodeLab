@@ -18,6 +18,7 @@ router.post('/approveproject',projectController.approveProject)
 router.post('/rejectproject',projectController.rejectProject)
 //customers
 router.get('/getallusers',userController.getAllUsers)
+router.post('/deleteuser',userController.deleteUser)
 
 //categories
 router.post('/deletecategory',categoryController.deleteCategory)

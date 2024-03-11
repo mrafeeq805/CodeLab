@@ -158,7 +158,7 @@ module.exports = {
 	},
 	getCategoryList: async (req, res) => {
 		try {
-			const data = await categorySchema.find()
+			const data = await categorySchema.find({status:"Listed"})
 			res.json(data);
 		} catch (error) {
 			console.log(error);

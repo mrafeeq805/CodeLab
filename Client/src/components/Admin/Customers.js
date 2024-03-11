@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import SideMenu from "./SideMenu";
 import UserData from "./UserData";
 import axios from "axios";
+import DeleteCustomer from "./DeleteCutomer";
 
 const Customers = () => {
 	const [userList, setUserList] = useState(null);
 	const [userListPer, setUserListPer] = useState(null);
 	const [searchType, setSearchType] = useState("Name");
+	const [showDelete, setShowDelete] = useState(false);
+	const [id, setId] = useState(null);
+	const [email, setEmail] = useState(null);
 	const search = useRef(null);
 	const filterHandler = (e) => {
 		const type = e.target.value;
@@ -121,6 +125,14 @@ const Customers = () => {
 	return (
 		<div className="flex">
 			<SideMenu />
+			{showDelete && (
+				<DeleteCustomer
+					id={id}
+					email={email}
+					setShowDelete={setShowDelete}
+					setUsersList={setUserList}
+				/>
+			)}
 			<div className="w-full p-4">
 				<div className="">
 					<span className="text-3xl font-semibold ">Customers</span>
@@ -190,7 +202,10 @@ const Customers = () => {
 					</div>
 				</div>
 
-				<UserData userList={userList} />
+				<UserData userList={userList}
+					setShowDelete={setShowDelete}
+					setId={setId}
+					setEmail={setEmail}/>
 			</div>
 		</div>
 	);
