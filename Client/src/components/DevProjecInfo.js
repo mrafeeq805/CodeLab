@@ -2,7 +2,7 @@ import React from 'react'
 
 const DevProjecInfo = ({views,projects}) => {
   return (
-    <div className='px-8'>
+    <div className='px-8 md:px-0'>
         <div className='rounded-lg bg-primary  p-2 flex '>
             <div className='flex gap-3 items-center w-full border-white border-r-2 px-3'>
                 <div className='p-1 bg-light rounded-lg'>

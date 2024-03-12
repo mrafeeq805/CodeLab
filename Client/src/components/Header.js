@@ -15,7 +15,7 @@ const Header = () => {
 		navigate("/profile");
 	};
   useEffect(() => {
-    if (cookies.token) {
+    if (cookies.token && ! cookies.token === "undefined") {
       console.log('logged');
 			return setLogged(true)
 		}

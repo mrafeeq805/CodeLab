@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProjectCardSec, { ProjectCardSecRemove } from "./ProjectCardSec";
-import { useSelector } from "react-redux";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
-import EmptyCard from "./EmptyCard"
+
 
 const DeveloperProjecSection = ({developerProjects}) => {
 

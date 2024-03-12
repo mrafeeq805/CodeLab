@@ -38,14 +38,14 @@ const MyProjecSection = ({ data }) => {
 		call();
 	}, []);
 	return (
-		<div className="px-2 mt-16">
+		<div className="px-2 mt-16 md:mt-0 md:px-24">
 			{!emptyData && <span className="font-medium">Projects ({myProjects.length || 0})</span>}
 			{ emptyData &&  (<EmptyCard 
 					title={"Project Empty"} 
 					img={"/img/project_empty.png"} 
 					des={"Projects not found. Start adding projects to enhance your skills"}
 				/>)}
-			<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
+			<div className="mt-3 grid md:grid-cols-4 grid-flow-row gap-2">
 				{myProjects.length === 0 && !emptyData && count?.map((item) => <ProjectCardSecLoader key={item} />)}
 				{
 					myProjects?.map((item, index) => (

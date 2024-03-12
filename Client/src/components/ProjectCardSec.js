@@ -47,10 +47,12 @@ const ProjectCardSec = (props) => {
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-eye-fill text-gray-400"></i>
 								<span className="text-xs text-gray-400">{views}</span>
+								<span className="text-xs text-gray-400 hidden md:inline"> Views</span>
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-arrow-down-circle text-gray-400"></i>
 								<span className="text-xs text-gray-400">{downloads}</span>
+								<span className="text-xs text-gray-400 hidden "> Downloads</span>
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>

@@ -3,6 +3,7 @@ import axios from "axios";
 import Demo from "./CropView";
 import { useNavigate } from "react-router-dom";
 
+
 const EditProfileForm = () => {
 	const navigate = useNavigate()
 	const [avatar, setAvatar] = useState(null);
@@ -19,7 +20,7 @@ const EditProfileForm = () => {
 				headline: headline.current.value,
 				bio: bio.current.value,
 				email: "muhammedrafeeqvr805@gmail.com",
-				avatar: cropped,
+				avatar: cropped ? cropped : avatar,
 			})
 			.then((res) => {
 				if(res?.data === 'updated'){
@@ -46,13 +47,17 @@ const EditProfileForm = () => {
 	useEffect(() => {
 		async function call() {
 			await axios
-				.post("/getprofile", { email: "muhammedrafeeqvr805@gmail.com" })
-				.then((res) => {
-					name.current.value = res?.data[0]?.name;
-					bio.current.value = res?.data[0]?.bio;
-					headline.current.value = res?.data[0]?.bio;
-					setAvatar(res?.data[0]?.avatar);
-				});
+				.post("/getprofile")
+				.then(({data}) => {
+					console.log(data);
+					name.current.value = data?.data?.name;
+					bio.current.value = data?.data?.bio;
+					headline.current.value = data?.data?.bio;
+					setAvatar(data?.data?.avatar);
+				})
+				.catch((err) => {
+					console.log(err);
+				})
 		}
 		call();
 	},[]);
@@ -82,6 +87,7 @@ const EditProfileForm = () => {
 								className="hidden"
 							/>
 							<button
+								type="button"
 								onClick={() => setAvatar(null)}
 								className="border-2 rounded-md px-4 p-1 text-sm">
 								Remove
