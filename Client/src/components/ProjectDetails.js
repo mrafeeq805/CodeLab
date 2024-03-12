@@ -8,26 +8,26 @@ const ProjectDetails = ({details,setSSVisible}) => {
 
 	return (
 		
-		<div className="mt-16 px-2">
+		<div className="mt-16 md:mt-4 px-2 bg-white my-5">
 			{!details && <ProjectDetailsLoader/>}
 			{details && (<div className="flex flex-col p-3 w-full">
-				<div className="flex justify-between">
-					<span className="text-lg">
+				<div className="flex justify-between md:hidden">
+					<span className="md:text-2xl text-xl md:font-medium">
 						{details?.title}
 					</span>
-					<div className="px-4 h-max bg-green-100 rounded-xs flex justify-center items-center">
+					<div className="px-4 h-max bg-green-100 rounded-xs md:hidden flex justify-center items-center">
 						<span className="text-green-500">{details?.price}</span>
 					</div>
 				</div>
 
-				<div className="flex justify-between mt-1 w-full">
+				<div className="flex md:hidden justify-between md:justify-normal md:gap-10 mt-1 w-full">
 					<div className="">
-						<span className=" text-gray-400 ">{details?.publisher}</span>
+						<span className=" text-gray-400 md:text-lg">{details?.publisher}</span>
 					</div>
 
 					<div className="flex gap-1 items-center">
 						<i className="bi bi-clock text-gray-400"></i>
-						<span className="text-sm text-gray-400">{calcDate(details?.published_date).result+" ago" || "New"}</span>
+						<span className="text-sm text-gray-400 md:text-base">{calcDate(details?.published_date).result+" ago" || "New"}</span>
 					</div>
 				</div>
 				<div className="mt-4">

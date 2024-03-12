@@ -12,7 +12,7 @@ const DeveloperProjecSection = ({developerProjects}) => {
 		<div className="px-2 mt-4">
             <span className="font-medium">Projects ({ developerProjects ? developerProjects.length : 0})</span>
 
-			<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
+			<div className="mt-3 grid md:grid-cols-5 gap-2">
 
 				{developerProjects.length === 0 && count?.map(item => <ProjectCardSecLoader key={item}/>)}
 				{developerProjects.length > 0 && developerProjects?.map((item,index) => (

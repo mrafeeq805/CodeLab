@@ -95,7 +95,7 @@ const Login = () => {
 			<div className="hidden sm:w-1/2 md:w-2/5 sm:flex sm:justify-center sm:items-center">
 				<img className="w-full" src="/img/login.avif" alt="login" />
 			</div>
-			<div className="md:w-4/12">
+			<div className="md:w-6/12">
 				<LoginIntro
 					title={"User Signin"}
 					info={"Please fill your detail to access your account."}

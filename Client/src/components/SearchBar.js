@@ -15,7 +15,7 @@ const SearchBar = ({ title }) => {
 
 	}
 	return (
-		<div className="p-2 my-2">
+		<div className="p-2 my-2 md:w-6/12">
 			<div className="rounded-lg border-2 p-2 px-4 ">
 				<form className="flex justify-between" onSubmit={formHandler}>
 					<input

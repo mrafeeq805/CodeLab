@@ -17,7 +17,7 @@ const FeaturesInput = ({val}) => {
     }
     
     return (
-        <div className="mt-2" id="editor">
+        <div className="mt-2 md:w-8/12" id="editor">
              <span className="font-medium">Features</span>
             <div className="my-2">
                 <ReactQuill className="" onChange={onChangeHandler} value={value}/>

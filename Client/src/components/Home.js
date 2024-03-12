@@ -34,13 +34,16 @@ const Home = () => {
 	return (
 		<div className="relative mb-12">
 			<Header />
-			<SearchBar title={"Search Projects..."} />
+			<div className="md:hidden">
+				<SearchBar title={"Search Projects..."} />
+			</div>
+			
 			<TopDevelopers />
 			<LatestProjects />
 			<Domains />
 			<PopularProjects />
 			<Link to={'/addproject'}>
-				<button className="bg-primary rounded-full h-16 w-16 p-2 text-white fixed z-30 right-2 bottom-2">
+				<button className="bg-primary rounded-full md:hidden h-16 w-16 p-2 text-white fixed z-30 right-2 bottom-2">
 					<i class="bi bi-plus text-white text-3xl"></i>
 				</button>
 			</Link>
