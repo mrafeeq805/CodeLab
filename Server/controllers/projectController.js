@@ -45,7 +45,6 @@ module.exports = {
 		const year = currentDate.getFullYear();
 		const date2 = `${month}-${day}-${year}`;
 		let lastid;
-		console.log(req.body);
 		const id = await projectSchema.find().sort({ _id: -1 }).limit(1);
 		if (id.length > 0) {
 			lastid = id[0].project_id;
@@ -74,7 +73,7 @@ module.exports = {
 				"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 			);
 			uploadBytes(storageRef, file).then((snapshot) => {
-				console.log("uploaded");
+				
 				getDownloadURL(snapshot.ref).then((item) => {
 					screenshotsLinks.push(item);
 				});
@@ -216,7 +215,6 @@ module.exports = {
 
 				{ _id: 0, email: 0, password: 0, title: 0 }
 			);
-			console.log(publisher);
 			if(!publisher ){
 				return res.json(
 					{
@@ -341,6 +339,7 @@ module.exports = {
 		}
 	},
 	editproject: async (req, res) => {
+		console.log("hd");
 		const {
 			title,
 			category,
@@ -352,6 +351,7 @@ module.exports = {
 			project_link,
 			project_id
 		} = req.body;
+		console.log(req.body);
 		const publisher = await projectSchema.findOne(
 			{
 				publisher_id: req.session.publisher_id,
@@ -360,8 +360,6 @@ module.exports = {
 
 			{ _id: 0, email: 0, password: 0, title: 0 }
 		);
-		console.log(publisher);
-		console.log(req.session.publisher_id);
 		if(!publisher ){
 			return res.json(
 				{
@@ -388,7 +386,6 @@ module.exports = {
 					"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 				);
 				uploadBytes(storageRef, file).then((snapshot) => {
-					console.log("uploaded");
 					getDownloadURL(snapshot.ref).then((item) => {
 						screenshotsLinks.push(item);
 					});
@@ -408,7 +405,6 @@ module.exports = {
 				"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
 			);
 			uploadBytes(storageRef, file).then((snapshot) => {
-				console.log("Uploaded file!");
 				getDownloadURL(snapshot.ref).then(async (item) => {
 					thumbnailLink = item;
 					callUpdate()
@@ -420,7 +416,6 @@ module.exports = {
 			callUpdate()
 		}
 		async function callUpdate(){
-			console.log('d');
 			const response = await openai.chat.completions.create({
 				model: "gpt-3.5-turbo",
 				messages: [

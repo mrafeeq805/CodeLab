@@ -9,11 +9,13 @@ import { extractId } from "../utils/getDownloadFile";
 import addDescription from "../utils/projectSlice";
 import ReactQuill from "react-quill";
 import NotFound from "./NotFound";
+import FormLoading from "./skelton/FormLoading";
 
 const EditProjectPage = () => {
 	var imglist = [];
 	const { id } = useParams();
 	const dispatch = useDispatch();
+	const [category,setCategory] = useState(null)
 	const navigate = useNavigate();
 	const [submitted,setSubmitted] = useState(false)
 	const [notFound, setNotFound] = useState(false);
@@ -36,7 +38,7 @@ const EditProjectPage = () => {
 			await axios
 				.get("/editinfo/" + id)
 				.then(async (res) => {
-					console.log(res);
+					
 					if (res?.data?.status === "ok") {
 						const details = res?.data?.details;
 						setData({
@@ -52,6 +54,13 @@ const EditProjectPage = () => {
 						setThumbnail(details?.thumbnail);
 						setFeatures(details?.features);
 						setImagesPreview(details?.screenshots);
+						async function callCategoris () {
+							await axios.get('/getallcategories')
+							.then(({data})=> {
+								setCategory(data)
+							})
+						}
+						callCategoris()
 						
 					} else {
 						
@@ -64,6 +73,7 @@ const EditProjectPage = () => {
 				});
 		}
 		call();
+		
 	}, []);
 
 	const changeInput = (e) => {
@@ -111,6 +121,7 @@ const EditProjectPage = () => {
 			};
 			await axios.post("/editproject", postData)
 			.then((res) => {
+				console.log(res);
 				if(res?.data?.status === "ok"){
 					setSubmitted(false)
 					navigate("/");
@@ -136,7 +147,8 @@ const EditProjectPage = () => {
 		<div className="mt-16 relative">
 			<Navbar title={"Modify Project"} />
 			{notFound && <NotFound />}
-			{!notFound && submitted && (
+			{submitted && <FormLoading />}
+			{!notFound && (
 				<div>
 					<form
 						className="px-3"
@@ -165,8 +177,8 @@ const EditProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onClick={changeInput}>
-							<option value={"React JS"}>React JS</option>
-							<option value={"Laravel"}>Laravel</option>
+							{category?.map(item => <option value={item.title}>{item.title}</option>)}
+							
 						</select>
 
 						<label className="text-login font-medium">Live Link</label>
@@ -196,7 +208,7 @@ const EditProjectPage = () => {
 								<div className="flex items-center justify-center w-full">
 									<label
 										for="dropzone-file"
-										className="flex px-8 flex-col items-center justify-center w-full p-2 h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+										className="flex px-8 flex-col items-center justify-center w-full p-2 h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 ">
 										<div className="flex flex-col items-center justify-center pt-5 pb-6">
 											<i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>
 											<p className="mb-2 text-sm text-gray-500 dark:text-gray-400">

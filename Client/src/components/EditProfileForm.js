@@ -19,7 +19,6 @@ const EditProfileForm = () => {
 				name: name.current.value,
 				headline: headline.current.value,
 				bio: bio.current.value,
-				email: "muhammedrafeeqvr805@gmail.com",
 				avatar: cropped ? cropped : avatar,
 			})
 			.then((res) => {

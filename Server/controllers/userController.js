@@ -122,13 +122,13 @@ module.exports = {
 		}
 	},
 	editProfile: async (req, res) => {
-		const { name, headline, bio, email, avatar } = req.body;
+		const { name, headline, bio,email, avatar } = req.body;
 		console.log(avatar);
 		var file = "";
 		const call = async (item) => {
 			try {
 				const user = await userSchema.findOneAndUpdate(
-					{ email: email },
+					{ email: req.session.email },
 					{
 						name: name,
 						bio: bio,

@@ -20,6 +20,7 @@ const AddProjectPage = () => {
 	const [screenshotError, setScreenshotError] = useState(false);
 	const [featuresError, setFeaturesError] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
+	const [category,setCategory] = useState(null)
 
 	const navigate = useNavigate();
 	const features = useSelector((store) => store?.feature?.features);
@@ -128,6 +129,13 @@ const AddProjectPage = () => {
 		if (cookies.token === "undefined") {
 			navigate("/login");
 		}
+		async function call(){
+			axios.get('getallcategories')
+			.then(({data})=> {
+				setCategory(data)
+			})
+		}
+		call()
 	}, []);
 	return (
 		<div className="mt-16 md:mt-0 relative md:mb-16">
@@ -173,7 +181,8 @@ const AddProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onChange={changeInput}>
-							<option value={"React JS"}>React JS</option>
+							{category?.map(item => <option value={item.title}>{item.title}</option>)}
+							
 						</select>
 					</div>
 				</div>
@@ -236,7 +245,7 @@ const AddProjectPage = () => {
 							<div className="flex items-center justify-center mt-2">
 								<label
 									for="dropfile"
-									className="flex px-8 w-full flex-col items-center justify-center p-2 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+									className="flex px-8 w-full flex-col items-center justify-center p-2 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100">
 									{!thumbnail && (
 										<div className="flex flex-col items-center justify-center pt-5 pb-6">
 											<i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>
@@ -279,7 +288,7 @@ const AddProjectPage = () => {
 						<div className="flex items-center justify-center w-full">
 							<label
 								for="dropzone-file"
-								className="flex px-8 flex-col md:h-full items-center justify-center w-full p-2 h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+								className="flex px-8 flex-col md:h-full items-center justify-center w-full p-2 h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 ">
 								<div className="flex flex-col items-center justify-center pt-5 pb-6">
 									<i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>
 									<p className="mb-2 text-sm text-gray-500 dark:text-gray-400">

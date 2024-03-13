@@ -2,11 +2,23 @@ import React, { useEffect, useState } from 'react'
 import DomainCard from './DomainCard'
 import DomainCardLoader from './skelton/DomainCardLoader'
 import { Link } from 'react-router-dom'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { addCategory } from '../utils/projectSlice'
 
 
 export const Domains = () => {
+    const dispatch = useDispatch()
     const domains = useSelector((store) => store?.project?.category)
+    useEffect(() => {
+        async function call(){
+			axios.get('getallcategories')
+			.then(({data})=> {
+				dispatch(addCategory(data))
+			})
+		}
+		call()
+    },[])
     return (
         <div className='px-2 mt-4'>
             <div className='flex justify-between items-center'>
