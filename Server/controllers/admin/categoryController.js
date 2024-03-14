@@ -55,10 +55,9 @@ module.exports = {
 			const file = base64ImageToBlob(icon);
 			const storageRef = ref(
 				storage,
-				"category/" + Date.now() + "." + file.type.split("/")[1]
+				"domains/" + Date.now() + "." + file.type.split("/")[1]
 			);
 			uploadBytes(storageRef, file).then((snapshot) => {
-				console.log("uploaded");
 				getDownloadURL(snapshot.ref).then(async(item) => {
 					const img = item;
                     

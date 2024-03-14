@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 
 const AddCategory = ({ setShowAdd , setCategoryList}) => {
+	const [categories,setCategories] = useState(null)
 	const name = useRef(null);
 	const [icon, setIcon] = useState(null);
 	const [categoryError, setCategoryError] = useState(false);
@@ -42,6 +44,7 @@ const AddCategory = ({ setShowAdd , setCategoryList}) => {
 				}
 			});
 	};
+
 	return (
 		<div className="transition ease-out duration-3000 w-full justify-center items-center flex fixed inset-0 z-50 bg-[rgba(0,0,0,0.2)]">
 			<div className="w-full flex justify-center items-center">
@@ -108,12 +111,10 @@ const AddCategory = ({ setShowAdd , setCategoryList}) => {
 								<select
 									className="border rounded-md p-3 text-gray-500 w-full"
 									onChange={(e) => setMain(e.target.value)}>
-									<option value="Mobile App Development">
-										Mobile App Development
-									</option>
-									<option value="Web App Development">
-										Web App Development
-									</option>
+									{categories?.map(item => (<option value={item}>
+										{item}
+									</option>))}
+									
 								</select>
 							</div>
 							<div className="w-full">

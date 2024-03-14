@@ -5,13 +5,15 @@ import { useDispatch } from 'react-redux';
 import { removeUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
+import Cookies from "universal-cookie";
 
 const ProfileMenuCard = ({icon,title}) => {
+  const cookie = new Cookies()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [cookies, removeCookie] = useCookies([]);
+
   const handleLogout = () =>{
-    removeCookie("token");
+    cookie.remove('token', { path: '/' });
     navigate('/login')
     
   }

@@ -10,6 +10,7 @@ import addDescription from "../utils/projectSlice";
 import ReactQuill from "react-quill";
 import NotFound from "./NotFound";
 import FormLoading from "./skelton/FormLoading";
+import { categories } from "../utils/categories";
 
 const EditProjectPage = () => {
 	var imglist = [];
@@ -23,13 +24,18 @@ const EditProjectPage = () => {
 	const [imagesPreview, setImagesPreview] = useState([]);
 	const [thumbnail, setThumbnail] = useState(null);
 	const [features, setFeatures] = useState(null);
-
+	const [selectedFramework, setSelectedFramework] = useState([]);
+	const changeSelectedFramework = (e) => {
+		if(!selectedFramework.includes(e.target.value)){
+			setSelectedFramework((list) => [...list, e.target.value]);
+		}
+		
+	};
 	const [data, setData] = useState({
 		title: "",
 		category: "",
 		live_link: "",
 		overview: "",
-		frameworks_used: "",
 		db_used: "",
 		project_link: "",
 	});
@@ -47,13 +53,13 @@ const EditProjectPage = () => {
 							live_link: details?.live_link,
 							category: details?.category,
 							overview: details?.overview,
-							frameworks_used: details?.frameworks_used,
 							db_used: details?.db_used,
 							project_link: details?.project_link,
 						});
 						setThumbnail(details?.thumbnail);
 						setFeatures(details?.features);
 						setImagesPreview(details?.screenshots);
+						setSelectedFramework(details?.frameworks_used)
 						async function callCategoris () {
 							await axios.get('/getallcategories')
 							.then(({data})=> {
@@ -118,6 +124,7 @@ const EditProjectPage = () => {
 				thumbnail: thumbnail,
 				features: features,
 				project_id: id,
+				frameworks_used : selectedFramework
 			};
 			await axios.post("/editproject", postData)
 			.then((res) => {
@@ -177,7 +184,7 @@ const EditProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onClick={changeInput}>
-							{category?.map(item => <option value={item.title}>{item.title}</option>)}
+							{categories?.map(item => <option value={item}>{item}</option>)}
 							
 						</select>
 
@@ -298,14 +305,41 @@ const EditProjectPage = () => {
 
 						<label className="text-login font-medium ">Languages Used</label>
 
-						<input
+						{/* <input
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
 							type="text"
 							placeholder="Eg : HTML,Javascript"
 							name="frameworks_used"
 							onChange={changeInput}
 							value={data?.frameworks_used}
-						/>
+						/> */}
+						<select
+							name="languages"
+							onChange={changeSelectedFramework}
+							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2">
+							{category?.map((item) => (
+								<option value={item.title}>{item.title}</option>
+							))}
+						</select>
+						<div className="flex flex-wrap gap-3">
+							{selectedFramework?.map((item,index) => (<div
+								id="new+div"
+								class="flex bg-primary rounded-full p-1 pl-3 w-max gap-2 h-max">
+								<div>
+									<span class="text-white">{item}</span>
+								</div>
+								<button
+									onClick={() => {
+										selectedFramework.splice(index,1)
+										setSelectedFramework([...selectedFramework])
+									}}
+									type="button"
+									id="new+button"
+									class=" text-white rounded-full h-6 w-6">
+									<i class="bi bi-x"></i>
+								</button>
+							</div>))}
+						</div>
 						<label className="text-login font-medium ">Database</label>
 
 						<input

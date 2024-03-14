@@ -30,7 +30,7 @@ export const Domains = () => {
             </div>
             {!domains && <DomainCardLoader/>}
             
-            <div className='mt-3 grid grid-cols-5 gap-3'>
+            <div className='mt-3 grid grid-cols-4 gap-3'>
                 {domains?.map((item,index) => <DomainCard key={index} name={item.title} img={item.icon}/>)}
             </div>
         </div>

@@ -30,12 +30,15 @@ const ProjectCardSec = (props) => {
 			<div className="border-[1px] border-gray-200 rounded-md p-2 flex md:flex-col">
 				<div className="flex gap-3 sm:flex-col ">
 					{!load && <Skeleton variant="rounded" width={150} height={90} />}
-					<img
-						className={load ? "rounded-md w-2/5 h-26 lg:h-36 object-cover sm:w-full" : "hidden rounded-md w-2/5 h-26 lg:h-36 object-cover" }
+					<div className="w-36 sm:w-full h-24 lg:h-36">
+						<img
+						className={load ? "rounded-md h-full w-full object-cover " : "hidden h-full w-full rounded-md object-cover" }
 						src={thumbnail}
 						alt="thumb"
 						onLoad={onLoadImage}
-					/>
+						/>
+					</div>
+					
 
 					<div className="flex flex-col">
 						<span className="text-primary text-xs uppercase tracking-wider font-medium">

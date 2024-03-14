@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 
 const Header = () => {
 	const navigate = useNavigate();
-	const [cookies, removeCookie, setCookie] = useCookies([]);
+	const [cookie, removeCookie, setCookie] = useCookies([]);
 	const [logged, setLogged] = useState(true);
 	const navigateFavorites = () => {
 		navigate("/favorites");
@@ -14,7 +14,8 @@ const Header = () => {
 		navigate("/profile");
 	};
 	useEffect(() => {
-		if (!cookies.token || cookies.token === "undefined") {
+		console.log(cookie.token);
+		if (!cookie.token || cookie.token === "undefined") {
 			console.log("logged");
 			return setLogged(false);
 		}

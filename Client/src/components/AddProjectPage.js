@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import FormLoading from "./skelton/FormLoading";
 import Header from "./Header";
-import { categories } from "../utils/categories";
 import { frameworks } from "../utils/frameworks";
+import {categories} from "../utils/categories"
 
 const AddProjectPage = () => {
 	const [cookies, removeCookie] = useCookies([]);
@@ -23,6 +23,7 @@ const AddProjectPage = () => {
 	const [featuresError, setFeaturesError] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 	const [category, setCategory] = useState(null);
+
 
 	const navigate = useNavigate();
 	const features = useSelector((store) => store?.feature?.features);
@@ -140,6 +141,11 @@ const AddProjectPage = () => {
 		if (cookies.token === "undefined" || !cookies.token) {
 			navigate("/login");
 		}
+		async function call () {
+			const {data} = await axios.get('/getallcategories')
+			setCategory(data)
+		}
+		call()
 	}, []);
 	return (
 		<div className="mt-16 md:mt-0 relative md:mb-16">
@@ -340,8 +346,8 @@ const AddProjectPage = () => {
 							name="languages"
 							onChange={changeSelectedFramework}
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2">
-							{frameworks?.map((item) => (
-								<option value={item.name}>{item.name}</option>
+							{category?.map((item) => (
+								<option value={item.title}>{item.title}</option>
 							))}
 						</select>
 						<div className="flex flex-wrap gap-3">
