@@ -244,6 +244,9 @@ module.exports = {
 			);
 
 			const stacks_used = Array.from(new Set(data.map(item=>item.frameworks_used).flat()))
+			const images = await categorySchema.find({title:{"$in": stacks_used}},{icon:1})
+			console.log(stacks_used);
+			console.log(images);
 			const user = await projectSchema.aggregate([
 				{
 					$match: {
@@ -265,7 +268,7 @@ module.exports = {
 				details: userDetails[0],
 				views: user[0].totalViews,
 				projectsCount: user[0].projectsCount,
-				stacks_used : stacks_used
+				stacks_used : images
 			});
 		} catch (error) {
 			console.log(error);
