@@ -28,10 +28,10 @@ const ProjectCardSec = (props) => {
 	return (
 		<Link to={"/description/"+category+"/"+project_id}>
 			<div className="border-[1px] border-gray-200 rounded-md p-2 flex md:flex-col">
-				<div className="flex gap-3 sm:flex-col">
+				<div className="flex gap-3 sm:flex-col ">
 					{!load && <Skeleton variant="rounded" width={150} height={90} />}
 					<img
-						className={load ? "rounded-md w-2/5 h-26 object-cover sm:w-full" : "hidden rounded-md w-2/5 h-26 object-cover" }
+						className={load ? "rounded-md w-2/5 h-26 lg:h-36 object-cover sm:w-full" : "hidden rounded-md w-2/5 h-26 lg:h-36 object-cover" }
 						src={thumbnail}
 						alt="thumb"
 						onLoad={onLoadImage}
@@ -41,7 +41,7 @@ const ProjectCardSec = (props) => {
 						<span className="text-primary text-xs uppercase tracking-wider font-medium">
 							{category}
 						</span>
-						<span className="">{title}</span>
+						<span className="lg:text-lg">{title}</span>
 						<span className="text-sm text-gray-400">{publisher}</span>
 						<div className="flex justify-between w-full gap-8">
 							<div className="flex gap-2 items-center">

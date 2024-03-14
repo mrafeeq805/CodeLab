@@ -20,7 +20,7 @@ export const Domains = () => {
 		call()
     },[])
     return (
-        <div className='px-2 mt-4'>
+        <div className='px-2 mt-4 md:px-32'>
             <div className='flex justify-between items-center'>
                 <span className=' font-medium'>Projects by Domains</span>
                 <Link to={'/categories'}>

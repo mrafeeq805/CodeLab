@@ -5,13 +5,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
 import { useNavigate } from "react-router-dom";
-import { extractId } from "../utils/getDownloadFile";
 import { useCookies } from "react-cookie";
 import FormLoading from "./skelton/FormLoading";
 import Header from "./Header";
+import { categories } from "../utils/categories";
+import { frameworks } from "../utils/frameworks";
 
 const AddProjectPage = () => {
 	const [cookies, removeCookie] = useCookies([]);
+	const [selectedFramework, setSelectedFramework] = useState([]);
 	const [titleError, setTitleError] = useState(false);
 	const [languageError, setlanguageError] = useState(false);
 	const [overviewError, setOverviewError] = useState(false);
@@ -20,25 +22,29 @@ const AddProjectPage = () => {
 	const [screenshotError, setScreenshotError] = useState(false);
 	const [featuresError, setFeaturesError] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
-	const [category,setCategory] = useState(null)
+	const [category, setCategory] = useState(null);
 
 	const navigate = useNavigate();
 	const features = useSelector((store) => store?.feature?.features);
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
 	const [thumbnail, setThumbnail] = useState(null);
+	const changeSelectedFramework = (e) => {
+		if(!selectedFramework.includes(e.target.value)){
+			setSelectedFramework((list) => [...list, e.target.value]);
+		}
+		
+	};
 	const [data, setData] = useState({
 		title: "",
-		category: "React JS",
+		category: "Web Development",
 		link: "",
 		overview: "",
-		languages: "",
 		db: "No DB used",
 		project_link: "",
 	});
 	const changeInput = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
-		data.project_link = extractId(data.project_link);
 	};
 	const handleProductImageChange = (e) => {
 		const files = Array.from(e.target.files);
@@ -84,7 +90,6 @@ const AddProjectPage = () => {
 
 	const formHandler = async (e) => {
 		e.preventDefault();
-		console.log(features);
 		setTitleError(false);
 		setlanguageError(false);
 		setOverviewError(false);
@@ -104,7 +109,7 @@ const AddProjectPage = () => {
 			return setFeaturesError(true);
 		} else if (data.project_link === "" || !isValidUrl(data.project_link)) {
 			return setProjectLINKError(true);
-		} else if (data.languages === "") {
+		} else if (selectedFramework.length === 0) {
 			return setlanguageError(true);
 		}
 		setSubmitted(true);
@@ -115,10 +120,16 @@ const AddProjectPage = () => {
 				screenshots: images,
 				thumbnail: thumbnail,
 				features: features,
+				frameworks_used : selectedFramework
 			};
-			await axios.post("/addproject", postData);
-			navigate("/");
-			setSubmitted(false);
+			await axios.post("/addproject", postData)
+			.then(() => {
+				navigate("/");
+				setSubmitted(false);
+			}).catch((err) => {
+				console.log(err);
+			})
+			
 		} catch (error) {
 			setSubmitted(false);
 			console.log("error");
@@ -126,16 +137,9 @@ const AddProjectPage = () => {
 	};
 	useEffect(() => {
 		console.log(cookies.token);
-		if (cookies.token === "undefined") {
+		if (cookies.token === "undefined" || !cookies.token) {
 			navigate("/login");
 		}
-		async function call(){
-			axios.get('getallcategories')
-			.then(({data})=> {
-				setCategory(data)
-			})
-		}
-		call()
 	}, []);
 	return (
 		<div className="mt-16 md:mt-0 relative md:mb-16">
@@ -181,8 +185,9 @@ const AddProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onChange={changeInput}>
-							{category?.map(item => <option value={item.title}>{item.title}</option>)}
-							
+							{categories?.map((item) => (
+								<option value={item}>{item}</option>
+							))}
 						</select>
 					</div>
 				</div>
@@ -328,15 +333,44 @@ const AddProjectPage = () => {
 				{/* project file */}
 				<div className="md:flex md:gap-10 w-full">
 					<div className="w-full">
-						<label className="text-login font-medium ">Languages Used</label>
+						<label className="text-login font-medium ">
+							Languages / Frameworks Used
+						</label>
+						<select
+							name="languages"
+							onChange={changeSelectedFramework}
+							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2">
+							{frameworks?.map((item) => (
+								<option value={item.name}>{item.name}</option>
+							))}
+						</select>
+						<div className="flex flex-wrap gap-3">
+							{selectedFramework?.map((item,index) => (<div
+								id="new+div"
+								class="flex bg-primary rounded-full p-1 pl-3 w-max gap-2 h-max">
+								<div>
+									<span class="text-white">{item}</span>
+								</div>
+								<button
+									onClick={() => {
+										selectedFramework.splice(index,1)
+										setSelectedFramework([...selectedFramework])
+									}}
+									type="button"
+									id="new+button"
+									class=" text-white rounded-full h-6 w-6">
+									<i class="bi bi-x"></i>
+								</button>
+							</div>))}
+						</div>
 
-						<input
-							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
+						{/* <input
+							className="hidden w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
 							type="text"
 							placeholder="Eg : HTML,Javascript"
 							name="languages"
 							onChange={changeInput}
-						/>
+						/> */}
 						{languageError && (
 							<div className="mb-1">
 								<span className="text-red-500 text-xs block">

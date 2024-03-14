@@ -39,6 +39,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 module.exports = {
 	addproject: async (req, res) => {
+		console.log(req.body);
 		const currentDate = new Date();
 		const day = currentDate.getDate();
 		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
@@ -60,7 +61,7 @@ module.exports = {
 			category,
 			link,
 			overview,
-			languages,
+			frameworks_used,
 			db,
 			features,
 			project_link,
@@ -114,7 +115,7 @@ module.exports = {
 					category: category,
 					live_link: link,
 					overview: overview,
-					frameworks_used: languages,
+					frameworks_used: frameworks_used,
 					db_used: db,
 					screenshots: screenshotsLinks,
 					thumbnail: thumbnailLink,

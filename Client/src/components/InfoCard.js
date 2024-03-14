@@ -4,7 +4,7 @@ import InfoSubCard from './InfoSubCard'
 import InformationCardLoader from './skelton/InformationCardLoader'
 
 const InfoCard = ({data}) => {
-  const details = [data?.category,data?.published_date,data?.last_updated,data?.frameworks_used,data?.db_used]
+  const details = [data?.category,data?.published_date,data?.last_updated,data?.frameworks_used.join(','),data?.db_used]
   return (
     <div className='bg-white p-3 my-3'>
         <span className='font-medium text-lg'>Information</span>

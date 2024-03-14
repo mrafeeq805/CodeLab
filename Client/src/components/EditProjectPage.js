@@ -247,7 +247,7 @@ const EditProjectPage = () => {
 							<div className="flex items-center justify-center mt-2">
 								<label
 									for="dropfile"
-									className="flex px-8 w-full flex-col items-center justify-center p-2 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+									className="flex px-8 w-full flex-col items-center justify-center p-2 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800  hover:bg-gray-100 ">
 									{!thumbnail && (
 										<div className="flex flex-col items-center justify-center pt-5 pb-6">
 											<i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>

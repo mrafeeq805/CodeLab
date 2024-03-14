@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const TopDevelopers = () => {
 	const list = useSelector((store) => store?.project?.topDevelopers);
 	return (
-		<div className="px-2">
+		<div className="px-2 md:px-32">
 			<div className="flex justify-between">
 				<span className="font-medium">Top Developers</span>
 				<Link to={"/developers"}>
