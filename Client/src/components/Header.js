@@ -36,7 +36,7 @@ const Header = () => {
 						class="bi bi-person-circle text-2xl text-gray-500"></i>
 				</div>
 			</header>
-			<header className="items-center bg-white shadow-md md:flex px-32 justify-between hidden">
+			<header className="items-center bg-white shadow-md md:flex px-32 justify-between hidden fixed w-full top-0">
 				<div className="flex gap-2">
 					<img className="h-6" src="/logo.png" alt="logo" />
 					<span className="text-primary font-medium text-lg">CodeLab</span>

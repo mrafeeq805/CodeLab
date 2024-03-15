@@ -7,11 +7,11 @@ const DomainCard = ({name,img}) => {
     navigate('/projects/'+name)
   }
   return (
-    <div onClick={navigateDomains} className='bg-light p-2 rounded-xl flex items-center justify-center flex-col'>
+    <div onClick={navigateDomains} className='bg-light p-2 rounded-xl md:py-8 flex items-center md:flex-row md:gap-4 justify-center flex-col'>
         <div className=''>
-            <img className='h-8' src={img} alt='icon' />
+            <img className='h-8 md:h-10 lg:h-12' src={img} alt='icon' />
         </div>
-        <span className='text-sm text-gray-500'>{name}</span>
+        <span className='text-sm text-gray-500 md:text-base'>{name}</span>
     </div>
   )
 }

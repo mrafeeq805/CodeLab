@@ -129,8 +129,8 @@ module.exports = {
 					status: "Pending",
 					price: "Free",
 					keywords:
-						title.split(" ").join(",") +
-						" , " +
+						title.split(" ").join(",") + 
+						" , " + frameworks_used.join(",")+ " , "+
 						response?.choices[0]?.message?.content,
 				});
 				newProject.save();
@@ -258,7 +258,6 @@ module.exports = {
 						_id: null,
 						totalViews: { $sum: "$views" },
 						projectsCount: { $sum: 1 },
-						stacks_used : {$sum: 1}
 					},
 				},
 				{ $unset: ["_id"] },

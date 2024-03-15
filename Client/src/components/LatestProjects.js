@@ -9,7 +9,7 @@ const LatestProjects = () => {
 	return (
 		<div className="px-2 mt-4 md:px-32">
 			<div className="flex justify-between items-center">
-				<span className=" font-medium">Latest Projects</span>
+				<span className=" font-medium md:text-lg">Latest Projects</span>
 				<span className="text-primary font-medium text-xs hidden">More</span>
 			</div>
 			

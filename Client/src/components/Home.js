@@ -14,6 +14,8 @@ import {
 	addTopDevelopers,
 } from "../utils/projectSlice";
 import { Link } from "react-router-dom";
+import Banner from "./Banner";
+import Footer from "./Footer";
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -32,21 +34,31 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div className="relative mb-12">
+		<div className="relative mb-12 md:mb-0">
 			<Header />
 			<div className="md:hidden">
 				<SearchBar title={"Search Projects..."} />
 			</div>
-			
+			<Banner/>
 			<TopDevelopers />
+			<div className=" hidden md:block">
+			 <Domains />
+			</div>
+			
 			<LatestProjects />
-			<Domains />
+			<div className=" md:hidden">
+			 <Domains />
+			</div>
+			
 			<PopularProjects />
 			<Link to={'/addproject'}>
 				<button className="bg-primary rounded-full md:hidden h-16 w-16 p-2 text-white fixed z-30 right-2 bottom-2">
 					<i class="bi bi-plus text-white text-3xl"></i>
 				</button>
 			</Link>
+			<div className="md:block">
+				<Footer/>
+			</div>
 		</div>
 	);
 };

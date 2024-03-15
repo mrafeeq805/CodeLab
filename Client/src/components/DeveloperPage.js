@@ -41,7 +41,7 @@ const DeveloperPage = () => {
 		call();
 	}, []);
 	return (
-		<div className="bg-slate-50 flex-col mt-16 md:mt-0">
+		<div className="bg-slate-50 flex-col mt-16 md:mt-24">
 			<Navbar title={devinfo?.details?.name} />
 			<div className="hidden md:block">
 				<Header />

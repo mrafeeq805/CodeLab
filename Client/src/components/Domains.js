@@ -20,17 +20,17 @@ export const Domains = () => {
 		call()
     },[])
     return (
-        <div className='px-2 mt-4 md:px-32'>
+        <div className='px-2 mt-4 md:px-28'>
             <div className='flex justify-between items-center'>
-                <span className=' font-medium'>Projects by Domains</span>
+                <span className=' font-medium md:text-lg'>Projects by Domains</span>
                 <Link to={'/categories'}>
-                    <span className='text-primary font-medium text-xs'>More</span>
+                    <span className='text-primary font-medium text-xs md:text-base'>More</span>
                 </Link>
                 
             </div>
             {!domains && <DomainCardLoader/>}
             
-            <div className='mt-3 grid grid-cols-4 gap-3'>
+            <div className='mt-3 grid grid-cols-4 md:grid-cols-6 gap-3'>
                 {domains?.map((item,index) => <DomainCard key={index} name={item.title} img={item.icon}/>)}
             </div>
         </div>
