@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useCookies } from "react-cookie";
+import ProfilePopup from "./ProfilePopup";
 
 const Header = () => {
 	const navigate = useNavigate();
 	const [cookie, removeCookie, setCookie] = useCookies([]);
 	const [logged, setLogged] = useState(true);
+	const [showProfile, setShowProfile] = useState(false);
 	const navigateFavorites = () => {
 		navigate("/favorites");
 	};
@@ -36,7 +38,7 @@ const Header = () => {
 						class="bi bi-person-circle text-2xl text-gray-500"></i>
 				</div>
 			</header>
-			<header className="items-center bg-white shadow-md md:flex px-32 justify-between hidden fixed z-20 w-full top-0">
+			<header className="items-center bg-white shadow-md md:flex px-32 justify-between hidden fixed z-20 w-full top-0 ">
 				<div className="flex gap-2">
 					<img className="h-6" src="/logo.png" alt="logo" />
 					<span className="text-primary font-medium text-lg">CodeLab</span>
@@ -58,12 +60,14 @@ const Header = () => {
 							</span>
 						</div>
 					)}
-
-					{logged && (
-						<i
-							onClick={navigateProfile}
-							class="bi bi-person-circle text-3xl text-gray-500"></i>
-					)}
+					<div className="group">
+						{logged && (
+							<i
+								
+								class="bi bi-person-circle text-3xl text-gray-500 hover:text-primary"></i>
+						)}
+						<ProfilePopup />
+					</div>
 				</div>
 			</header>
 		</div>

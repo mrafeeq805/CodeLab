@@ -108,6 +108,9 @@ module.exports = {
 					res.json({
 						result: "success",
 						token: token,
+						email : user[0].email,
+						name: user[0].name,
+						avatar : user[0].avatar
 					});
 				} else {
 					res.json({

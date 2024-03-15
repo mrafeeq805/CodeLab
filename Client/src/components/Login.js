@@ -47,6 +47,9 @@ const Login = () => {
 			.then((r) => {
 				if (r.data.result === "success") {
 					cookies.set("token", r?.data?.token, { path: "/" });
+					cookies.set("email", r?.data?.email, { path: "/" });
+					cookies.set("name", r?.data?.name, { path: "/" });
+					cookies.set("avatar", r?.data?.avatar, { path: "/" });
 					toast.success("Successfully Signed In", {
 						position: "bottom-right",
 						autoClose: 5000,

@@ -4,7 +4,7 @@ import FeaturesInput from "./FeaturesInput";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import SSCards from "./SSCards";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import FormLoading from "./skelton/FormLoading";
 import Header from "./Header";
@@ -148,7 +148,7 @@ const AddProjectPage = () => {
 		call()
 	}, []);
 	return (
-		<div className="mt-16 md:mt-0 relative md:mb-16">
+		<div className="mt-16 md:mt-24 relative md:mb-16">
 			<Navbar title={"Add Project"} />
 			<div className="hidden md:block">
 				<Header />
@@ -156,7 +156,7 @@ const AddProjectPage = () => {
 
 			{submitted && <FormLoading />}
 			<div className="hidden md:flex gap-2 px-44 mt-5">
-				<span className="text-sm text-gray-400 md:text-base">Home</span>
+				<Link className="text-sm text-gray-400 md:text-base" to={'/'}>Home</Link>
 				<span className="text-sm text-gray-400 md:text-base">/</span>
 				<span className="text-sm text-gray-400 md:text-base">Projects</span>
 				<span className="text-sm text-gray-400 md:text-base">/</span>

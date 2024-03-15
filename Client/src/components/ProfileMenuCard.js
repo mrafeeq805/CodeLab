@@ -14,6 +14,9 @@ const ProfileMenuCard = ({icon,title}) => {
 
   const handleLogout = () =>{
     cookie.remove('token', { path: '/' });
+    cookie.remove('email', { path: '/' });
+    cookie.remove('name', { path: '/' });
+    cookie.remove('avatar', { path: '/' });
     navigate('/login')
     
   }
