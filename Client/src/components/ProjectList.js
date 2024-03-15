@@ -4,6 +4,7 @@ import SearchBar from "./SearchBar";
 import ProjectListSection from "./ProjectListSection";
 import { Link, useParams } from "react-router-dom";
 import Header from "./Header";
+import Footer from './Footer'
 
 const ProjectList = () => {
 	return (
@@ -20,6 +21,9 @@ const ProjectList = () => {
 					<i class="bi bi-plus text-white text-3xl"></i>
 				</button>
 			</Link>
+			<div className="hidden md:block mt-12">
+				<Footer/>
+			</div>
 		</div>
 	);
 };

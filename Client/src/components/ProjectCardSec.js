@@ -27,7 +27,7 @@ const ProjectCardSec = (props) => {
 	} = props.data;
 	return (
 		<Link to={"/description/"+category+"/"+project_id}>
-			<div className="border-[1px] border-gray-200 rounded-md p-2 flex md:flex-col">
+			<div className="border-[1px] border-gray-200 rounded-md p-2 flex md:flex-col md:shadow-lg">
 				<div className="flex gap-3 sm:flex-col ">
 					{!load && <Skeleton variant="rounded" width={150} height={90} />}
 					<div className="w-36 sm:w-full h-24 lg:h-36">
