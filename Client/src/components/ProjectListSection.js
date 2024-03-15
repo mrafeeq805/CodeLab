@@ -31,7 +31,14 @@ const ProjectListSection = () => {
 	//const projectList = useSelector((store) => store?.project?.latestProjects)
 	const list = ["1", "2"];
 	return (
-		<div className="px-4">
+		<div className="px-4 md:mt-24 md:px-16">
+			<div className="flex gap-2">
+				<span className="text-sm text-gray-400 md:text-base">Home</span>
+				<span className="text-sm text-gray-400 md:text-base">/</span>
+				<span className="text-sm text-gray-400 md:text-base">Projects</span>
+				<span className="text-sm text-gray-400 md:text-base">/</span>
+				<span className="text-sm text-gray-400 md:text-base">{category}</span>
+			</div>
 			{!emptyData && (
 				<div className="flex justify-between items-center">
 					<span className="font-medium">
@@ -44,9 +51,7 @@ const ProjectListSection = () => {
 				</div>
 			)}
 			{popup && <SortPopup setPopup={setPopup} setProjectList={setProjectList} list={projectList}/>}
-
-			<div className="mt-3 grid grid-cols-1 gap-3">
-				{emptyData && (
+			{emptyData && (
 					<EmptyCard
 						title={"Project Empty"}
 						img={"/img/project_empty.png"}
@@ -55,6 +60,8 @@ const ProjectListSection = () => {
 						}
 					/>
 				)}
+			<div className="mt-3 grid grid-cols-1 md:grid-cols-4 gap-3">
+				
 				{projectList.length === 0 &&
 					!emptyData &&
 					list?.map((item, index) => <ProjectCardMainLoader key={index} />)}

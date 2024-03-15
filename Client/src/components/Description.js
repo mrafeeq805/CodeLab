@@ -11,6 +11,7 @@ import { Skeleton } from "@mui/material";
 import ScreenshotsCarousel from "./ScreenshotsCarousel";
 import { calcDate } from "../utils/dateDifference";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const Description = () => {
 	const [description, setDiscription] = useState(null);
@@ -36,7 +37,7 @@ const Description = () => {
 		<div className="bg-slate-50 ">
 			<Navbar title={"Project Desciption"} />
 			<Header/>
-			<div className="hidden md:flex md:flex-col md:gap-3 pt-6 px-32 ">
+			<div className="hidden md:flex md:flex-col md:gap-3 pt-6 px-32 md:mt-20">
 				<div className="flex gap-2">
 					<span className="text-sm text-gray-400 md:text-base">Home</span>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
@@ -178,6 +179,9 @@ const Description = () => {
 					url={description?.project_link}
 				/>
 			)}
+			<div className="hidden md:block">
+				<Footer/>
+			</div>
 		</div>
 	);
 };

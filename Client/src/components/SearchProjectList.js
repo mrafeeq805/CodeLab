@@ -9,6 +9,7 @@ import ProjectCardMain from "./ProjectCardMain";
 import axios from "axios";
 import { addSearchResult } from "../utils/projectSlice";
 import EmptyCard from "./EmptyCard";
+import Header from "./Header";
 
 const SearchProjectList = () => {
 	const [emptyData,setEmptyData] = useState(false)
@@ -35,13 +36,17 @@ const SearchProjectList = () => {
 	return (
 		<div>
 			<Navbar title={search} />
-			<SearchBar title={"Search Projects..."} />
+			<Header/>
+			<div className="md:hidden">
+			 <SearchBar title={"Search Projects..."} />
+			</div>
+			
 			{ emptyData &&  (<EmptyCard 
 					title={"No results found"} 
 					img={"/img/no_results.png"} 
 					des={"No results found. Please try again "}
 			/>)}
-			<div className="px-4">
+			<div className="px-4 md:mt-24">
 				{!emptyData && (<div className="flex justify-between items-center">
 					<span className="font-medium">
 						Search Results ({projectList ? projectList.length : 0})
@@ -52,7 +57,7 @@ const SearchProjectList = () => {
 					</div>
 				</div>)}
 
-				<div className="mt-3 grid grid-cols-1 gap-3">
+				<div className="mt-3 grid grid-cols-1 md:grid-cols-4 gap-3">
 					{!projectList && !emptyData &&
 						list?.map((item, index) => <ProjectCardMainLoader key={index} />)}
 					{projectList &&
