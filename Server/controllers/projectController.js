@@ -142,7 +142,7 @@ module.exports = {
 	getLatestList: async (req, res) => {
 		
 		try {
-			const data = await projectSchema.find().sort({ _id: -1 }).limit(2);
+			const data = await projectSchema.find().sort({ _id: -1 });
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -150,7 +150,7 @@ module.exports = {
 	},
 	getPopularList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({views: -1 }).limit(2);
+			const data = await projectSchema.find().sort({views: -1 });
 			res.json(data);
 		} catch (error) {
 			console.log(error);

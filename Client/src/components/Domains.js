@@ -6,8 +6,10 @@ import {  useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addCategory } from '../utils/projectSlice'
 
-
+const width = window.innerWidth
+const count = width <=400 ? 8 : 12
 export const Domains = () => {
+
     const dispatch = useDispatch()
     const domains = useSelector((store) => store?.project?.category)
     useEffect(() => {
@@ -31,7 +33,7 @@ export const Domains = () => {
             {!domains && <DomainCardLoader/>}
             
             <div className='mt-3 grid grid-cols-4 md:grid-cols-6 gap-3'>
-                {domains?.map((item,index) => <DomainCard key={index} name={item.title} img={item.icon}/>)}
+                {domains?.slice(0,count).map((item,index) => <DomainCard key={index} name={item.title} img={item.icon}/>)}
             </div>
         </div>
     )

@@ -60,6 +60,9 @@ const Header = () => {
 							</span>
 						</div>
 					)}
+					<i
+						onClick={navigateFavorites}
+						class="bi bi-heart text-gray-500 text-2xl"></i>
 					<div className="group">
 						{logged && (
 							<i

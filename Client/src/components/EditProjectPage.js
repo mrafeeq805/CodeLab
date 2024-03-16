@@ -145,8 +145,11 @@ const EditProjectPage = () => {
 	return (
 		<div className="mt-16 relative md:my-24">
 			<Navbar title={"Modify Project"} />
-			<Header />
-			<div className="flex gap-2 md:px-56">
+			<div className="hidden md:block">
+				<Header />
+			</div>
+			
+			<div className="hidden md:flex gap-2 md:px-56 ">
 				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
 					Home
 				</Link>

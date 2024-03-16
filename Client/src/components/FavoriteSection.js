@@ -4,46 +4,64 @@ import axios from "axios";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 import { useSelector } from "react-redux";
 import EmptyCard from "./EmptyCard";
+import { Link } from "react-router-dom";
 
 const FavoriteSection = () => {
-    const list = ['1','2']
-	const [emptyData,setEmptyData] = useState(false)
-	const [favoriteProjects,setFavoriteProjects] = useState([])
-	const favorites = useSelector((store) => store?.favorite?.favoriteProjects)
+	const list = ["1", "2"];
+	const [emptyData, setEmptyData] = useState(false);
+	const [favoriteProjects, setFavoriteProjects] = useState([]);
+	const favorites = useSelector((store) => store?.favorite?.favoriteProjects);
 	useEffect(() => {
-		setFavoriteProjects([])
+		setFavoriteProjects([]);
 		async function call() {
-			await axios.post("/getfavorite",{id:favorites})
-			.then((res) => {
-				if(res?.data.length === 0){
-					setEmptyData(true)
-				}else{
-					setFavoriteProjects(res?.data)
-					setEmptyData(false)
+			await axios.post("/getfavorite", { id: favorites }).then((res) => {
+				if (res?.data.length === 0) {
+					setEmptyData(true);
+				} else {
+					setFavoriteProjects(res?.data);
+					setEmptyData(false);
 				}
-				
 			});
 		}
 		call();
 	}, [favorites]);
 
-    const ProjectCardSecNew = ProjectCardSecRemove(ProjectCardSec)
+	const ProjectCardSecNew = ProjectCardSecRemove(ProjectCardSec);
 	return (
-		<div className="px-2 mt-16">
-            {!emptyData && <span className="font-medium">Projects ({favorites ? favorites.length : 0})</span>}
-			{ emptyData &&  (<EmptyCard 
-					title={"No favorites"} 
-					img={"/img/no_favorite.png"} 
-					des={"You have nothing on your list yet. Its never too late to change it"}
-				/>)}
-			<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
-				{favoriteProjects.length === 0 && !emptyData && list?.map(item => <ProjectCardSecLoader key={item}/>)}
-				{favoriteProjects && favoriteProjects?.map((item,index) => (
-					<ProjectCardSecNew data={item}/>
-				))}
+		<div className="px-2 mt-16 md:mt-24 md:px-44">
+			<div className="md:flex gap-2 hidden mb-5">
+				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
+					Home
+				</Link>
+				<span className="text-sm text-gray-400 md:text-base">/</span>
+				<span className="text-sm text-gray-400 md:text-base font-medium">Favorites</span>
+
+			</div>
+			{!emptyData && (
+				<span className="font-medium md:text-lg">
+					Projects ({favorites ? favorites.length : 0})
+				</span>
+			)}
+			{emptyData && (
+				<EmptyCard
+					title={"No favorites"}
+					img={"/img/no_favorite.png"}
+					des={
+						"You have nothing on your list yet. Its never too late to change it"
+					}
+				/>
+			)}
+			<div className="mt-3 grid md:grid-cols-3 grid-flow-row gap-2">
+				{favoriteProjects.length === 0 &&
+					!emptyData &&
+					list?.map((item) => <ProjectCardSecLoader key={item} />)}
+				{favoriteProjects &&
+					favoriteProjects?.map((item, index) => (
+						<ProjectCardSecNew data={item} />
+					))}
 			</div>
 		</div>
 	);
 };
 
-export default FavoriteSection
+export default FavoriteSection;

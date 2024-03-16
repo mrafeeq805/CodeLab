@@ -38,7 +38,7 @@ const Categories = () => {
 			</div>
 			<div className="px-2 ">
 			{!list && <DomainCardLoader/>}
-			<div className="mt-3 grid grid-cols-5 gap-3">
+			<div className="mt-3 grid grid-cols-4 gap-3">
 				{list?.map((item) => (
 					<DomainCard name={item.title} img={item.icon} />
 				))}
