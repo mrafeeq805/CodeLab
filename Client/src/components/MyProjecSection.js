@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 import axios from "axios";
 import { addMyProjects } from "../utils/projectSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 
 const MyProjecSection = ({ data }) => {
@@ -38,7 +38,12 @@ const MyProjecSection = ({ data }) => {
 		call();
 	}, []);
 	return (
-		<div className="px-2 mt-16 md:mt-0 md:px-24">
+		<div className="px-2 mt-16 md:mt-24 md:px-24 ">
+			<div className="flex gap-2 mb-5">
+					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
+					<span className="text-sm text-gray-400 md:text-base">/</span>
+					<span className="text-sm text-gray-400 md:text-base font-medium">My Projects</span>
+				</div>
 			{!emptyData && <span className="font-medium">Projects ({myProjects.length || 0})</span>}
 			{ emptyData &&  (<EmptyCard 
 					title={"Project Empty"} 

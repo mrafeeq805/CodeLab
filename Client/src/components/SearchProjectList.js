@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import ProjectListSection from "./ProjectListSection";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectCardMain from "./ProjectCardMain";
@@ -69,8 +69,8 @@ const SearchProjectList = () => {
 				/>
 			)}
 			<div className="px-4 md:mt-24 md:px-24">
-				<div className="flex gap-2">
-					<span className="text-sm text-gray-400 md:text-base">Home</span>
+				<div className=" gap-2 hidden md:flex">
+					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
 					<span className="text-sm text-gray-400 md:text-base">Search</span>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
@@ -106,7 +106,7 @@ const SearchProjectList = () => {
 					</div>
 				)}
 				<div className="md:flex md:border-t-2">
-					<div>
+					<div className="hidden md:block">
 						<Filter projectList={projectList} setProjectList={setProjectList}/>
 					</div>
 					<div className="md:p-5">

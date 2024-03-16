@@ -3,7 +3,7 @@ import ProjectCardMain from "./ProjectCardMain";
 import { useSelector } from "react-redux";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 import SortPopup from "./SortPopup";
 
@@ -49,8 +49,8 @@ const ProjectListSection = () => {
 	const list = ["1", "2"];
 	return (
 		<div className="px-4 md:mt-24 md:px-16">
-			<div className="flex gap-2">
-				<span className="text-sm text-gray-400 md:text-base">Home</span>
+			<div className="hidden md:flex gap-2">
+				<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 				<span className="text-sm text-gray-400 md:text-base">/</span>
 				<span className="text-sm text-gray-400 md:text-base">Projects</span>
 				<span className="text-sm text-gray-400 md:text-base">/</span>

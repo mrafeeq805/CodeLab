@@ -52,7 +52,7 @@ const Filter = ({projectList,setProjectList}) => {
 					</div>
                     <div className="border-b-[1px] pb-4 ">
 						<span className="text-lg font-medium">Categories</span>
-						<div className="mt-1 max-h-72 overflow-y-scroll">
+						<div className="mt-1 max-h-48 overflow-y-scroll">
 							<ul className="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg dark:text-white ">
 								{categories?.map( item => (<li className="w-full  rounded-t-lg ">
 									<div className="flex items-center ">

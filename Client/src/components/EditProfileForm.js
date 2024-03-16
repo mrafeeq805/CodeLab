@@ -3,9 +3,8 @@ import axios from "axios";
 import Demo from "./CropView";
 import { useNavigate } from "react-router-dom";
 
-
 const EditProfileForm = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const [avatar, setAvatar] = useState(null);
 	const [picked, setPicked] = useState(false);
 	const [cropped, setCropped] = useState(null);
@@ -14,7 +13,7 @@ const EditProfileForm = () => {
 	const bio = useRef(null);
 	const handleForm = async (e) => {
 		e.preventDefault();
-			await axios
+		await axios
 			.post("/editprofiledata", {
 				name: name.current.value,
 				headline: headline.current.value,
@@ -22,15 +21,12 @@ const EditProfileForm = () => {
 				avatar: cropped ? cropped : avatar,
 			})
 			.then((res) => {
-				if(res?.data === 'updated'){
-					navigate('profile')
-				}else{
+				if (res?.data === "updated") {
+					navigate("profile");
+				} else {
 					console.log(res?.data);
 				}
-				
 			});
-		
-		
 	};
 	const onChangeImage = (e) => {
 		const reader = new FileReader();
@@ -47,7 +43,7 @@ const EditProfileForm = () => {
 		async function call() {
 			await axios
 				.post("/getprofile")
-				.then(({data}) => {
+				.then(({ data }) => {
 					console.log(data);
 					name.current.value = data?.data?.name;
 					bio.current.value = data?.data?.bio;
@@ -56,43 +52,49 @@ const EditProfileForm = () => {
 				})
 				.catch((err) => {
 					console.log(err);
-				})
+				});
 		}
 		call();
-	},[]);
+	}, []);
 	return (
-		<div className="mt-4 p-4">
-			<form className="" onSubmit={handleForm}>
+		<div className="mt-4 p-4 md:px-44 md:flex justify-center items-center">
+			<form className="md:w-5/12" onSubmit={handleForm}>
 				<div className="flex justify-between items-center mb-4">
-					<div className="flex flex-col">
-						<span className="text-xl font-medium">Basic Information</span>
-						<div className="mt-2 flex flex-col">
-							<span>Profile Photo</span>
-							<span className="text-gray-400 text-sm">
-								Recommonded 300 * 300
-							</span>
-						</div>
+					<div className="md:flex ">
+						<div className="flex flex-col w-full">
+							<span className="text-xl font-medium">Basic Information</span>
+							<div className="mt-2 flex flex-col">
+								<span>Profile Photo</span>
+								<span className="text-gray-400 text-sm">
+									Recommonded 300 * 300
+								</span>
+							</div>
 
-						<div className="flex gap-3 mt-2">
-							<label
-								className="border-2 rounded-md px-4 p-1 text-sm"
-								for={"file_inp"}>
-								Change
-							</label>
-							<input
-								onChange={onChangeImage}
-								type="file"
-								id="file_inp"
-								className="hidden"
-							/>
-							<button
-								type="button"
-								onClick={() => setAvatar(null)}
-								className="border-2 rounded-md px-4 p-1 text-sm">
-								Remove
-							</button>
+							<div className="flex gap-3 mt-2">
+								<label
+									className="border-2 rounded-md px-4 p-1 text-sm"
+									for={"file_inp"}>
+									Change
+								</label>
+								<input
+									onChange={onChangeImage}
+									type="file"
+									id="file_inp"
+									className="hidden"
+								/>
+								<button
+									type="button"
+									onClick={() => setAvatar(null)}
+									className="border-2 rounded-md px-4 p-1 text-sm">
+									Remove
+								</button>
+							</div>
+						</div>
+						<div>
+
 						</div>
 					</div>
+
 					<div>
 						<div className="border-[1px] border-primary rounded-full h-16 w-16 p-1">
 							<img

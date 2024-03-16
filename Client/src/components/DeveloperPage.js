@@ -5,7 +5,7 @@ import DevProjecInfo from "./DevProjecInfo";
 import TechStackSection from "./TechStackSection";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 import ProjectCardSec from "./ProjectCardSec";
 import Header from "./Header";
@@ -48,7 +48,7 @@ const DeveloperPage = () => {
 				<Header />
 			</div>
 			<div className=" gap-2 hidden md:flex px-32">
-				<span className="text-sm text-gray-400 md:text-base">Home</span>
+				<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 				<span className="text-sm text-gray-400 md:text-base">/</span>
 				<span className="text-sm text-gray-400 md:text-base">Developers</span>
 				<span className="text-sm text-gray-400 md:text-base">/</span>

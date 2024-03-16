@@ -11,7 +11,7 @@ const Banner = () => {
 					Buy premium <strong>PHP scripts, app templates, themes</strong> and{" "}
 					<strong>plugins</strong> and create amazing websites & apps.
 				</p>
-				<div className="flex justify-center items-center">
+				<div className="flex justify-center items-center mt-7">
 					<div className="p-2 my-2 md:w-8/12 ">
 						<div className="rounded-lg border-2 p-2 px-4 bg-white">
 							<form

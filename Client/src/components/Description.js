@@ -5,7 +5,7 @@ import InfoCard from "./InfoCard";
 import DeveloperProfileCard from "./DeveloperProfileCard";
 import RelatedProjects from "./RelatedProjects";
 import DownloadCard from "./DownloadCard";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
 import ScreenshotsCarousel from "./ScreenshotsCarousel";
@@ -39,7 +39,7 @@ const Description = () => {
 			<Header/>
 			<div className="hidden md:flex md:flex-col md:gap-3 pt-6 px-32 md:mt-20">
 				<div className="flex gap-2">
-					<span className="text-sm text-gray-400 md:text-base">Home</span>
+					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
 					<span className="text-sm text-gray-400 md:text-base">Projects</span>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
