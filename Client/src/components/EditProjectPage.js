@@ -139,7 +139,6 @@ const EditProjectPage = () => {
 	};
 	const removeHandler = (index) => {
 		imagesPreview.splice(index, 1);
-		console.log(imagesPreview);
 		setImagesPreview([...imagesPreview]);
 	};
 	return (
@@ -218,7 +217,7 @@ const EditProjectPage = () => {
 								<label className="text-login font-medium">Overview</label>
 
 								<textarea
-									className="w-full text-login_light min-h-24 md:min-h-48 border-2 rounded-lg flex justify-between p-2 my-2"
+									className="w-full text-login_light min-h-44 md:min-h-48 border-2 rounded-lg flex justify-between p-2 my-2"
 									name="overview"
 									onChange={changeInput}
 									value={data?.overview}

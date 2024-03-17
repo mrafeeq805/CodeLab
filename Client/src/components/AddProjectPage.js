@@ -20,6 +20,7 @@ const AddProjectPage = () => {
 	const [project_linkError, setProjectLINKError] = useState(false);
 	const [thumbnailError, setThumbnailError] = useState(false);
 	const [screenshotError, setScreenshotError] = useState(false);
+	const [categoryError, setCategoryError] = useState(false);
 	const [featuresError, setFeaturesError] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 	const [category, setCategory] = useState(null);
@@ -38,7 +39,7 @@ const AddProjectPage = () => {
 	};
 	const [data, setData] = useState({
 		title: "",
-		category: "Web Development",
+		category: "Choose",
 		link: "",
 		overview: "",
 		db: "No DB used",
@@ -100,6 +101,10 @@ const AddProjectPage = () => {
 		setFeaturesError(false);
 		if (data.title === "") {
 			return setTitleError(true);
+		} else if (data.category === "Choose") {
+			return setCategoryError(true);
+		} else if (data.project_link === "" || !isValidUrl(data.project_link)) {
+			return setProjectLINKError(true);
 		} else if (data.overview === "") {
 			return setOverviewError(true);
 		} else if (images.length === 0) {
@@ -108,8 +113,6 @@ const AddProjectPage = () => {
 			return setThumbnailError(true);
 		} else if (features === null) {
 			return setFeaturesError(true);
-		} else if (data.project_link === "" || !isValidUrl(data.project_link)) {
-			return setProjectLINKError(true);
 		} else if (selectedFramework.length === 0) {
 			return setlanguageError(true);
 		}
@@ -191,10 +194,18 @@ const AddProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onChange={changeInput}>
+							<option value={'Choose'} disabled>Choose</option>
 							{categories?.map((item) => (
 								<option value={item}>{item}</option>
 							))}
 						</select>
+						{categoryError && (
+							<div className="mb-1">
+								<span className="text-red-500 text-xs block">
+									Select a valid category
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 				<div className="md:flex w-full md:gap-10">
@@ -275,6 +286,7 @@ const AddProjectPage = () => {
 									<input
 										id="dropfile"
 										type="file"
+										accept="image/*"
 										className="hidden"
 										onChange={onImageChange}
 									/>
@@ -311,6 +323,7 @@ const AddProjectPage = () => {
 									type="file"
 									multiple
 									className="hidden"
+									accept="image/*"
 									onChange={handleProductImageChange}
 								/>
 							</label>
@@ -346,6 +359,7 @@ const AddProjectPage = () => {
 							name="languages"
 							onChange={changeSelectedFramework}
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2">
+							<option value={"Choose"} disabled>Choose</option>
 							{category?.map((item) => (
 								<option value={item.title}>{item.title}</option>
 							))}
@@ -370,6 +384,7 @@ const AddProjectPage = () => {
 							</div>))}
 						</div>
 
+
 						{/* <input
 							className="hidden w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
 							type="text"
@@ -380,7 +395,7 @@ const AddProjectPage = () => {
 						{languageError && (
 							<div className="mb-1">
 								<span className="text-red-500 text-xs block">
-									Enter a valid languages used
+									Pick atleast one languages used
 								</span>
 							</div>
 						)}

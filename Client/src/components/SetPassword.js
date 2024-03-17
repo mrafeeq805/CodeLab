@@ -2,8 +2,6 @@ import React, { useRef, useState } from "react";
 import LoginIntro from "./LoginIntro";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { updatePassword,signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../utils/firebase";
 import FormLoading from "./skelton/FormLoading";
 
 const SetPassword = () => {

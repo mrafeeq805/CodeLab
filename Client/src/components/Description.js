@@ -5,7 +5,7 @@ import InfoCard from "./InfoCard";
 import DeveloperProfileCard from "./DeveloperProfileCard";
 import RelatedProjects from "./RelatedProjects";
 import DownloadCard from "./DownloadCard";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
 import ScreenshotsCarousel from "./ScreenshotsCarousel";
@@ -16,9 +16,11 @@ import Footer from "./Footer";
 const Description = () => {
 	const [description, setDiscription] = useState(null);
 	const [publisher, setPublisher] = useState(null);
+	const location = useLocation()
 	const { project_id,category } = useParams();
 	const [ssvisible, setSSVisible] = useState(false);
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		async function call() {
 			await axios
 				.get("/description/" + project_id)
@@ -31,7 +33,7 @@ const Description = () => {
 				});
 		}
 		call();
-	}, [project_id]);
+	}, [location.pathname]);
 
 	return (
 		<div className="bg-slate-50 ">
@@ -173,6 +175,7 @@ const Description = () => {
 			</div>
 
 			{/* <RelatedProjects /> */}
+			<RelatedProjects/>
 			{!ssvisible && (
 				<DownloadCard
 					id={description?.project_id}
