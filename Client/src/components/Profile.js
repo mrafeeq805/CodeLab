@@ -16,7 +16,6 @@ const Profile = () => {
 		navigate("/editprofile");
 	};
 	useEffect(() => {
-		console.log(cookies.token);
 		if (!cookies.token) {
 			return navigate("/login");
 		}

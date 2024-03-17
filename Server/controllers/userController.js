@@ -126,14 +126,15 @@ module.exports = {
 	},
 	editProfile: async (req, res) => {
 		const { name, headline, bio,email, avatar } = req.body;
-		console.log(avatar);
+		const aleady = await userSchema.findOne({email : req.session.email})
 		var file = "";
 		const call = async (item) => {
 			try {
+				 
 				const user = await userSchema.findOneAndUpdate(
 					{ email: req.session.email },
 					{
-						name: name,
+						name: name === '' ? aleady.name : name,
 						bio: bio,
 						title: headline,
 						avatar: item,

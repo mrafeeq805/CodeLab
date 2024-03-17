@@ -12,6 +12,7 @@ import EmptyCard from "./EmptyCard";
 import Header from "./Header";
 import Filter from "./Filter";
 import Footer from "./Footer"
+import SortPopup from "./SortPopup";
 
 const SearchProjectList = () => {
 	const [emptyData, setEmptyData] = useState(false);
@@ -19,6 +20,7 @@ const SearchProjectList = () => {
 	const list = [1, 2];
 	const [projectList, setProjectList] = useState(null);
 	const { search } = useParams();
+	const [popup, setPopup] = useState(false);
 	const sortHandler = (type) => {
 		if (type === "Latest") {
 			const newList = [...projectList].sort(
@@ -68,6 +70,13 @@ const SearchProjectList = () => {
 					des={"No results found. Please try again "}
 				/>
 			)}
+			{popup && (
+				<SortPopup
+					setPopup={setPopup}
+					setProjectList={setProjectList}
+					list={projectList}
+				/>
+			)}
 			<div className="px-4 md:mt-24 md:px-24">
 				<div className=" gap-2 hidden md:flex">
 					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
@@ -84,7 +93,7 @@ const SearchProjectList = () => {
 						<span className="font-medium md:text-lg">
 							Search Results ({projectList ? projectList.length : 0})
 						</span>
-						<div className="flex items-center gap-2 md:hidden">
+						<div onClick={() => setPopup(true)} className="flex items-center gap-2 md:hidden">
 							<i class="bi bi-sort-down text-primary"></i>
 							<span className="text-primary text-sm">SORT</span>
 						</div>

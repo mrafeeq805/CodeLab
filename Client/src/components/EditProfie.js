@@ -11,8 +11,11 @@ const EditProfile = () => {
 	return (
 		<div className="bg-slate-50 flex-col mt-16 md:pt-9 ">
 			<Navbar title={"Edit Profile"} />
-			<Header/>
-			<div className="flex gap-2 md:px-44 mb-5">
+			<div className="hidden md:block">
+				<Header/>
+			</div>
+
+			<div className="hidden md:flex gap-2 md:px-44 mb-5 ">
 				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
 					Home
 				</Link>

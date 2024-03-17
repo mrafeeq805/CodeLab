@@ -52,17 +52,22 @@ const Header = () => {
 						Submit Project
 					</button>
 					{!logged && (
-						<div>
+						<button>
 							<span
 								onClick={() => navigate("/login")}
 								className="text-lg font-medium">
 								Sign In
 							</span>
-						</div>
+						</button>
 					)}
-					<i
-						onClick={navigateFavorites}
-						class="bi bi-heart text-gray-500 text-2xl"></i>
+					<button onClick={navigateFavorites}>
+						<i
+						
+						class="bi bi-heart text-gray-500 text-2xl ">
+						
+						</i>
+					</button>
+						
 					<div className="group">
 						{logged && (
 							<i

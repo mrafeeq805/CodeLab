@@ -64,7 +64,7 @@ const Description = () => {
 					</div>
 				</div>
 			</div>
-			<hr className="my-3"/>
+			<hr className="my-3 hidden md:block"/>
 			<div className="md:flex md:px-28 ">
 				<div className="px-3 mb-32 md:w-8/12">
 					<div>

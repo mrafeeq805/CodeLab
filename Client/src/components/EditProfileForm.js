@@ -2,17 +2,22 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Demo from "./CropView";
 import { useNavigate } from "react-router-dom";
+import FormLoading from './skelton/FormLoading'
+import Cookies from "universal-cookie";
 
 const EditProfileForm = () => {
+	const cookies = new Cookies()
 	const navigate = useNavigate();
 	const [avatar, setAvatar] = useState(null);
 	const [picked, setPicked] = useState(false);
 	const [cropped, setCropped] = useState(null);
 	const name = useRef(null);
-	const headline = useRef(null);
+	const headline = useRef(null)
+	const [loading,setLoading] = useState(false)
 	const bio = useRef(null);
 	const handleForm = async (e) => {
 		e.preventDefault();
+		setLoading(true)
 		await axios
 			.post("/editprofiledata", {
 				name: name.current.value,
@@ -21,8 +26,9 @@ const EditProfileForm = () => {
 				avatar: cropped ? cropped : avatar,
 			})
 			.then((res) => {
-				if (res?.data === "updated") {
-					navigate("profile");
+				if (res?.data?.result === "updated") {
+					setLoading(false)
+					navigate("/profile");
 				} else {
 					console.log(res?.data);
 				}
@@ -40,6 +46,9 @@ const EditProfileForm = () => {
 		reader.readAsDataURL(e.target.files[0]);
 	};
 	useEffect(() => {
+		if (!cookies.get('token')) {
+			return navigate("/login");
+		}
 		async function call() {
 			await axios
 				.post("/getprofile")
@@ -58,6 +67,7 @@ const EditProfileForm = () => {
 	}, []);
 	return (
 		<div className="mt-4 p-4 md:px-44 md:flex justify-center items-center">
+			{loading && <FormLoading/>}
 			<form className="md:w-5/12" onSubmit={handleForm}>
 				<div className="flex justify-between items-center mb-4">
 					<div className="md:flex ">

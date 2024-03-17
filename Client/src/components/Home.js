@@ -34,7 +34,7 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div className="relative mb-12 md:mb-0">
+		<div className="relative md:mb-0">
 			<Header />
 			<div className="md:hidden">
 				<SearchBar title={"Search Projects..."} />

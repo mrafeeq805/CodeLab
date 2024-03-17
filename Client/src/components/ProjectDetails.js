@@ -8,7 +8,7 @@ const ProjectDetails = ({details,setSSVisible}) => {
 
 	return (
 		
-		<div className="mt-16 md:mt-4 px-2 bg-white my-5">
+		<div className="mt-4 md:mt-4 px-2 bg-white my-5">
 			{!details && <ProjectDetailsLoader/>}
 			{details && (<div className="flex flex-col p-3 w-full">
 				<div className="flex justify-between md:hidden">

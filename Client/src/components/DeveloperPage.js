@@ -85,7 +85,7 @@ const DeveloperPage = () => {
 					/>
 					<TechStackSection data={devinfo?.stacks_used} />
 				</div>
-				<div className="md:w-full md:bg-white md:p-4">
+				<div className="md:w-full md:bg-white md:p-4 mb-5">
 					{!emptyData && (
 						<div className="px-2 mt-4">
 							<span className="font-medium md:text-lg">

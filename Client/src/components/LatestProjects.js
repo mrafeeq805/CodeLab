@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import ProjectCardSec from "./ProjectCardSec";
 import { useSelector } from "react-redux";
 import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
-
+const width = window.innerWidth
+const count = width <=400 ? 2 : 8
 const LatestProjects = () => {
 	const countd = [1,2]
-	const width = window.innerWidth
-    const count = width <=400 ? 2 : 8
+
 	const list = useSelector((store) => store?.project?.latestProjects);
 	return (
 		<div className="px-2 mt-4 md:px-28 ">
