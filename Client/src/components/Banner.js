@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
 import SearchBar from "./SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
 	const search = useRef(null);
-	const formHandler = () => {};
+	const navigate = useNavigate()
+	const formHandler = (e) => {
+		e.preventDefault()
+		navigate('/search/'+search.current.value.toLowerCase())
+	};
 	return (
 		<div className="px-96 md:flex hidden flex-col justify-center items-center bg-gradient-to-r from-primary to-blue-400 py-16 mt-16">
 			<div className="">

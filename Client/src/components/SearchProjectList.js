@@ -13,6 +13,7 @@ import Header from "./Header";
 import Filter from "./Filter";
 import Footer from "./Footer";
 import SortPopup from "./SortPopup";
+import _ from "lodash";
 
 const SearchProjectList = () => {
 	const location = useLocation();
@@ -126,11 +127,11 @@ const SearchProjectList = () => {
 					{!emptyData && (<div className="hidden md:block">
 						<Filter projectList={projectList} projectListPer={projectListPer} setProjectList={setProjectList} />
 					</div>)}
-					<div className="md:p-5">
-						<div className="mt-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
+					<div className="md:p-5 md:w-full">
+						<div className="mt-3 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3">
 							{!projectList &&
 								!emptyData &&
-								list?.map((item, index) => (
+								_.range(1,5).map((item, index) => (
 									<ProjectCardMainLoader key={index} />
 								))}
 							{projectList &&

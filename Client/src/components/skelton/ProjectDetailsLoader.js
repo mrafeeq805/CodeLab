@@ -1,28 +1,26 @@
 import React from "react";
-import { Skeleton } from "@mui/material";
 
 const ProjectDetailsLoader = ({ details }) => {
 	return (
-		<div className="">
-			<div className="flex flex-col p-3 w-full">
+		<div role="status" class=" animate-pulse flex gap-1 my-2">
+			<div className="flex flex-col p-3 w-full gap-3">
 				<div className="flex justify-between items-center">
-                    <Skeleton variant="text" width={50} height={20} sx={{ fontSize: "0.8rem" }} />
-					<Skeleton variant="text" width={50} height={40} sx={{ fontSize: "0.8rem" }} />
+					<div class="h-2.5 bg-gray-200 rounded-full w-24 "></div>
+					<div class="h-2.5 bg-gray-200 rounded-full w-12 "></div>
 				</div>
 
 				<div className="flex justify-between mt-1 w-full">
-                    <Skeleton variant="text" width={50} sx={{ fontSize: "0.8rem" }} />
-
-					<div className="flex gap-1 items-center">
-                        <Skeleton variant="text" width={50} sx={{ fontSize: "0.8rem" }} />
-					</div>
+					<div class="h-2.5 bg-gray-200 rounded-full w-12 "></div>
+					<div class="h-2.5 bg-gray-200 rounded-full w-16 "></div>
+					
 				</div>
 				<div className="mt-4">
-                    <Skeleton variant="rounded" sx={{ width: 350 }} height={150} />
+				
+					<div class="h-36 bg-gray-200 rounded-lg w-full "></div>
+					
 					<div className="flex mt-3 gap-5 w-full justify-between">
-                        <Skeleton variant="rounded" width={165} height={40} />
-
-						<Skeleton variant="rounded" width={165} height={40} />
+						<div class="h-12 bg-gray-200 rounded-lg w-full "></div>
+						<div class="h-12 bg-gray-200 rounded-lg w-full "></div>
 					</div>
 				</div>
 			</div>
@@ -30,4 +28,4 @@ const ProjectDetailsLoader = ({ details }) => {
 	);
 };
 
-export default ProjectDetailsLoader
+export default ProjectDetailsLoader;

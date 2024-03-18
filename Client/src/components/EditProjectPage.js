@@ -194,7 +194,7 @@ const EditProjectPage = () => {
 									value={data?.category}
 									className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 									name="category"
-									onClick={changeInput}>
+									onChange={changeInput}>
 									{categories?.map((item) => (
 										<option value={item}>{item}</option>
 									))}

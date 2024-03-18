@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import {  useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addCategory } from '../utils/projectSlice'
+import _ from 'lodash'
 
 const width = window.innerWidth
 const count = width <=400 ? 8 : 12
@@ -30,7 +31,11 @@ export const Domains = () => {
                 </Link>
                 
             </div>
-            {!domains && <DomainCardLoader/>}
+            <div className='mt-3 grid grid-cols-4 md:grid-cols-6 gap-3'>
+            {!domains && _.range(1,count).map(item => <DomainCardLoader key={item}/>)}
+            </div>
+            
+            
             
             <div className='mt-3 grid grid-cols-4 md:grid-cols-6 gap-3'>
                 {domains?.slice(0,count).map((item,index) => <DomainCard key={index} name={item.title} img={item.icon}/>)}

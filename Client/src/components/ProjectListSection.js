@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 import SortPopup from "./SortPopup";
+import _ from 'lodash'
 
 const ProjectListSection = () => {
 	const [projectList, setProjectList] = useState([]);
@@ -105,7 +106,7 @@ const ProjectListSection = () => {
 			<div className="mt-3 grid grid-cols-1 md:grid-cols-4 gap-3">
 				{projectList.length === 0 &&
 					!emptyData &&
-					list?.map((item, index) => <ProjectCardMainLoader key={index} />)}
+					_.range(1,5).map((item, index) => <ProjectCardMainLoader key={index} />)}
 				{projectList &&
 					projectList?.map((item, index) => (
 						<ProjectCardMain key={index} data={item} />

@@ -7,7 +7,6 @@ import RelatedProjects from "./RelatedProjects";
 import DownloadCard from "./DownloadCard";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import { Skeleton } from "@mui/material";
 import ScreenshotsCarousel from "./ScreenshotsCarousel";
 import { calcDate } from "../utils/dateDifference";
 import Header from "./Header";
@@ -16,8 +15,8 @@ import Footer from "./Footer";
 const Description = () => {
 	const [description, setDiscription] = useState(null);
 	const [publisher, setPublisher] = useState(null);
-	const location = useLocation()
-	const { project_id,category } = useParams();
+	const location = useLocation();
+	const { project_id, category } = useParams();
 	const [ssvisible, setSSVisible] = useState(false);
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -38,10 +37,12 @@ const Description = () => {
 	return (
 		<div className="bg-slate-50 ">
 			<Navbar title={"Project Desciption"} />
-			<Header/>
+			<Header />
 			<div className="hidden md:flex md:flex-col md:gap-3 pt-6 px-32 md:mt-20">
 				<div className="flex gap-2">
-					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
+					<Link to={"/"} className="text-sm text-gray-400 md:text-base">
+						Home
+					</Link>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
 					<span className="text-sm text-gray-400 md:text-base">Projects</span>
 					<span className="text-sm text-gray-400 md:text-base">/</span>
@@ -53,20 +54,26 @@ const Description = () => {
 				<div className="flex justify-between md:justify-normal md:gap-10 mt-1 w-full">
 					<div className="flex gap-2">
 						<span className="  md:text-lg font-medium">By</span>
-						<span className=" text-primary md:text-lg">{description?.publisher}</span>
+						<span className=" text-primary md:text-lg">
+							{description?.publisher}
+						</span>
 					</div>
 					<div className="flex gap-1 items-center">
 						<i className="bi bi-eye-fill text-gray-400"></i>
-						<span className="text-sm text-gray-400 md:text-base">{description?.views} views</span>
+						<span className="text-sm text-gray-400 md:text-base">
+							{description?.views} views
+						</span>
 					</div>
 
 					<div className="flex gap-1 items-center">
 						<i className="bi bi-clock text-gray-400"></i>
-						<span className="text-sm text-gray-400 md:text-base">{calcDate(description?.published_date).result+" ago" || "New"}</span>
+						<span className="text-sm text-gray-400 md:text-base">
+							{calcDate(description?.published_date).result + " ago" || "New"}
+						</span>
 					</div>
 				</div>
 			</div>
-			<hr className="my-3 hidden md:block"/>
+			<hr className="my-3 hidden md:block" />
 			<div className="md:flex md:px-28 ">
 				<div className="px-3 mb-32 md:w-8/12">
 					<div>
@@ -91,19 +98,9 @@ const Description = () => {
 						<span className="font-medium text-lg">Overview</span>
 						<hr className="my-2"></hr>
 						{!description && (
-							<div className="flex flex-col gap-2">
-								<Skeleton
-									variant="rounded"
-									width={300}
-									height={5}
-									sx={{ fontSize: "0.8rem" }}
-								/>
-								<Skeleton
-									variant="rounded"
-									width={250}
-									height={5}
-									sx={{ fontSize: "0.8rem" }}
-								/>
+							<div className="flex flex-col gap-3 animate-pulse my-2">
+								<div class="h-2.5 bg-gray-200 rounded-full w-11/12 "></div>
+								<div class="h-2.5 bg-gray-200 rounded-full w-10/12 "></div>
 							</div>
 						)}
 
@@ -113,19 +110,9 @@ const Description = () => {
 						<span className="font-medium text-lg">Features</span>
 						<hr className="my-2"></hr>
 						{!description && (
-							<div className="flex flex-col gap-2">
-								<Skeleton
-									variant="rounded"
-									width={300}
-									height={5}
-									sx={{ fontSize: "0.8rem" }}
-								/>
-								<Skeleton
-									variant="rounded"
-									width={250}
-									height={5}
-									sx={{ fontSize: "0.8rem" }}
-								/>
+							<div className="flex flex-col gap-3 animate-pulse my-2">
+								<div class="h-2.5 bg-gray-200 rounded-full w-11/12 "></div>
+								<div class="h-2.5 bg-gray-200 rounded-full w-10/12 "></div>
 							</div>
 						)}
 
@@ -175,7 +162,7 @@ const Description = () => {
 			</div>
 
 			{/* <RelatedProjects /> */}
-			<RelatedProjects/>
+			<RelatedProjects />
 			{!ssvisible && (
 				<DownloadCard
 					id={description?.project_id}
@@ -183,7 +170,7 @@ const Description = () => {
 				/>
 			)}
 			<div className="hidden md:block">
-				<Footer/>
+				<Footer />
 			</div>
 		</div>
 	);

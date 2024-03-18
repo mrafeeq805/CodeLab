@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import DomainChip from "./DomainChip";
 import { Link } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
-import { Skeleton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../utils/favoriteSlice";
 
-const ProjectCardMain = ({ data,type }) => {
-	const [load,setLoad] = useState(false)
+const ProjectCardMain = ({ data, type }) => {
+	const [load, setLoad] = useState(false);
 	const onImagLoad = () => {
-		setLoad(true)
-	}
+		setLoad(true);
+	};
 	const dispatch = useDispatch();
 	const favoriteHandler = () => {
-		const id = data?.project_id
+		const id = data?.project_id;
 		if (!favorites.includes(id)) {
 			dispatch(addItem(id));
-		}else{
+		} else {
 			dispatch(removeItem(id));
 		}
 	};
@@ -32,23 +31,38 @@ const ProjectCardMain = ({ data,type }) => {
 		thumbnail,
 		published_date,
 		category,
-		project_id
+		project_id,
 	} = data;
 	return (
-		<Link  to={"/description/"+category + "/" + project_id}>
+		<Link to={"/description/" + category + "/" + project_id}>
 			<div className="border-[1px] border-gray-200 rounded-md flex w-full">
 				<div className="w-full relative">
-					{!load && <Skeleton variant="rounded" width={350} height={170} />}
+					{!load && (
+						<div class="flex items-center justify-center w-full h-44 bg-gray-300 rounded  ">
+							<svg
+								class="w-10 h-10 text-gray-200 "
+								aria-hidden="true"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="currentColor"
+								viewBox="0 0 20 18">
+								<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+							</svg>
+						</div>
+					)}
 					<img
-						className={load ? "rounded-md h-44 w-full object-cover" : "hidden rounded-md h-44 w-full object-cover"}
+						className={
+							load
+								? "rounded-md h-44 w-full object-cover"
+								: "hidden rounded-md h-44 w-full object-cover"
+						}
 						src={thumbnail}
 						alt=""
 						onLoad={onImagLoad}
 					/>
 					<div className="flex absolute top-2 left-2 gap-2">
-					{frameworks_used?.map((item) => (
-						<DomainChip key={item} title={item} />
-					))}
+						{frameworks_used?.map((item) => (
+							<DomainChip key={item} title={item} />
+						))}
 					</div>
 					<div className="flex flex-col p-2">
 						<span className="text-lg">{title}</span>
@@ -64,7 +78,9 @@ const ProjectCardMain = ({ data,type }) => {
 							</div>
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-clock text-gray-400"></i>
-								<span className="text-sm text-gray-400">{calcDate(published_date).result || "New" }</span>
+								<span className="text-sm text-gray-400">
+									{calcDate(published_date).result || "New"}
+								</span>
 							</div>
 							<div className="px-6 bg-light rounded-xs flex justify-center items-center">
 								<span className="text-primary">{price}</span>
@@ -75,7 +91,6 @@ const ProjectCardMain = ({ data,type }) => {
 				{/* <button onClick={favoriteHandler} className="absolute flex justify-center items-center top-2 right-2 rounded-full h-10 w-10 bg-gray-500 p-2 bg-opacity-40">
 					<i className="bi bi-heart text-white"></i>
 				</button> */}
-				
 			</div>
 		</Link>
 	);

@@ -320,7 +320,10 @@ module.exports = {
 	},
 	getRelatedProjects: async (req, res) => {
 		try {
-			const data = await projectSchema.find({ category: req.params.category });
+			const data = await projectSchema.find({
+				frameworks_used:req.params.category
+			  })
+			  console.log(data);
 			res.json(data);
 		} catch (error) {
 			console.log(error);

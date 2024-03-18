@@ -16,7 +16,7 @@ const TopDevelopers = () => {
 			</div>
 
 			{!list && (
-				<div className="h-16">
+				<div className="">
 					<DevelopersLoader />
 				</div>
 			)}

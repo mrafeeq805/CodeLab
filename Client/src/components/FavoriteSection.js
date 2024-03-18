@@ -51,7 +51,7 @@ const FavoriteSection = () => {
 					}
 				/>
 			)}
-			<div className="mt-3 grid md:grid-cols-3 grid-flow-row gap-2">
+			<div className="mt-3 grid md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-2">
 				{favoriteProjects.length === 0 &&
 					!emptyData &&
 					list?.map((item) => <ProjectCardSecLoader key={item} />)}
