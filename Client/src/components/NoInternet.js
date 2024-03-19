@@ -22,7 +22,7 @@ const NoInternet = () => {
 				</div>
 			</div>
 			<div>
-				<img src={'../assets/Group.png'} alt="empty"/>
+				<img src={localStorage.getItem('nointernet')} alt="empty"/>
 			</div>
 		</div>
 	);

@@ -13,6 +13,7 @@ import FormLoading from "./skelton/FormLoading";
 import { categories } from "../utils/categories";
 import Header from "./Header";
 import Footer from './Footer'
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const EditProjectPage = () => {
 	var imglist = [];
@@ -72,7 +73,18 @@ const EditProjectPage = () => {
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.warn("Something went wrong !",{
+						position: "top-center",
+						autoClose: 2000,
+						hideProgressBar: true,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						transition : Bounce
+						
+					});
 				});
 		}
 		call();
@@ -144,6 +156,7 @@ const EditProjectPage = () => {
 	return (
 		<div className="mt-16 relative md:my-24">
 			<Navbar title={"Modify Project"} />
+			<ToastContainer/>
 			<div className="hidden md:block">
 				<Header />
 			</div>

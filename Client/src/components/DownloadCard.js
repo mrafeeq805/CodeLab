@@ -41,7 +41,20 @@ const DownloadCard = ({ id, url }) => {
 	const onDownload = async () => {
 		await axios.post("/download", { id: id }).then((res) => {
 			console.log(res.data);
-		});
+		}).catch((err) => {
+			toast.warn("Something went wrong !",{
+				position: "top-center",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+				transition : Bounce
+				
+			});
+		})
 	};
 	const favorites = useSelector((store) => store?.favorite?.favoriteProjects);
 	

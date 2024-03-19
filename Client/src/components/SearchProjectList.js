@@ -14,6 +14,7 @@ import Filter from "./Filter";
 import Footer from "./Footer";
 import SortPopup from "./SortPopup";
 import _ from "lodash";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const SearchProjectList = () => {
 	const location = useLocation();
@@ -57,7 +58,20 @@ const SearchProjectList = () => {
 					setProjectListPer(res?.data);
 					setEmptyData(false);
 				}
-			});
+			}).catch((err)=> {
+				toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+			})
 		}
 		call();
 	}, [location.pathname]);
@@ -65,6 +79,7 @@ const SearchProjectList = () => {
 		<div className="">
 			<Navbar title={search} />
 			<Header />
+			<ToastContainer/>
 			{!emptyData && (<div className=" gap-2 hidden md:flex md:px-24">
 				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
 					Home

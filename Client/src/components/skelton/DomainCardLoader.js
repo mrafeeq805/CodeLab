@@ -4,7 +4,7 @@ import React from "react";
 const DomainCardLoader = () => {
 	return (
 		<div role="status" class=" animate-pulse flex flex-col justify-center items-center gap-4 my-2">
-			<div class="flex flex-col md:flex-row items-center justify-center py-3 md:py-8 gap-3 bg-gray-300 rounded-lg w-16">
+			<div class="flex flex-col md:flex-row items-center justify-center py-3 md:py-8 gap-3 bg-gray-300 rounded-lg w-16 md:w-full">
 				<svg
 					class="w-7 md:h-10 md:w-10 h-7 text-gray-200 "
 					aria-hidden="true"

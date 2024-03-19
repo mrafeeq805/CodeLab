@@ -3,6 +3,7 @@ import ProjectCardMain from "./ProjectCardMain";
 import axios from "axios";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
 import { useParams } from "react-router-dom";
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const RelatedProjects = () => {
     const list = ["1",'2']
@@ -20,7 +21,20 @@ const RelatedProjects = () => {
 					setRelatedProjects(res?.data);
 				}
 				
-			});
+			}).catch((err) => {
+				toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+			})
 		}
 		call();
 	}, []);
@@ -30,6 +44,7 @@ const RelatedProjects = () => {
 				<span className=" font-medium">Related Projects</span>
 				
 			</div>)}
+			<ToastContainer/>
 
 			{!emptyData && (<div className="mt-3 grid md:grid-cols-3 grid-flow-row gap-2">
 				{relatedProjects.length === 0 && list?.map(item => <ProjectCardMainLoader key={item}/>)}

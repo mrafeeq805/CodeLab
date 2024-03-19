@@ -10,6 +10,7 @@ import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 import ProjectCardSec from "./ProjectCardSec";
 import Header from "./Header";
 import Footer from "./Footer";
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const DeveloperPage = () => {
 	const [emptyData, setEmptyData] = useState(false);
@@ -36,7 +37,18 @@ const DeveloperPage = () => {
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.warn("Something went wrong !",{
+						position: "top-center",
+						autoClose: 2000,
+						hideProgressBar: true,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						transition : Bounce
+						
+					});
 				});
 		}
 		call();
@@ -47,6 +59,7 @@ const DeveloperPage = () => {
 			<div className="hidden md:block">
 				<Header />
 			</div>
+			<ToastContainer/>
 			<div className=" gap-2 hidden md:flex px-32">
 				<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 				<span className="text-sm text-gray-400 md:text-base">/</span>

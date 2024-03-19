@@ -12,6 +12,7 @@ import { calcDate } from "../utils/dateDifference";
 import Header from "./Header";
 import Footer from "./Footer";
 import _ from "lodash";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const Description = () => {
 	const [description, setDiscription] = useState(null);
@@ -19,6 +20,7 @@ const Description = () => {
 	const location = useLocation();
 	const { project_id, category } = useParams();
 	const [ssvisible, setSSVisible] = useState(false);
+	const [load,setLoad] = useState(false)
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -30,7 +32,17 @@ const Description = () => {
 					setPublisher(res?.data?.publisher);
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.warn("Something went wrong !", {
+						position: "top-center",
+						autoClose: 2000,
+						hideProgressBar: true,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						transition: Bounce,
+					});
 				});
 		}
 		call();
@@ -40,6 +52,7 @@ const Description = () => {
 		<div className="bg-slate-50 ">
 			<Navbar title={"Project Desciption"} />
 			<Header />
+			<ToastContainer />
 			{description && (
 				<div className="hidden md:flex md:flex-col md:gap-3 pt-6 px-32 md:mt-20">
 					<div className="flex gap-2">
@@ -113,23 +126,38 @@ const Description = () => {
 						<span className="text-lg font-medium">Screenshots</span>
 						<div className=" gap-4 md:grid grid-cols-4 my-3">
 							{description?.screenshots.map((item) => (
-								<img className="h-32 object-cover" src={item} alt="thumb" />
-							))}
-						</div>
-						{!description && (<div className=" gap-4 md:grid grid-cols-4 my-3 animate-pulse">
-							{_.range(0, 4).map((item) => (
-								<div class="flex items-center justify-center w-36 md:w-full h-32 bg-gray-300 rounded sm:w-96 ">
-									<svg
-										class="w-10 h-10 text-gray-200 "
-										aria-hidden="true"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="currentColor"
-										viewBox="0 0 20 18">
-										<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-									</svg>
+								<div>
+									<img className={load ? "h-32 object-cover" : "hidden"} src={item} alt="thumb" onLoad={() => setLoad(true)} />
+									{!load && (<div class="flex items-center justify-center w-36 md:w-full h-32 bg-gray-300 rounded sm:w-96 ">
+										<svg
+											class="w-10 h-10 text-gray-200 "
+											aria-hidden="true"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="currentColor"
+											viewBox="0 0 20 18">
+											<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+										</svg>
+									</div>
+									)}
 								</div>
 							))}
-						</div>)}
+						</div>
+						{!description && (
+							<div className=" gap-4 md:grid grid-cols-4 my-3 animate-pulse">
+								{_.range(0, 4).map((item) => (
+									<div class="flex items-center justify-center w-36 md:w-full h-32 bg-gray-300 rounded sm:w-96 ">
+										<svg
+											class="w-10 h-10 text-gray-200 "
+											aria-hidden="true"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="currentColor"
+											viewBox="0 0 20 18">
+											<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+										</svg>
+									</div>
+								))}
+							</div>
+						)}
 					</div>
 
 					<div className="bg-white p-3 my-3">

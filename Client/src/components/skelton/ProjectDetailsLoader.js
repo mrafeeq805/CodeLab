@@ -14,7 +14,7 @@ const ProjectDetailsLoader = ({ details }) => {
 					<div class="h-2.5 bg-gray-200 rounded-full w-16 "></div>
 				</div>
 				<div className="mt-4">
-					<div class="h-40 md:h-80 bg-gray-200 rounded-lg w-full flex justify-center items-center ">
+					<div class="h-44 md:h-96 bg-gray-200 rounded-lg w-full flex justify-center items-center ">
 						
 						<svg
 							class="w-10 h-10 fill-gray-600 "

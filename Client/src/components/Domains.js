@@ -6,6 +6,7 @@ import {  useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addCategory } from '../utils/projectSlice'
 import _ from 'lodash'
+import { Bounce, ToastContainer, toast } from 'react-toastify'
 
 const width = window.innerWidth
 const count = width <=400 ? 8 : 12
@@ -18,16 +19,30 @@ export const Domains = () => {
 			axios.get('getallcategories')
 			.then(({data})=> {
 				dispatch(addCategory(data))
-			})
+			}).catch((err) => {
+                toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+            })
 		}
 		call()
     },[])
     return (
         <div className='px-2 mt-4 md:px-28'>
+            <ToastContainer/>
             <div className='flex justify-between items-center'>
                 <span className=' font-medium md:text-lg'>Projects by Domains</span>
                 <Link to={'/categories'}>
-                    <span className='text-primary font-medium text-xs md:text-base'>More</span>
+                    <span className='text-primary font-medium text-xs md:text-base md:hidden'>More</span>
                 </Link>
                 
             </div>

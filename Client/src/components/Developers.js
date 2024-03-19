@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import DevelopersLoader from "./skelton/DevelopersLoader";
 import DeveloperCard from "./DeveloperCard";
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const Developers = () => {
 	const search = useRef(null);
@@ -18,11 +19,25 @@ const Developers = () => {
         .then(({data}) => {
             setList(data)
             setListPer(data)
-        })
+        }).catch((err) => {
+			toast.warn("Something went wrong !",{
+				position: "top-center",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+				transition : Bounce
+				
+			});
+		})
     },[])
 	return (
 		<div className="mt-16">
 			<Navbar title={"Developers"} />
+			<ToastContainer/>
 			<div className="p-2 my-2">
 				<div className="rounded-lg border-2 p-2 px-4 ">
 					<form className="flex justify-between" onSubmit={searchCategory}>

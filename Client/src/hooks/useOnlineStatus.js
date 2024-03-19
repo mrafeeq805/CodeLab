@@ -5,6 +5,7 @@ const useGetOnlineStatus= () =>{
     useEffect(()=>{
         window.addEventListener("online",()=>{
             setDetails('Online')
+            localStorage.setItem('nointernet','/img/Group.png')
         })
         window.addEventListener("offline",()=>{
             setDetails('Offline')

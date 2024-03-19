@@ -11,7 +11,7 @@ const TopDevelopers = () => {
 			<div className="flex justify-between">
 				<span className="font-medium md:text-lg">Top Developers</span>
 				<Link to={"/developers"}>
-					<span className="text-primary font-medium text-xs md:text-base">More</span>
+					<span className="text-primary font-medium text-xs md:text-base md:hidden">More</span>
 				</Link>
 			</div>
 

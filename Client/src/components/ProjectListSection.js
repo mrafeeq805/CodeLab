@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 import SortPopup from "./SortPopup";
 import _ from 'lodash'
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const ProjectListSection = () => {
 	const [projectList, setProjectList] = useState([]);
@@ -41,13 +42,27 @@ const ProjectListSection = () => {
 					setProjectList(res.data);
 					setEmptyData(false);
 				}
-			});
+			}).catch((err)=>{
+				toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+			})
 		}
 		call();
 	}, []);
 
 	return (
 		<div className="px-4 md:mt-24 md:px-16">
+			<ToastContainer/>
 			<div className="hidden md:flex gap-2">
 				<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 				<span className="text-sm text-gray-400 md:text-base">/</span>

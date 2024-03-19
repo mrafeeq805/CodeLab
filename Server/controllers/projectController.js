@@ -3,7 +3,7 @@ const userSchema = require("../models/user");
 const categorySchema = require("../models/category");
 const mongoose = require("mongoose");
 const multer = require("multer");
-var isBase64 = require('is-base64');
+var isBase64 = require("is-base64");
 const {
 	getStorage,
 	ref,
@@ -74,73 +74,83 @@ module.exports = {
 				"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 			);
 			uploadBytes(storageRef, file).then((snapshot) => {
-				
 				getDownloadURL(snapshot.ref).then((item) => {
 					screenshotsLinks.push(item);
-				});
-			});
+					const file = base64ImageToBlob(req.body.thumbnail);
+					const storageRef = ref(
+						storage,
+						"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
+					);
+					uploadBytes(storageRef, file).then((snapshot) => {
+						console.log("Uploaded file!");
+						getDownloadURL(snapshot.ref).then(async (item) => {
+							thumbnailLink = item;
+							const response = await openai.chat.completions.create({
+								model: "gpt-3.5-turbo",
+								messages: [
+									{
+										role: "system",
+										content:
+											"You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
+									},
+									{
+										role: "user",
+										content: overview,
+									},
+								],
+								temperature: 0.5,
+								max_tokens: 64,
+								top_p: 1,
+							});
+			
+							const newProject = new projectSchema({
+								publisher_id: "CD1",
+								title: title,
+								project_id: lastid + 1,
+								category: category,
+								live_link: link,
+								overview: overview,
+								frameworks_used: frameworks_used,
+								db_used: db,
+								screenshots: screenshotsLinks,
+								thumbnail: thumbnailLink,
+								features: features,
+								project_link: project_link,
+								publisher: "rafeeq",
+								published_date: date2,
+								last_updated: date2,
+								views: 0,
+								downloads: 0,
+								status: "Pending",
+								price: "Free",
+								keywords:
+									title.split(" ").join(",") +
+									" , " +
+									frameworks_used.join(",") +
+									" , " +
+									response?.choices[0]?.message?.content,
+							});
+							newProject.save();
+							res.json({result:true})
+						}).catch((err)=>{
+							res.json({result:err})
+						})
+					}).catch((err)=>{
+						res.json({result:err})
+					})
+				}).catch((err)=>{
+					res.json({result:err})
+				})
+			}).catch((err)=>{
+				res.json({result:err})
+			})
 		});
-		const file = base64ImageToBlob(req.body.thumbnail);
-		const storageRef = ref(
-			storage,
-			"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
-		);
 
-		uploadBytes(storageRef, file).then((snapshot) => {
-			console.log("Uploaded file!");
-			getDownloadURL(snapshot.ref).then(async (item) => {
-				thumbnailLink = item;
-				const response = await openai.chat.completions.create({
-					model: "gpt-3.5-turbo",
-					messages: [
-						{
-							role: "system",
-							content:
-								"You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
-						},
-						{
-							role: "user",
-							content: overview,
-						},
-					],
-					temperature: 0.5,
-					max_tokens: 64,
-					top_p: 1,
-				});
+		
 
-				const newProject = new projectSchema({
-					publisher_id: "CD1",
-					title: title,
-					project_id: lastid + 1,
-					category: category,
-					live_link: link,
-					overview: overview,
-					frameworks_used: frameworks_used,
-					db_used: db,
-					screenshots: screenshotsLinks,
-					thumbnail: thumbnailLink,
-					features: features,
-					project_link: project_link,
-					publisher: "rafeeq",
-					published_date: date2,
-					last_updated: date2,
-					views: 0,
-					downloads: 0,
-					status: "Pending",
-					price: "Free",
-					keywords:
-						title.split(" ").join(",") + 
-						" , " + frameworks_used.join(",")+ " , "+
-						response?.choices[0]?.message?.content,
-				});
-				newProject.save();
-			});
-		});
-
-		res.send("done");
+		
 	},
 	getLatestList: async (req, res) => {
-		
 		try {
 			const data = await projectSchema.find().sort({ _id: -1 });
 			res.json(data);
@@ -150,7 +160,7 @@ module.exports = {
 	},
 	getPopularList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({views: -1 });
+			const data = await projectSchema.find().sort({ views: -1 });
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -158,7 +168,7 @@ module.exports = {
 	},
 	getCategoryList: async (req, res) => {
 		try {
-			const data = await categorySchema.find({status:"Listed"})
+			const data = await categorySchema.find({ status: "Listed" });
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -207,27 +217,24 @@ module.exports = {
 	},
 	getEdiInfo: async (req, res) => {
 		try {
-			
 			const publisher = await projectSchema.findOne(
 				{
 					publisher_id: req.session.publisher_id,
-					project_id : req.params.project_id
+					project_id: req.params.project_id,
 				},
 
 				{ _id: 0, email: 0, password: 0, title: 0 }
 			);
-			if(!publisher ){
-				return res.json(
-					{
-						status : "unauthorized"
-					}
-				)
+			if (!publisher) {
+				return res.json({
+					status: "unauthorized",
+				});
 			}
 			const data = await projectSchema.findOne({
 				project_id: req.params.project_id,
 			});
 			res.json({
-				status : "ok",
+				status: "ok",
 				details: data,
 				publisher: publisher,
 			});
@@ -243,8 +250,13 @@ module.exports = {
 				{ name: 1, title: 1, bio: 1, avatar: 1, _id: 0 }
 			);
 
-			const stacks_used = Array.from(new Set(data.map(item=>item.frameworks_used).flat()))
-			const images = await categorySchema.find({title:{"$in": stacks_used}},{icon:1})
+			const stacks_used = Array.from(
+				new Set(data.map((item) => item.frameworks_used).flat())
+			);
+			const images = await categorySchema.find(
+				{ title: { $in: stacks_used } },
+				{ icon: 1 }
+			);
 			console.log(stacks_used);
 			console.log(images);
 			const user = await projectSchema.aggregate([
@@ -267,7 +279,7 @@ module.exports = {
 				details: userDetails[0],
 				views: user[0].totalViews,
 				projectsCount: user[0].projectsCount,
-				stacks_used : images
+				stacks_used: images,
 			});
 		} catch (error) {
 			console.log(error);
@@ -321,9 +333,9 @@ module.exports = {
 	getRelatedProjects: async (req, res) => {
 		try {
 			const data = await projectSchema.find({
-				frameworks_used:req.params.category
-			  })
-			  console.log(data);
+				frameworks_used: req.params.category,
+			});
+			console.log(data);
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -331,14 +343,15 @@ module.exports = {
 	},
 	getMyProjects: async (req, res) => {
 		try {
-			const data = await projectSchema.find({ publisher_id: req.session.publisher_id },
+			const data = await projectSchema.find(
+				{ publisher_id: req.session.publisher_id },
 				{
-					_id : 0
+					_id: 0,
 				}
 			);
 			res.json({
-				status : true,
-				data : data
+				status: true,
+				data: data,
 			});
 		} catch (error) {
 			console.log(error);
@@ -355,25 +368,23 @@ module.exports = {
 			db_used,
 			features,
 			project_link,
-			project_id
+			project_id,
 		} = req.body;
 		console.log(req.body);
 		const publisher = await projectSchema.findOne(
 			{
 				publisher_id: req.session.publisher_id,
-				project_id : project_id
+				project_id: project_id,
 			},
 
 			{ _id: 0, email: 0, password: 0, title: 0 }
 		);
-		if(!publisher ){
-			return res.json(
-				{
-					status : "unauthorized"
-				}
-			)
+		if (!publisher) {
+			return res.json({
+				status: "unauthorized",
+			});
 		}
-	
+
 		const currentDate = new Date();
 		const day = currentDate.getDate();
 		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
@@ -398,13 +409,13 @@ module.exports = {
 				});
 			}
 		});
-		if(screenshotsLinks.length > 0){
-			screenshotsLinks = [...screenshotsLinks,...fileList]
-		}else{
-			screenshotsLinks = fileList
+		if (screenshotsLinks.length > 0) {
+			screenshotsLinks = [...screenshotsLinks, ...fileList];
+		} else {
+			screenshotsLinks = fileList;
 		}
 
-		if(isBase64(req.body.thumbnail,{allowMime: true})){
+		if (isBase64(req.body.thumbnail, { allowMime: true })) {
 			const file = base64ImageToBlob(req.body.thumbnail);
 			const storageRef = ref(
 				storage,
@@ -413,15 +424,14 @@ module.exports = {
 			uploadBytes(storageRef, file).then((snapshot) => {
 				getDownloadURL(snapshot.ref).then(async (item) => {
 					thumbnailLink = item;
-					callUpdate()
-					
+					callUpdate();
 				});
 			});
-		}else{
-			thumbnailLink = req.body.thumbnail
-			callUpdate()
+		} else {
+			thumbnailLink = req.body.thumbnail;
+			callUpdate();
 		}
-		async function callUpdate(){
+		async function callUpdate() {
 			const response = await openai.chat.completions.create({
 				model: "gpt-3.5-turbo",
 				messages: [
@@ -439,33 +449,39 @@ module.exports = {
 				max_tokens: 64,
 				top_p: 1,
 			});
-			const exist = await projectSchema.findOne({project_id:project_id})
-	
-			const update = await projectSchema.updateOne({project_id:project_id},{
-				title : title === '' ? exist.title : title,
-				category : category,
-				live_link : live_link,
-				overview : overview === '' ? exist.overview : overview,
-				frameworks_used : frameworks_used === '' ? exist.frameworks_used : frameworks_used,
-				db_used : db_used,
-				screenshots : screenshotsLinks.length === 0 ? exist.screenshots : screenshotsLinks,
-				thumbnail : thumbnailLink === '' ? exist.thumbnail : thumbnailLink,
-				features : features === '<p><br></p>' ? exist.features : features,
-				project_link : project_link === '' ? exist.project_link : project_link,
-				last_updated : date2,
-				keywords: title === '' || overview === '' ? exist.keywords :
-					title.split(" ").join(",") +
-					" , " +
-					response?.choices[0]?.message?.content,
-	
-			})
-			
+			const exist = await projectSchema.findOne({ project_id: project_id });
+
+			const update = await projectSchema.updateOne(
+				{ project_id: project_id },
+				{
+					title: title === "" ? exist.title : title,
+					category: category,
+					live_link: live_link,
+					overview: overview === "" ? exist.overview : overview,
+					frameworks_used:
+						frameworks_used === "" ? exist.frameworks_used : frameworks_used,
+					db_used: db_used,
+					screenshots:
+						screenshotsLinks.length === 0
+							? exist.screenshots
+							: screenshotsLinks,
+					thumbnail: thumbnailLink === "" ? exist.thumbnail : thumbnailLink,
+					features: features === "<p><br></p>" ? exist.features : features,
+					project_link: project_link === "" ? exist.project_link : project_link,
+					last_updated: date2,
+					keywords:
+						title === "" || overview === ""
+							? exist.keywords
+							: title.split(" ").join(",") +
+							  " , " +
+							  response?.choices[0]?.message?.content,
+				}
+			);
+
 			res.json({
-				status : "ok"
+				status: "ok",
 			});
-			
 		}
-		
 	},
 };
 

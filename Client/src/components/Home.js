@@ -16,25 +16,43 @@ import {
 import { Link } from "react-router-dom";
 import Banner from "./Banner";
 import Footer from "./Footer";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		async function call() {
-			const list = await axios.get("/getlatest");
-			dispatch(addLatest(list?.data));
-			const topDevelopers = await axios.get("/getdevelopers");
-			dispatch(addTopDevelopers(topDevelopers?.data));
-			const popular = await axios.get("/getpopular");
-			dispatch(addPopular(popular?.data));
-			const categories = await axios.get("/getallcategories");
-			dispatch(addCategory(categories?.data));
+			try{
+				const list = await axios.get("/getlatest");
+				dispatch(addLatest(list?.data));
+				const topDevelopers = await axios.get("/getdevelopers");
+				dispatch(addTopDevelopers(topDevelopers?.data));
+				const popular = await axios.get("/getpopular");
+				dispatch(addPopular(popular?.data));
+				const categories = await axios.get("/getallcategories");
+				dispatch(addCategory(categories?.data));
+			}catch(err){
+				toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+			}
+			
 		}
 		call();
 	}, []);
 
 	return (
 		<div className="relative md:mb-0">
+			<ToastContainer/>
 			<Header />
 			<div className="md:hidden">
 				<SearchBar title={"Search Projects..."} />

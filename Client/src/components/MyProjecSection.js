@@ -6,6 +6,7 @@ import axios from "axios";
 import { addMyProjects } from "../utils/projectSlice";
 import { Link, useNavigate } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const MyProjecSection = ({ data }) => {
 	const ProjectCardSecNew = ProjectCardSecMy(ProjectCardSec);
@@ -32,13 +33,25 @@ const MyProjecSection = ({ data }) => {
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					toast.warn("Something went wrong !",{
+						position: "top-center",
+						autoClose: 2000,
+						hideProgressBar: true,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+						transition : Bounce
+						
+					});
 				});
 		}
 		call();
 	}, []);
 	return (
 		<div className="px-2 mt-4 md:mt-24 md:px-24 ">
+			<ToastContainer/>
 			<div className="hidden md:flex gap-2 mb-5">
 					<Link to={'/'} className="text-sm text-gray-400 md:text-base">Home</Link>
 					<span className="text-sm text-gray-400 md:text-base">/</span>

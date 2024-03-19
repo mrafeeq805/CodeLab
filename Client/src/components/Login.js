@@ -103,7 +103,7 @@ const Login = () => {
 					title={"User Signin"}
 					info={"Please fill your detail to access your account."}
 				/>
-				<div className="mt-4 px-4">
+				<div className="mt-4 px-4 xl:w-9/12">
 					<form className="" onSubmit={formHandler}>
 						<label className="text-login font-medium ">Email</label>
 						<div className="border-2 rounded-lg flex justify-between p-2 my-3">

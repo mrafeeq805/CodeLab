@@ -5,6 +5,7 @@ import ProjectCardSecLoader from "./skelton/ProjectCardSecLoader";
 import { useSelector } from "react-redux";
 import EmptyCard from "./EmptyCard";
 import { Link } from "react-router-dom";
+import {Bounce, ToastContainer, toast} from 'react-toastify'
 
 const FavoriteSection = () => {
 	const list = ["1", "2"];
@@ -21,7 +22,20 @@ const FavoriteSection = () => {
 					setFavoriteProjects(res?.data);
 					setEmptyData(false);
 				}
-			});
+			}).catch((err)=> {
+				toast.warn("Something went wrong !",{
+					position: "top-center",
+					autoClose: 2000,
+					hideProgressBar: true,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "light",
+					transition : Bounce
+					
+				});
+			})
 		}
 		call();
 	}, [favorites]);
@@ -29,6 +43,7 @@ const FavoriteSection = () => {
 	const ProjectCardSecNew = ProjectCardSecRemove(ProjectCardSec);
 	return (
 		<div className="px-2 mt-16 md:mt-24 md:px-44">
+			<ToastContainer/>
 			<div className="md:flex gap-2 hidden mb-5">
 				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
 					Home
