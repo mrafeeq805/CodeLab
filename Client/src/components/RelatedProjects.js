@@ -25,13 +25,13 @@ const RelatedProjects = () => {
 		call();
 	}, []);
 	return (
-		<div className="px-2 mt-4 mb-24 ">
+		<div className="px-2 mt-4 mb-24 md:px-32">
 			{!emptyData && (<div className="flex justify-between items-center">
 				<span className=" font-medium">Related Projects</span>
 				
 			</div>)}
 
-			{!emptyData && (<div className="mt-3 grid grid-col-5 grid-flow-row gap-2">
+			{!emptyData && (<div className="mt-3 grid md:grid-cols-3 grid-flow-row gap-2">
 				{relatedProjects.length === 0 && list?.map(item => <ProjectCardMainLoader key={item}/>)}
 				{relatedProjects && relatedProjects?.map((item,index) => (
 					<ProjectCardMain key={index} data={item} type={'related'} />

@@ -4,7 +4,7 @@ import React from "react";
 const ProjectCardSecLoader = () => {
 	return (
 		<div role="status" class=" animate-pulse flex gap-4 my-2 p-3 md:flex-col">
-			<div class="flex items-center justify-center w-36 md:w-full md:h-36 h-24 lg:h-44 bg-gray-300 rounded sm:w-96 ">
+			<div class="flex items-center justify-center w-36 md:w-full md:h-36 h-24 bg-gray-300 rounded  ">
 				<svg
 					class="w-10 h-10 text-gray-200 "
 					aria-hidden="true"

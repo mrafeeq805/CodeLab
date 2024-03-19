@@ -38,12 +38,12 @@ const ProjectCardSec = (props) => {
 							</svg>
 						</div>
 					)}
-					<div className={load ? " w-36 md:w-full sm:w-96 h-24 lg:h-44" : 'invisible'}>
+					<div className={load ? " w-36 md:w-full sm:w-96 h-24 lg:h-44" : 'hidden'}>
 						<img
 							className={
 								load
 									? "rounded-md h-full w-full object-cover "
-									: "invisible h-full w-full rounded-md object-cover"
+									: " h-full w-full rounded-md object-cover"
 							}
 							src={thumbnail}
 							alt="thumb"

@@ -10,7 +10,7 @@ const DeveloperProfileCard = ({ publisher }) => {
 		navigate("/developerinfo/"+publisher?.publisher_id);
 	};
 	return (
-		<div className="mb-32">
+		<div className="">
 			{!publisher?.name && <DeveloperProfileCardLoader/>}
 			
 			{publisher?.name && (<div className="bg-gray-100 p-2 flex flex-col items-center">

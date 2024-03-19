@@ -7,9 +7,10 @@ import Header from "./Header";
 import Footer from './Footer'
 
 const ProjectList = () => {
+	const {category} = useParams()
 	return (
 		<div className="relative">
-			<Navbar title={"Projects"} />
+			<Navbar title={category} />
 			<Header/>
 			<div className="block md:hidden">
 				<SearchBar title={"Search Projects..."} />

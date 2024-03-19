@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ProjectCardMain from "./ProjectCardMain";
-import { useSelector } from "react-redux";
 import ProjectCardMainLoader from "./skelton/ProjectCardMainLoader";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -46,8 +45,7 @@ const ProjectListSection = () => {
 		}
 		call();
 	}, []);
-	//const projectList = useSelector((store) => store?.project?.latestProjects)
-	const list = ["1", "2"];
+
 	return (
 		<div className="px-4 md:mt-24 md:px-16">
 			<div className="hidden md:flex gap-2">

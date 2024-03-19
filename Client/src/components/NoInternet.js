@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+
 
 const NoInternet = () => {
 	return (
@@ -22,7 +22,7 @@ const NoInternet = () => {
 				</div>
 			</div>
 			<div>
-				<img src="/img/Group.png" alt="emty"/>
+				<img src={'../assets/Group.png'} alt="empty"/>
 			</div>
 		</div>
 	);
