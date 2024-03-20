@@ -1,7 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const SideMenu = () => {
+	const cookie = new Cookies()
+	const navigate = useNavigate()
+	const logoutHandler = async  () => {
+	
+		const res = await axios.post('/admin/logout')
+		console.log(res);
+	}
     const items = [
         {
             name : "Dashboard",
@@ -24,15 +33,20 @@ const SideMenu = () => {
             path : "/admin/users"
         }
     ]
+	useEffect(() => {
+		if (!cookie.get('admin_token')) {
+			return navigate("/admin/login");
+		}
+	},[])
 	return (
 		<div class="flex">
 			<div>
 				<div class="px-5 flex flex-col gap-2 bg-white h-screen">
-					<form action="/admin/logout" method="post">
+					<form>
 						<div class="flex justify-between">
 							<h1 class="text-blue-500 text-3xl my-4">LOGO</h1>
 
-							<button class="material-symbols-outlined text-red-500">
+							<button onClick={logoutHandler} class="material-symbols-outlined text-red-500">
 								logout
 							</button>
 						</div>

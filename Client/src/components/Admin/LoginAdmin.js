@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie'
 
 const LoginAdmin = () => {
+	const cookie = new Cookies()
 	const email = useRef(null)
 	const password = useRef(null)
 	const [err,setErr] = useState(null)
@@ -19,6 +21,7 @@ const LoginAdmin = () => {
 			password : password.current.value
 		}).then(({data}) => {
 			if(data.status === "success"){
+				cookie.set('admin_token',data?.token,{path : '/'})
 				navigate('/admin/dashboard')
 			}else{
 				setErr("invalid credentials ! ")
@@ -28,6 +31,13 @@ const LoginAdmin = () => {
 			setErr("invalid credentials ! ")
 		})
 	}
+	useEffect(() => {
+		if (!cookie.get('admin_token')) {
+			return navigate("/admin/login");
+		}else{
+			return navigate('/admin/dashboard')
+		}
+	},[])
 	return (
 		<div>
 			<section class="bg-gray-50 dark:bg-gray-900">
