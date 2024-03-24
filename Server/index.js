@@ -13,12 +13,12 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(session({
-    secret: 'your-secret-key', // Change this to a secure random string
+    secret: process.env.SESSION_KEY, // Change this to a secure random string
     resave: false,
     saveUninitialized: true,
   }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/codelab')
+mongoose.connect(process.env.MONGO_URL)
 .then(() => {
     console.log("database connected");
 })

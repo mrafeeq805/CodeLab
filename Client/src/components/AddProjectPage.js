@@ -194,7 +194,7 @@ const AddProjectPage = () => {
 							className="w-full border-2 rounded-lg p-2 my-2 pr-2"
 							name="category"
 							onChange={changeInput}>
-							<option value={'Choose'} disabled>Choose</option>
+							<option value={'Choose'} disabled selected>Choose</option>
 							{categories?.map((item) => (
 								<option value={item}>{item}</option>
 							))}
@@ -359,7 +359,7 @@ const AddProjectPage = () => {
 							name="languages"
 							onChange={changeSelectedFramework}
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2">
-							<option value={"Choose"} disabled>Choose</option>
+							<option value={"Choose"} disabled selected>Choose</option>
 							{category?.map((item) => (
 								<option value={item.title}>{item.title}</option>
 							))}

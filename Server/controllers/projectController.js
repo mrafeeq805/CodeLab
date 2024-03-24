@@ -4,6 +4,8 @@ const categorySchema = require("../models/category");
 const mongoose = require("mongoose");
 const multer = require("multer");
 var isBase64 = require("is-base64");
+const sharp = require("sharp");
+const fs = require("fs");
 const {
 	getStorage,
 	ref,
@@ -67,92 +69,89 @@ module.exports = {
 			project_link,
 		} = req.body;
 
-		fileList.map((item) => {
-			const file = base64ImageToBlob(item);
-			const storageRef = ref(
+		fileList.map(async (item) => {
+			const file = base64ImageToBlob(item)
+			
+			const storageRefScreenshot = ref(
 				storage,
 				"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 			);
-			uploadBytes(storageRef, file).then((snapshot) => {
-				getDownloadURL(snapshot.ref).then((item) => {
-					screenshotsLinks.push(item);
-					const file = base64ImageToBlob(req.body.thumbnail);
-					const storageRef = ref(
-						storage,
-						"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
-					);
-					uploadBytes(storageRef, file).then((snapshot) => {
-						console.log("Uploaded file!");
-						getDownloadURL(snapshot.ref).then(async (item) => {
-							thumbnailLink = item;
-							const response = await openai.chat.completions.create({
-								model: "gpt-3.5-turbo",
-								messages: [
-									{
-										role: "system",
-										content:
-											"You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
-									},
-									{
-										role: "user",
-										content: overview,
-									},
-								],
-								temperature: 0.5,
-								max_tokens: 64,
-								top_p: 1,
-							});
-			
-							const newProject = new projectSchema({
-								publisher_id: "CD1",
-								title: title,
-								project_id: lastid + 1,
-								category: category,
-								live_link: link,
-								overview: overview,
-								frameworks_used: frameworks_used,
-								db_used: db,
-								screenshots: screenshotsLinks,
-								thumbnail: thumbnailLink,
-								features: features,
-								project_link: project_link,
-								publisher: "rafeeq",
-								published_date: date2,
-								last_updated: date2,
-								views: 0,
-								downloads: 0,
-								status: "Pending",
-								price: "Free",
-								keywords:
-									title.split(" ").join(",") +
-									" , " +
-									frameworks_used.join(",") +
-									" , " +
-									response?.choices[0]?.message?.content,
-							});
-							newProject.save();
-							res.json({result:true})
-						}).catch((err)=>{
-							res.json({result:err})
-						})
-					}).catch((err)=>{
-						res.json({result:err})
-					})
-				}).catch((err)=>{
-					res.json({result:err})
-				})
-			}).catch((err)=>{
-				res.json({result:err})
-			})
+			try {
+				const upload = await uploadBytes(storageRefScreenshot, file);
+				const upload_url = await getDownloadURL(upload.ref);
+				screenshotsLinks.push(upload_url);
+			} catch (err) {
+				console.log(err);
+				res.json({ result: false });
+			}
 		});
+		const file = base64ImageToBlob(req.body.thumbnail)
+		const storageRef = ref(
+			storage,
+			"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
+		);
+		try {
+			const upload = await uploadBytes(storageRef, file);
+			const upload_url = await getDownloadURL(upload.ref);
+			thumbnailLink = upload_url
+			const response = await openai.chat.completions.create({
+				model: "gpt-3.5-turbo",
+				messages: [
+					{
+						role: "system",
+						content:
+							"You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
+					},
+					{
+						role: "user",
+						content: overview,
+					},
+				],
+				temperature: 0.5,
+				max_tokens: 64,
+				top_p: 1,
+			});
+	
+			const newProject = new projectSchema({
+				publisher_id: "CD1",
+				title: title,
+				project_id: lastid + 1,
+				category: category,
+				live_link: link,
+				overview: overview,
+				frameworks_used: frameworks_used,
+				db_used: db,
+				screenshots: screenshotsLinks,
+				thumbnail: thumbnailLink,
+				features: features,
+				project_link: project_link,
+				publisher: "rafeeq",
+				published_date: date2,
+				last_updated: date2,
+				views: 0,
+				downloads: 0,
+				status: "Pending",
+				price: "Free",
+				keywords:
+					title.split(" ").join(",") +
+					" , " +
+					frameworks_used.join(",") +
+					" , " +
+					response?.choices[0]?.message?.content,
+			});
+			newProject.save();
+			res.json({ result: true });
+		} catch (err) {
+			console.log(err);
+			res.json({ result: false });
+		}
 
-		
-
-		
 	},
 	getLatestList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({ _id: -1 });
+			const data = await projectSchema
+				.find({ status: "Approved" })
+				.sort({ _id: -1 });
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -160,7 +159,9 @@ module.exports = {
 	},
 	getPopularList: async (req, res) => {
 		try {
-			const data = await projectSchema.find().sort({ views: -1 });
+			const data = await projectSchema
+				.find({ status: "Approved" })
+				.sort({ views: -1 });
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -244,7 +245,10 @@ module.exports = {
 	},
 	getDeveloperProjects: async (req, res) => {
 		try {
-			const data = await projectSchema.find({ publisher_id: req.params.id });
+			const data = await projectSchema.find({
+				publisher_id: req.params.id,
+				status: "Approved",
+			});
 			const userDetails = await userSchema.find(
 				{ publisher_id: req.params.id },
 				{ name: 1, title: 1, bio: 1, avatar: 1, _id: 0 }
@@ -300,6 +304,7 @@ module.exports = {
 			const search = req.params.search;
 			const data = await projectSchema.find({
 				keywords: { $regex: new RegExp(search, "i") },
+				status: "Approved",
 			});
 			res.json(data);
 		} catch (error) {
@@ -334,6 +339,7 @@ module.exports = {
 		try {
 			const data = await projectSchema.find({
 				frameworks_used: req.params.category,
+				status: "Approved",
 			});
 			console.log(data);
 			res.json(data);
@@ -395,18 +401,17 @@ module.exports = {
 		var screenshotsLinks = [];
 		var thumbnailLink = "";
 
-		fileList.map((item) => {
+		fileList.map(async (item) => {
 			if (isBase64(item, { allowMime: true })) {
 				const file = base64ImageToBlob(item);
 				const storageRef = ref(
 					storage,
 					"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 				);
-				uploadBytes(storageRef, file).then((snapshot) => {
-					getDownloadURL(snapshot.ref).then((item) => {
-						screenshotsLinks.push(item);
-					});
-				});
+				const upload = await uploadBytes(storageRef, file)
+				const url = await getDownloadURL(upload.ref).
+				screenshotsLinks.push(url);
+				
 			}
 		});
 		if (screenshotsLinks.length > 0) {
@@ -421,12 +426,11 @@ module.exports = {
 				storage,
 				"thumbnail/" + Date.now() + "." + file.type.split("/")[1]
 			);
-			uploadBytes(storageRef, file).then((snapshot) => {
-				getDownloadURL(snapshot.ref).then(async (item) => {
-					thumbnailLink = item;
-					callUpdate();
-				});
-			});
+			const upload = await uploadBytes(storageRef, file)
+			const url = await getDownloadURL(upload.ref)
+			thumbnailLink = url;
+			callUpdate();
+				
 		} else {
 			thumbnailLink = req.body.thumbnail;
 			callUpdate();

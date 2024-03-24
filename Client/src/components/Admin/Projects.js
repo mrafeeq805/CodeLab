@@ -82,6 +82,7 @@ const Projects = () => {
 		axios.get("/admin/getallprojects").then(({ data }) => {
 			setProjectList(data);
 			setProjectListPer(data);
+			console.log(data);
 		});
 	}, []);
 	return (
