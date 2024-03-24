@@ -23,7 +23,7 @@ const DeveloperPage = () => {
 	useEffect(() => {
 		async function call() {
 			await axios
-				.get("/getDeveloperProjects/" + id)
+				.get("/api/getDeveloperProjects/" + id)
 				.then((res) => {
 					console.log(res?.data);
 					if (res?.data?.projects.length === 0) {

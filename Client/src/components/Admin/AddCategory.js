@@ -28,7 +28,7 @@ const AddCategory = ({ setShowAdd , setCategoryList}) => {
 		if (name.current.value === "") return setCategoryError(true);
 		if (!icon) return setImgError(true);
 		await axios
-			.post("/admin/addcategory", {
+			.post("/api/admin/addcategory", {
 				title: name.current.value,
 				icon: icon,
 				status: status,

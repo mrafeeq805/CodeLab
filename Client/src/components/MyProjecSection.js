@@ -18,7 +18,7 @@ const MyProjecSection = ({ data }) => {
 	useEffect(() => {
 		async function call() {
 			await axios
-				.get("/getMyProjects")
+				.get("/api/getMyProjects")
 				.then(({ data }) => {
 					if (data?.status) {
 						if(data?.data.length === 0){

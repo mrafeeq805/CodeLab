@@ -23,13 +23,13 @@ const Home = () => {
 	useEffect(() => {
 		async function call() {
 			try{
-				const list = await axios.get("/getlatest");
+				const list = await axios.get("/api/getlatest");
 				dispatch(addLatest(list?.data));
-				const topDevelopers = await axios.get("/getdevelopers");
+				const topDevelopers = await axios.get("/api/getdevelopers");
 				dispatch(addTopDevelopers(topDevelopers?.data));
-				const popular = await axios.get("/getpopular");
+				const popular = await axios.get("/api/getpopular");
 				dispatch(addPopular(popular?.data));
-				const categories = await axios.get("/getallcategories");
+				const categories = await axios.get("/api/getallcategories");
 				dispatch(addCategory(categories?.data));
 			}catch(err){
 				toast.warn("Something went wrong !",{

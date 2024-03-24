@@ -20,7 +20,7 @@ const EditProfileForm = () => {
 		e.preventDefault();
 		setLoading(true)
 		await axios
-			.post("/editprofiledata", {
+			.post("/api/editprofiledata", {
 				name: name.current.value,
 				headline: headline.current.value,
 				bio: bio.current.value,
@@ -76,7 +76,7 @@ const EditProfileForm = () => {
 		}
 		async function call() {
 			await axios
-				.post("/getprofile")
+				.post("/api/getprofile")
 				.then(({ data }) => {
 					console.log(data);
 					name.current.value = data?.data?.name;

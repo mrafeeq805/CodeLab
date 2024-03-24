@@ -35,7 +35,7 @@ const ProjectListSection = () => {
 
 	useEffect(() => {
 		async function call() {
-			await axios.get("/getrelated/" + category).then((res) => {
+			await axios.get("/api/getrelated/" + category).then((res) => {
 				if (res.data.length === 0) {
 					setEmptyData(true);
 				} else {

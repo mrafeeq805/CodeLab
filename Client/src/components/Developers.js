@@ -15,7 +15,7 @@ const Developers = () => {
     setList(list)
   }
 	useEffect(() => {
-        axios.get('/getdevelopers')
+        axios.get('/api/getdevelopers')
         .then(({data}) => {
             setList(data)
             setListPer(data)

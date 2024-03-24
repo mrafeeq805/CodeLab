@@ -43,7 +43,7 @@ const Login = () => {
 			password: password.current.value,
 		};
 		await axios
-			.post("/login", formData)
+			.post("/api/login", formData)
 			.then((r) => {
 				if (r.data.result === "success") {
 					cookies.set("token", r?.data?.token, { path: "/" });

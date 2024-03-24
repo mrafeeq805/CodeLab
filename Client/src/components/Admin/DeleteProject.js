@@ -4,7 +4,7 @@ import React from "react";
 const DeleteProject = ({setShowDelete,id,projectList,setProjectList}) => {
 	const formHandler = (e) => {
 		e.preventDefault()
-		axios.post('/admin/deleteproject',{project_id:id})
+		axios.post('/api/admin/deleteproject',{project_id:id})
 		.then(({data}) => {
 			setShowDelete(false)
 			setProjectList(data)

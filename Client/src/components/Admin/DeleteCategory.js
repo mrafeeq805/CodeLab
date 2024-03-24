@@ -5,7 +5,7 @@ import React from "react";
 const DeleteCategory = ({setShowDelete,id,categoryList,setCategoryList,name}) => {
 	const formHandler = (e) => {
 		e.preventDefault()
-		axios.post('/admin/deletecategory',{id:id})
+		axios.post('/api/admin/deletecategory',{id:id})
 		.then(({data}) => {
 			setShowDelete(false)
 			setCategoryList(data)

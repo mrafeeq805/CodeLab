@@ -12,7 +12,7 @@ const RelatedProjects = () => {
 	const [relatedProjects,setRelatedProjects] = useState([])
 	useEffect(() => {
 		async function call() {
-			await axios.get("/getrelated/"+category)
+			await axios.get("/api/getrelated/"+category)
 			.then((res) => {
 				if(res?.data.length === 0){
 					setEmptyData(true)

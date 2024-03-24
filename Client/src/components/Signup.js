@@ -41,8 +41,8 @@ const Signup = () => {
 			email: email.current.value,
 			password: password.current.value,
 		};
-		await axios
-			.post("/createaccount", formData)
+		 axios
+			.post("/api/createaccount", formData)
 			.then((r) => {
 				if (r.data.result === "success") {
 					cookies.set('token', r?.data?.token, { path: '/' });

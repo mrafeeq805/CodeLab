@@ -50,7 +50,7 @@ const SearchProjectList = () => {
 		setProjectList(null);
 		setProjectListPer(null)
 		async function call() {
-			await axios.get("/search/" + search.toLowerCase()).then((res) => {
+			 axios.get("/api/search/" + search.toLowerCase()).then((res) => {
 				if (res?.data.length === 0) {
 					setEmptyData(true);
 				} else {

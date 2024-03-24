@@ -5,7 +5,7 @@ const ShowProjectDetails = ({ setShowData, id ,setProjectList}) => {
 	const [details, setDetails] = useState(null);
 	const reason = useRef(null)
 	const approveHandler = async () => {
-		await axios.post('/admin/approveproject',{project_id:id})
+		await axios.post('/api/admin/approveproject',{project_id:id})
 		.then(({data}) => {
 			setProjectList(data)
 			setShowData(false)
@@ -15,7 +15,7 @@ const ShowProjectDetails = ({ setShowData, id ,setProjectList}) => {
 		if(reason.current.value === ''){
 			return;
 		}
-		await axios.post('/admin/rejectproject',{project_id:id,reason:reason.current.value,publisher_id:details?.publisher_id})
+		await axios.post('/api/admin/rejectproject',{project_id:id,reason:reason.current.value,publisher_id:details?.publisher_id})
 		.then(({data}) => {
 			setProjectList(data)
 			setShowData(false)
@@ -23,7 +23,7 @@ const ShowProjectDetails = ({ setShowData, id ,setProjectList}) => {
 	}
 	useEffect(() => {
 		axios
-			.post("/admin/getprojectdetails", {
+			.post("/api/admin/getprojectdetails", {
 				id: id,
 			})
 			.then(({ data }) => {

@@ -8,7 +8,7 @@ const SideMenu = () => {
 	const navigate = useNavigate()
 	const logoutHandler = async  () => {
 	
-		const res = await axios.post('/admin/logout')
+		const res = await axios.post('/api/admin/logout')
 		console.log(res);
 	}
     const items = [

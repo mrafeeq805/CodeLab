@@ -17,7 +17,7 @@ const Categories = () => {
     setList(list)
   }
 	useEffect(() => {
-        axios.get('/getallcategories')
+        axios.get('/api/getallcategories')
         .then(({data}) => {
             setList(data)
             setListPer(data)

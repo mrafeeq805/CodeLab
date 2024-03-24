@@ -20,7 +20,7 @@ const Profile = () => {
 			return navigate("/login");
 		}
 		async function call() {
-			await axios.post("/getprofile").then(({ data }) => {
+			await axios.post("/api/getprofile").then(({ data }) => {
 				if (data?.status) {
 					setName(data?.data?.name);
 					setAvatar(data?.data?.avatar);

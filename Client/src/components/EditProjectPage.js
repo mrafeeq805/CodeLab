@@ -44,7 +44,7 @@ const EditProjectPage = () => {
 	useEffect(() => {
 		async function call() {
 			await axios
-				.get("/editinfo/" + id)
+				.get("/api/editinfo/" + id)
 				.then(async (res) => {
 					if (res?.data?.status === "ok") {
 						const details = res?.data?.details;
@@ -134,7 +134,7 @@ const EditProjectPage = () => {
 				project_id: id,
 				frameworks_used: selectedFramework,
 			};
-			await axios.post("/editproject", postData).then((res) => {
+			await axios.post("/api/editproject", postData).then((res) => {
 				console.log(res);
 				if (res?.data?.status === "ok") {
 					setSubmitted(false);

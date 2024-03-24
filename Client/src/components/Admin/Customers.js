@@ -119,7 +119,7 @@ const Customers = () => {
 		}
 	};
 	useEffect(() => {
-		axios.get("/admin/getallusers").then(({ data }) => {
+		axios.get("/api/admin/getallusers").then(({ data }) => {
 			setUserListPer(data);
 			setUserList(data);
 			console.log(data);

@@ -15,7 +15,7 @@ const FavoriteSection = () => {
 	useEffect(() => {
 		setFavoriteProjects([]);
 		async function call() {
-			await axios.post("/getfavorite", { id: favorites }).then((res) => {
+			await axios.post("/api/getfavorite", { id: favorites }).then((res) => {
 				if (res?.data.length === 0) {
 					setEmptyData(true);
 				} else {

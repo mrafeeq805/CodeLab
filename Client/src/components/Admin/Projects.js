@@ -79,7 +79,7 @@ const Projects = () => {
         }
 	};
 	useEffect(() => {
-		axios.get("/admin/getallprojects").then(({ data }) => {
+		axios.get("/api/admin/getallprojects").then(({ data }) => {
 			setProjectList(data);
 			setProjectListPer(data);
 			console.log(data);

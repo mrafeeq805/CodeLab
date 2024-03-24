@@ -16,7 +16,7 @@ export const Domains = () => {
     const domains = useSelector((store) => store?.project?.category)
     useEffect(() => {
         async function call(){
-			axios.get('getallcategories')
+			axios.get('/api/getallcategories')
 			.then(({data})=> {
 				dispatch(addCategory(data))
 			}).catch((err) => {

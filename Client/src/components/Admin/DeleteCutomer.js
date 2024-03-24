@@ -5,7 +5,7 @@ import React from "react";
 const DeleteCustomer = ({setShowDelete,id,setUsersList,email}) => {
 	const formHandler = (e) => {
 		e.preventDefault()
-		axios.post('/admin/deleteuser',{id:id})
+		axios.post('/api/admin/deleteuser',{id:id})
 		.then(({data}) => {
 			setShowDelete(false)
 			setUsersList(data)

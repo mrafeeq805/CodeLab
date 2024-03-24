@@ -16,7 +16,7 @@ const LoginAdmin = () => {
 		}else if(password.current.value === ''){
 			return setErr("Password cannot be empty !")
 		}
-		axios.post('/admin/login',{
+		axios.post('/api/admin/login',{
 			email : email.current.value,
 			password : password.current.value
 		}).then(({data}) => {

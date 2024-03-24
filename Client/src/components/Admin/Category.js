@@ -67,7 +67,7 @@ const Category = () => {
 		}
 	};
 	useEffect(() => {
-		axios.get("/admin/getallcategories").then(({ data }) => {
+		axios.get("/api/admin/getallcategories").then(({ data }) => {
 			setCategoryListPer(data);
 			setCategoryList(data);
 			console.log(data);

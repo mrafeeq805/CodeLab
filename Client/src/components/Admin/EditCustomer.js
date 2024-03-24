@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const EditCustomer = ({email,status,setStatus,id,setShowEdit,setUserList}) => {
     const formHandler = (e) => {
 		e.preventDefault()
-		axios.post('/admin/updateuser',{id:id,status:status})
+		axios.post('/api/admin/updateuser',{id:id,status:status})
 		.then(({data}) => {
 			setShowEdit(false)
 			setUserList(data)

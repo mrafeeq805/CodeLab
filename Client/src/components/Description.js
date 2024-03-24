@@ -26,7 +26,7 @@ const Description = () => {
 		window.scrollTo(0, 0);
 		async function call() {
 			await axios
-				.get("/description/" + project_id)
+				.get("/api/description/" + project_id)
 				.then(async (res) => {
 					setDiscription(res?.data?.details);
 					setPublisher(res?.data?.publisher);

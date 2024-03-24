@@ -39,7 +39,7 @@ const DownloadCard = ({ id, url }) => {
 		}
 	};
 	const onDownload = async () => {
-		await axios.post("/download", { id: id }).then((res) => {
+		await axios.post("/api/download", { id: id }).then((res) => {
 			console.log(res.data);
 		}).catch((err) => {
 			toast.warn("Something went wrong !",{

@@ -126,7 +126,7 @@ const AddProjectPage = () => {
 				features: features,
 				frameworks_used : selectedFramework
 			};
-			await axios.post("/addproject", postData)
+			await axios.post("/api/addproject", postData)
 			.then(() => {
 				navigate("/");
 				setSubmitted(false);
@@ -145,7 +145,7 @@ const AddProjectPage = () => {
 			navigate("/login");
 		}
 		async function call () {
-			const {data} = await axios.get('/getallcategories')
+			const {data} = await axios.get('/api/getallcategories')
 			setCategory(data)
 		}
 		call()

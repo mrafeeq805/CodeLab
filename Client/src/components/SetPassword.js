@@ -22,7 +22,7 @@ const SetPassword = () => {
             return setPasswordError('Both passwords should be same !')
         }
 		setSubmitted(true)
-        axios.post('/setpassword',{password : confirm.current.value})
+        axios.post('/api/setpassword',{password : confirm.current.value})
         .then(({data}) => {
             if(data?.result === 'updated'){
 				setSubmitted(false)

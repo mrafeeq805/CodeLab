@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 			setForgotError(null);
 			setSubmitted(true)
 			axios
-				.post("/sendotp", { email: email.current.value })
+				.post("/api/sendotp", { email: email.current.value })
 				.then(({ data }) => {
 					if (data?.result === "email sent") {
 						setSubmitted(false)
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
 			setSubmitted(true)
 			setForgotError(null);
 			axios
-				.post("/verifyotp", { otp: otp.current.value })
+				.post("/api/verifyotp", { otp: otp.current.value })
 				.then(({ data }) => {
 					if (data?.result === "verified") {
 						setSubmitted(false)
