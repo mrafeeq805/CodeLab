@@ -27,8 +27,8 @@ mongoose.connect(process.env.MONGO_URL)
 })
 
 
-app.use("/",userrouter)
-app.use("/admin",adminrouter)
+app.use("/api",userrouter)
+app.use("/api/admin",adminrouter)
 
 app.listen(4000,()=>{
     console.log("started");

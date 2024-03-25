@@ -44,7 +44,7 @@ module.exports = {
 		const user = await userSchema.find({ email: email });
 
 		if (user.length === 0) {
-			const token = createSecretToken(user._id);
+			const token = createSecretToken(email);
 			res.cookie("token", token, {
 				withCredentials: true,
 				httpOnly: false,
@@ -56,7 +56,6 @@ module.exports = {
 			} else {
 				lastid = "CD1";
 			}
-			console.log(lastid);
 			bcrypt.hash(password, saltRounds, async function (err, hash) {
 				const newuser = new userSchema({
 					name: name,
@@ -91,10 +90,12 @@ module.exports = {
 	},
 	login: async (req, res) => {
 		const { email, password } = req.body;
+		console.log(email);
 		const user = await userSchema.find({ email: email });
+		console.log(user);
 		if (user.length === 1) {
 			const hash = user[0].password;
-			const token = createSecretToken(user._id);
+			const token = createSecretToken(user.email);
 			res.cookie("token", token, {
 				withCredentials: true,
 				httpOnly: false,

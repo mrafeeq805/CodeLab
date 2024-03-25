@@ -42,7 +42,7 @@ const Login = () => {
 			email: email.current.value,
 			password: password.current.value,
 		};
-		await axios
+		axios
 			.post("/api/login", formData)
 			.then((r) => {
 				if (r.data.result === "success") {
