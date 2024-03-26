@@ -31,10 +31,11 @@ const DeveloperPage = () => {
 					} else {
 						setEmptyData(false);
 						//dispatch(addDeveloperProjects(res?.data?.projects))
-						setProjects(res?.data?.projects);
-						setDevinfo(res?.data);
-						console.log(res?.data);
+						
+						
 					}
+					setProjects(res?.data?.projects);
+					setDevinfo(res?.data);
 				})
 				.catch((err) => {
 					toast.warn("Something went wrong !",{

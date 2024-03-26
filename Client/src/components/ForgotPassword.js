@@ -81,8 +81,8 @@ const ForgotPassword = () => {
 			</div>
 			<div className="md:w-5/12">
 				<LoginIntro
-					title={"Forgot Password"}
-					info={"Enter your regigstered Email ID  to continue"}
+					title={"Forget Password"}
+					info={"Enter your registered Email ID  to continue"}
 				/>
 				{submitted && <FormLoading />}
 				<div className="mt-4 px-4">

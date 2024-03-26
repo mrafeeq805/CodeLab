@@ -66,13 +66,13 @@ const Description = () => {
 							{category}
 						</span>
 					</div>
-					<span className="md:text-3xl text-xl md:font-medium">
+					<span className="md:text-3xl text-xl md:font-medium capitalize">
 						{description?.title}
 					</span>
 					<div className="flex justify-between md:justify-normal md:gap-10 mt-1 w-full">
 						<div className="flex gap-2">
 							<span className="  md:text-lg font-medium">By</span>
-							<span className=" text-primary md:text-lg">
+							<span className=" text-primary md:text-lg capitalize">
 								{description?.publisher}
 							</span>
 						</div>
@@ -170,7 +170,7 @@ const Description = () => {
 							</div>
 						)}
 
-						{description && <p>{description?.overview}</p>}
+						{description && <p className="capitalize">{description?.overview}</p>}
 					</div>
 					<div className="bg-white p-3 my-3">
 						<span className="font-medium text-lg">Features</span>

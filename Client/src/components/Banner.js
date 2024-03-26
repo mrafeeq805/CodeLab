@@ -10,11 +10,11 @@ const Banner = () => {
 		navigate('/search/'+search.current.value.toLowerCase())
 	};
 	return (
-		<div className="px-96 md:flex hidden flex-col justify-center items-center bg-gradient-to-r from-primary to-blue-400 py-16 mt-16">
+		<div className="px-48 md:flex hidden flex-col justify-center items-center bg-gradient-to-r from-primary to-blue-400 py-16 mt-16">
 			<div className="">
-				<p className="text-white text-3xl text-center">
-					Buy premium <strong>PHP scripts, app templates, themes</strong> and{" "}
-					<strong>plugins</strong> and create amazing websites & apps.
+				<p className="text-white text-4xl text-center ">
+					Are you struggling to find a <strong>unified platform </strong>to showcase your projects,
+					We offers a <strong>centralized </strong>space for <strong>developers</strong> to upload and share their work.
 				</p>
 				<div className="flex justify-center items-center mt-7">
 					<div className="p-2 my-2 md:w-8/12 ">

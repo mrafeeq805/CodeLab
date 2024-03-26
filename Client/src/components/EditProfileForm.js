@@ -29,7 +29,7 @@ const EditProfileForm = () => {
 			.then((res) => {
 				if (res?.data?.result === "updated") {
 					setLoading(false)
-					navigate("/profile");
+					navigate("/");
 				} else {
 					toast.warn("Something went wrong !",{
 						position: "top-center",
@@ -172,9 +172,12 @@ const EditProfileForm = () => {
 				<div className="border-2 rounded-lg flex justify-between p-2 my-3 h-24">
 					<textarea ref={bio} className="w-full text-login_light" type="text" />
 				</div>
-				<button className=" bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5">
+				<div className="w-full flex justify-center">
+				<button className=" bg-primary p-2 w-full md:w-max md:px-20 md:text-sm rounded-lg text-xl text-white py-3 mt-5">
 					Save
 				</button>
+				</div>
+				
 			</form>
 		</div>
 	);

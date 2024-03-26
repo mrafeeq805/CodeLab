@@ -1,6 +1,7 @@
 import React from "react";
 
 const DevInfo = ({data}) => {
+	console.log(data);
 	return (
 		<div className="flex flex-col justify-center items-center md:flex-row md:gap-5">
 			<div className="border-[1px] border-primary rounded-full h-16 w-16 p-1 md:h-24 md:w-24">

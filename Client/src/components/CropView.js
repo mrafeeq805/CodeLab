@@ -34,7 +34,7 @@ const Demo = ({ img, setPicked, setCropped }) => {
 	return (
 		<div>
 			{display && (
-				<div>
+				<div className="z-30 fixed inset-0">
 					<Cropper
 						style={{ containerStyle: { backgroundColor: "gray" } }}
 						image={dogImg}

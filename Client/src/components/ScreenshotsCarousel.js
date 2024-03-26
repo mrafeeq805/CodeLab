@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import SimpleImageSlider from "react-simple-image-slider";
+import SimpleImageSlider from 'react-simple-image-slider'
 
-const ScreenshotsCarousel = ({ screenshots,setSSVisible }) => {
+
+
+
+const ScreenshotsCarousel = ({ screenshots, setSSVisible }) => {
 	const [visibility, setVisibility] = useState(true);
 	return (
 		<div
 			
 			className={!visibility ? "hidden" :"fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20 px-4" }>
-			<div className="bg-white rounded-lg p-2 h-max w-max relative">
+			<div className="bg-white rounded-lg p-2 h-[500px] w-max relative flex justify-center items-center">
 				<SimpleImageSlider
+					
 					width={350}
-					height={200}
+					height={800}
 					images={screenshots}
 					showBullets={false}
 					showNavs={true}

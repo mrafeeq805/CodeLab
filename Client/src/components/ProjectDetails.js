@@ -47,7 +47,7 @@ const ProjectDetails = ({ details, setSSVisible }) => {
 			{details && (
 				<div className="flex flex-col p-3 w-full">
 					<div className="flex justify-between md:hidden">
-						<span className="md:text-2xl text-xl md:font-medium">
+						<span className="md:text-2xl text-xl md:font-medium capitalize">
 							{details?.title}
 						</span>
 						<div className="px-4 h-max bg-green-100 rounded-xs md:hidden flex justify-center items-center">
@@ -57,7 +57,7 @@ const ProjectDetails = ({ details, setSSVisible }) => {
 
 					<div className="flex md:hidden justify-between md:justify-normal md:gap-10 mt-1 w-full">
 						<div className="">
-							<span className=" text-gray-400 md:text-lg">
+							<span className=" text-gray-400 md:text-lg capitalize">
 								{details?.publisher}
 							</span>
 						</div>

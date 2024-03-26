@@ -80,7 +80,7 @@ const SearchProjectList = () => {
 			<Navbar title={search} />
 			<Header />
 			<ToastContainer/>
-			{!emptyData && (<div className=" gap-2 hidden md:flex md:px-24">
+			<div className=" gap-2 hidden md:flex md:px-24">
 				<Link to={"/"} className="text-sm text-gray-400 md:text-base">
 					Home
 				</Link>
@@ -90,7 +90,7 @@ const SearchProjectList = () => {
 				<span className="text-sm text-gray-400 md:text-base font-medium">
 					{search}
 				</span>
-			</div>)}
+			</div>
 			<div className="md:hidden">
 				<SearchBar title={"Search Projects..."} />
 			</div>

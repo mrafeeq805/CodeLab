@@ -200,9 +200,7 @@ module.exports = {
 			}
 			if (!req.session.viewed_posts[req.params.project_id]) {
 				req.session.viewed_posts[req.params.project_id] = 1;
-				//update session
-				//increment post count in posts table with post id
-				//update 'viewed_posts' column with new session
+
 				const update = await projectSchema.findOneAndUpdate(
 					{ project_id: req.params.project_id },
 					{ views: views }
@@ -261,8 +259,7 @@ module.exports = {
 				{ title: { $in: stacks_used } },
 				{ icon: 1 }
 			);
-			console.log(stacks_used);
-			console.log(images);
+
 			const user = await projectSchema.aggregate([
 				{
 					$match: {
@@ -278,11 +275,12 @@ module.exports = {
 				},
 				{ $unset: ["_id"] },
 			]);
+			console.log(user[0]);
 			res.json({
 				projects: data,
 				details: userDetails[0],
-				views: user[0].totalViews,
-				projectsCount: user[0].projectsCount,
+				views: user[0]?.totalViews || 0,
+				projectsCount: user[0]?.projectsCount || 0,
 				stacks_used: images,
 			});
 		} catch (error) {
@@ -401,17 +399,24 @@ module.exports = {
 		var screenshotsLinks = [];
 		var thumbnailLink = "";
 
-		fileList.map(async (item) => {
+		fileList.forEach(async (item) => {
 			if (isBase64(item, { allowMime: true })) {
 				const file = base64ImageToBlob(item);
 				const storageRef = ref(
 					storage,
 					"screenshots/" + Date.now() + "." + file.type.split("/")[1]
 				);
-				const upload = await uploadBytes(storageRef, file)
-				const url = await getDownloadURL(upload.ref).
-				screenshotsLinks.push(url);
-				
+		
+				try {
+					const uploadTask = await uploadBytes(storageRef, file);
+					const url = await getDownloadURL(uploadTask.ref);
+					screenshotsLinks.push(url); // Push the URL into screenshotsLinks array
+					if (!thumbnailLink) {
+						thumbnailLink = url;
+					}
+				} catch (error) {
+					console.error("Error uploading image:", error);
+				}
 			}
 		});
 		if (screenshotsLinks.length > 0) {

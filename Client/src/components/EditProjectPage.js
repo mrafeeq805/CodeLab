@@ -42,8 +42,8 @@ const EditProjectPage = () => {
 		project_link: "",
 	});
 	useEffect(() => {
-		async function call() {
-			await axios
+		 function call() {
+			 axios
 				.get("/api/editinfo/" + id)
 				.then(async (res) => {
 					if (res?.data?.status === "ok") {
@@ -62,7 +62,7 @@ const EditProjectPage = () => {
 						setImagesPreview(details?.screenshots);
 						setSelectedFramework(details?.frameworks_used);
 						async function callCategoris() {
-							await axios.get("/getallcategories").then(({ data }) => {
+							await axios.get("/api/getallcategories").then(({ data }) => {
 								setCategory(data);
 							});
 						}
@@ -134,7 +134,7 @@ const EditProjectPage = () => {
 				project_id: id,
 				frameworks_used: selectedFramework,
 			};
-			await axios.post("/api/editproject", postData).then((res) => {
+			axios.post("/api/editproject", postData).then((res) => {
 				console.log(res);
 				if (res?.data?.status === "ok") {
 					setSubmitted(false);

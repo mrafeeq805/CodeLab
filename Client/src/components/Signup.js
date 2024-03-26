@@ -120,8 +120,9 @@ const Signup = () => {
 							<span className="text-login_light text-">
 								Already have an account ?{" "}
 								<span
+									
 									onClick={handlerLogin}
-									className="text-primary font-medium">
+									className="text-primary font-medium cursor-pointer" >
 									Log in
 								</span>
 							</span>

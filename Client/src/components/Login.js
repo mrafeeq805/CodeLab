@@ -80,17 +80,7 @@ const Login = () => {
 		if (isAuth && isAuth !== "undefined") {
 			return navigate("/");
 		}
-		toast.info("Logged Out", {
-			position: "bottom-right",
-			autoClose: 4000,
-			hideProgressBar: true,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-			transition: Bounce,
-		});
+		
 	}, []);
 	return (
 		<div className="relative sm:flex sm:items-center md:justify-center md:px-56 md:pt-16">
@@ -101,7 +91,7 @@ const Login = () => {
 			<div className="md:w-6/12">
 				<LoginIntro
 					title={"User Signin"}
-					info={"Please fill your detail to access your account."}
+					info={"Please fill your details to access your account."}
 				/>
 				<div className="mt-4 px-4 xl:w-9/12">
 					<form className="" onSubmit={formHandler}>
@@ -128,12 +118,13 @@ const Login = () => {
 										: "bi bi-eye text-login_light text-lg"
 								}></i>
 						</div>
-						<span onClick={handlerForgot} className="text-primary font-medium">
+						{loginError && (
+							<span className="text-red-500 text-xs block">{loginError}</span>
+						)}
+						<span onClick={handlerForgot} className="cursor-pointer text-primary font-medium">
 							Forgot Password ?
 						</span>
-						{loginError && (
-							<span className="text-red-500 text-xs">{loginError}</span>
-						)}
+						
 						<button className="bg-primary p-2 w-full rounded-lg text-xl text-white py-3 mt-5">
 							Signin
 						</button>
@@ -142,7 +133,7 @@ const Login = () => {
 								Don’t have an account ?{" "}
 								<span
 									onClick={handlerSignup}
-									className="text-primary font-medium">
+									className="text-primary font-medium cursor-pointer">
 									Signup
 								</span>
 							</span>

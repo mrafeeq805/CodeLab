@@ -39,9 +39,11 @@ const Header = () => {
 				</div>
 			</header>
 			<header className="items-center bg-white shadow-md md:flex px-32 justify-between hidden fixed z-20 w-full top-0 ">
-				<div className="flex gap-2">
+				<div onClick={() => {
+					navigate('/')
+				}} className="flex gap-2 cursor-pointer">
 					<img className="h-6" src="/logo.png" alt="logo" />
-					<span className="text-primary font-medium text-lg">CodeLab</span>
+					<span className="text-blue-400 font-medium text-lg">CodeLab</span>
 				</div>
 				<SearchBar title={"Search Projects ..."} />
 
