@@ -32,11 +32,12 @@ const Demo = ({ img, setPicked, setCropped }) => {
 	};
 
 	return (
-		<div>
+		<div className="">
 			{display && (
-				<div className="z-30 fixed inset-0">
+				<div className="z-30 fixed inset-0  md:w-full md:h-96 md:z-0 md:relative md:bg-white" >
+					<div className="">
 					<Cropper
-						style={{ containerStyle: { backgroundColor: "gray" } }}
+						style={{ containerStyle: { backgroundColor: "gray"} }}
 						image={dogImg}
 						crop={crop}
 						rotation={rotation}
@@ -48,6 +49,8 @@ const Demo = ({ img, setPicked, setCropped }) => {
 						onCropComplete={onCropComplete}
 						onZoomChange={setZoom}
 					/>
+					</div>
+					
 					<button
 						type="button"
 						className="p-2 bg-white rounded-lg absolute bottom-4 right-1/3 left-1/3"
