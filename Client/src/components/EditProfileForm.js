@@ -29,6 +29,10 @@ const EditProfileForm = () => {
 			.then((res) => {
 				if (res?.data?.result === "updated") {
 					setLoading(false)
+					console.log(res?.data?.data);
+					cookies.set("email", res?.data?.data?.email, { path: "/" });
+					cookies.set("name", res?.data?.data?.name, { path: "/" });
+					cookies.set("avatar", res?.data?.data?.avatar, { path: "/" });
 					navigate("/");
 				} else {
 					toast.warn("Something went wrong !",{

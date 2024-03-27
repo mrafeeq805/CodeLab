@@ -139,10 +139,13 @@ module.exports = {
 						bio: bio,
 						title: headline,
 						avatar: item,
-					}
+					},
+
 				);
+				const final = await userSchema.findOne({email : req.session.email})
 				res.json({
 					result: "updated",
+					data : final
 				});
 			} catch (err) {
 				console.log(err);

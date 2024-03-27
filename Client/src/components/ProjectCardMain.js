@@ -65,8 +65,8 @@ const ProjectCardMain = ({ data, type }) => {
 						))}
 					</div>
 					<div className="flex flex-col p-2">
-						<span className="text-lg">{title}</span>
-						<span className=" text-gray-400">{publisher}</span>
+						<span className="text-lg capitalize">{title}</span>
+						<span className=" text-gray-400 capitalize">{publisher}</span>
 						<div className="flex justify-between mt-1">
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-eye-fill text-gray-400"></i>

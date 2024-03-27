@@ -56,8 +56,8 @@ const ProjectCardSec = (props) => {
 						<span className="text-primary text-xs uppercase tracking-wider font-medium">
 							{category}
 						</span>
-						<span className="lg:text-lg">{title}</span>
-						<span className="text-sm text-gray-400">{publisher}</span>
+						<span className="lg:text-lg capitalize">{title}</span>
+						<span className="text-sm text-gray-400 capitalize">{publisher}</span>
 						<div className="flex justify-between w-full gap-8">
 							<div className="flex gap-2 items-center">
 								<i className="bi bi-eye-fill text-gray-400"></i>

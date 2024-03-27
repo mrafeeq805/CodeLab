@@ -126,8 +126,8 @@ const Description = () => {
 						<span className="text-lg font-medium">Screenshots</span>
 						<div className=" gap-4 md:grid grid-cols-4 my-3">
 							{description?.screenshots.map((item) => (
-								<div>
-									<img className={load ? "h-32 object-cover" : "hidden"} src={item} alt="thumb" onLoad={() => setLoad(true)} />
+								<div onClick={() => setSSVisible(true)}>
+									<img className={load ? "h-32 object-cover border-2 p-2 rounded-lg" : "hidden"} src={item} alt="thumb" onLoad={() => setLoad(true)} />
 									{!load && (<div class="flex items-center justify-center w-36 md:w-full h-32 bg-gray-300 rounded sm:w-96 ">
 										<svg
 											class="w-10 h-10 text-gray-200 "
