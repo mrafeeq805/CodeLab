@@ -242,11 +242,11 @@ const AddProjectPage = () => {
 					</div>
 				</div>
 				<div className="md:flex md:gap-10 w-full">
-					<div className="w-full">
+					<div className="w-full ">
 						<label className="text-login font-medium">Overview</label>
 
 						<textarea
-							className="w-full text-login_light min-h-24 md:min-h-44 border-2 rounded-lg flex justify-between p-2 my-2"
+							className="w-full xl:h-64 text-login_light min-h-24 md:min-h-44 border-2 rounded-lg flex justify-between p-2 my-2"
 							name="overview"
 							onChange={changeInput}
 						/>
@@ -267,7 +267,7 @@ const AddProjectPage = () => {
 							<div className="flex items-center justify-center mt-2">
 								<label
 									for="dropfile"
-									className="flex px-8 w-full flex-col items-center justify-center p-2 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100">
+									className="flex px-8 w-full flex-col items-center justify-center p-2 xl:h-64 h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100">
 									{!thumbnail && (
 										<div className="flex flex-col items-center justify-center pt-5 pb-6">
 											<i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>
@@ -278,7 +278,7 @@ const AddProjectPage = () => {
 									)}
 									{thumbnail && (
 										<img
-											className="h-full w-full object-cover"
+											className="h-full w-full object-contain"
 											src={thumbnail}
 											alt="thumb"
 										/>
@@ -307,7 +307,7 @@ const AddProjectPage = () => {
 				<div className="mt-2">
 					<span className="font-medium text-login">Screenshots</span>
 
-					<div className="grid grid-cols-3 gap-2 mt-2 md:w-8/12 md:h-36">
+					<div className="grid grid-cols-3 gap-2 mt-2 md:w-8/12 xl:w-full xl:grid-cols-5">
 						<div className="flex items-center justify-center w-full">
 							<label
 								for="dropzone-file"

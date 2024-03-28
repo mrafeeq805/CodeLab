@@ -59,7 +59,7 @@ const ProjectCardMain = ({ data, type }) => {
 						alt=""
 						onLoad={onImagLoad}
 					/>
-					<div className="flex absolute top-2 left-2 gap-2">
+					<div className="flex absolute top-2 left-2 gap-2 flex-wrap">
 						{frameworks_used?.map((item) => (
 							<DomainChip key={item} title={item} />
 						))}

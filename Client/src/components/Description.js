@@ -86,7 +86,7 @@ const Description = () => {
 						<div className="flex gap-1 items-center">
 							<i className="bi bi-clock text-gray-400"></i>
 							<span className="text-sm text-gray-400 md:text-base">
-								{calcDate(description?.published_date).result + " ago" || "New"}
+								{calcDate(description?.published_date).result ? calcDate(description?.published_date).result + " ago" : 'New'}
 							</span>
 						</div>
 					</div>

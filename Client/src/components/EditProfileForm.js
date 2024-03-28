@@ -33,6 +33,9 @@ const EditProfileForm = () => {
 					cookies.set("email", res?.data?.data?.email, { path: "/" });
 					cookies.set("name", res?.data?.data?.name, { path: "/" });
 					cookies.set("avatar", res?.data?.data?.avatar, { path: "/" });
+					if(!res?.data?.data?.avatar){
+						cookies.set("avatar",'/img/dev.png', { path: "/" });
+					}
 					navigate("/");
 				} else {
 					toast.warn("Something went wrong !", {
@@ -156,13 +159,13 @@ const EditProfileForm = () => {
 
 					<label className="text-login font-medium ">Full Name</label>
 					<div className="border-2 rounded-lg flex justify-between p-2 my-3">
-						<input ref={name} className="w-full text-login_light" type="text" />
+						<input ref={name} className="w-full text-login_light outline-none bg-inherit" type="text" />
 					</div>
 					<label className="text-login font-medium">Headline</label>
 					<div className="border-2 rounded-lg flex justify-between p-2 my-3">
 						<input
 							ref={headline}
-							className="w-full text-login_light"
+							className="w-full text-login_light outline-none bg-inherit"
 							type="text"
 						/>
 					</div>
@@ -170,12 +173,12 @@ const EditProfileForm = () => {
 					<div className="border-2 rounded-lg flex justify-between p-2 my-3 h-24">
 						<textarea
 							ref={bio}
-							className="w-full text-login_light"
+							className="w-full text-login_light outline-none bg-inherit"
 							type="text"
 						/>
 					</div>
 					<div className="w-full flex justify-center">
-						<button className=" bg-primary p-2 w-full md:w-max md:px-20 md:text-sm rounded-lg text-xl text-white py-3 mt-5">
+						<button disabled={picked ? true : false} className=" bg-primary p-2 w-full md:w-max md:px-20 md:text-sm rounded-lg text-xl text-white py-3 mt-5">
 							Save
 						</button>
 					</div>

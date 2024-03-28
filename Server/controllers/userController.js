@@ -106,6 +106,7 @@ module.exports = {
 						return res.json({ result: "user blocked" });
 					req.session.email = email;
 					req.session.publisher_id = user[0].publisher_id;
+					req.session.publisher = user[0].name
 					res.json({
 						result: "success",
 						token: token,

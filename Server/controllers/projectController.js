@@ -113,7 +113,7 @@ module.exports = {
 			});
 	
 			const newProject = new projectSchema({
-				publisher_id: "CD1",
+				publisher_id: req.session.publisher_id,
 				title: title,
 				project_id: lastid + 1,
 				category: category,
@@ -125,7 +125,7 @@ module.exports = {
 				thumbnail: thumbnailLink,
 				features: features,
 				project_link: project_link,
-				publisher: "rafeeq",
+				publisher: req.session.publisher,
 				published_date: date2,
 				last_updated: date2,
 				views: 0,
@@ -465,6 +465,7 @@ module.exports = {
 				{
 					title: title === "" ? exist.title : title,
 					category: category,
+					status : 'Pending',
 					live_link: live_link,
 					overview: overview === "" ? exist.overview : overview,
 					frameworks_used:
