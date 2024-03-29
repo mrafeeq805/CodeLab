@@ -89,7 +89,7 @@ const ProjectDetails = ({ details, setSSVisible }) => {
 							</div>)}
 							{load && (<div className="hidden md:flex opacity-0 absolute w-full top-0 rounded-md h-44 md:h-96 bg-black bg-opacity-50 transition-all group-hover:delay-100 group-hover:opacity-80  justify-center items-center">
 								<div className="flex gap-5">
-									<a href={details?.live_link} target="_blank" rel="noreferrer">
+									<a href={'https://www.youtube.in'} target="_blank">
 										<button className="border-white border-2 rounded-full p-3 h-16 w-16 hover:scale-110 transition-all hover:delay-100">
 											<i class="bi bi-laptop text-white text-2xl"></i>
 										</button>

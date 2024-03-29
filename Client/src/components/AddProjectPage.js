@@ -103,7 +103,7 @@ const AddProjectPage = () => {
 			return setTitleError(true);
 		} else if (data.category === "Choose") {
 			return setCategoryError(true);
-		} else if (data.project_link === "" || !isValidUrl(data.project_link)) {
+		} else if (data.project_link === "" ) {
 			return setProjectLINKError(true);
 		} else if (data.overview === "") {
 			return setOverviewError(true);
@@ -216,8 +216,9 @@ const AddProjectPage = () => {
 
 						<input
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
-							type="text"
+							type="url"
 							name="link"
+
 							onChange={changeInput}
 						/>
 					</div>
@@ -227,8 +228,9 @@ const AddProjectPage = () => {
 						</label>
 
 						<input
+
 							className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
-							type="text"
+							type="url"
 							name="project_link"
 							onChange={changeInput}
 						/>

@@ -221,7 +221,7 @@ const EditProjectPage = () => {
 								<input
 									value={data?.live_link}
 									className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
-									type="text"
+									type="url"
 									name="live_link"
 									onChange={changeInput}
 								/>
@@ -336,7 +336,7 @@ const EditProjectPage = () => {
 
 								<input
 									className="w-full text-login_light border-2 rounded-lg flex justify-between p-2 my-2"
-									type="text"
+									type="url"
 									name="project_link"
 									onChange={changeInput}
 									value={data?.project_link}

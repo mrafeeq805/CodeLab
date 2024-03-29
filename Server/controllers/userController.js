@@ -90,9 +90,7 @@ module.exports = {
 	},
 	login: async (req, res) => {
 		const { email, password } = req.body;
-		console.log(email);
 		const user = await userSchema.find({ email: email });
-		console.log(user);
 		if (user.length === 1) {
 			const hash = user[0].password;
 			const token = createSecretToken(user.email);
@@ -246,7 +244,6 @@ module.exports = {
 					result: "not authorized",
 				});
 			}
-			console.log(req.session.otp);
 			if (otp === req.session.otp) {
 				req.session.verified = true;
 				res.json({
@@ -274,7 +271,6 @@ module.exports = {
 					result: "not authorized",
 				});
 			}
-			console.log(req.session.verified);
 			if (req.session.verified) {
 				bcrypt.hash(password, saltRounds, async function (err, hash) {
 					try {

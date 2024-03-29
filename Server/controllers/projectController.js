@@ -41,7 +41,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 module.exports = {
 	addproject: async (req, res) => {
-		console.log(req.body);
 		const currentDate = new Date();
 		const day = currentDate.getDate();
 		const month = currentDate.getMonth() + 1; // Add 1 as months are zero-based
@@ -69,7 +68,7 @@ module.exports = {
 			project_link,
 		} = req.body;
 
-		fileList.map(async (item) => {
+		await Promise.all(fileList.map(async (item) => {
 			const file = base64ImageToBlob(item)
 			
 			const storageRefScreenshot = ref(
@@ -84,7 +83,7 @@ module.exports = {
 				console.log(err);
 				res.json({ result: false });
 			}
-		});
+		}));
 		const file = base64ImageToBlob(req.body.thumbnail)
 		const storageRef = ref(
 			storage,
@@ -275,7 +274,7 @@ module.exports = {
 				},
 				{ $unset: ["_id"] },
 			]);
-			console.log(user[0]);
+			
 			res.json({
 				projects: data,
 				details: userDetails[0],
@@ -339,7 +338,7 @@ module.exports = {
 				frameworks_used: req.params.category,
 				status: "Approved",
 			});
-			console.log(data);
+			
 			res.json(data);
 		} catch (error) {
 			console.log(error);
@@ -362,7 +361,6 @@ module.exports = {
 		}
 	},
 	editproject: async (req, res) => {
-		console.log("hd");
 		const {
 			title,
 			category,
@@ -374,7 +372,6 @@ module.exports = {
 			project_link,
 			project_id,
 		} = req.body;
-		console.log(req.body);
 		const publisher = await projectSchema.findOne(
 			{
 				publisher_id: req.session.publisher_id,
@@ -399,8 +396,8 @@ module.exports = {
 		var screenshotsLinks = [];
 		var thumbnailLink = "";
 
-		fileList.forEach(async (item) => {
-			if (isBase64(item, { allowMime: true })) {
+		await Promise.all(fileList.map(async (item) => {
+			if (!isValidUrl(item)) {
 				const file = base64ImageToBlob(item);
 				const storageRef = ref(
 					storage,
@@ -411,6 +408,7 @@ module.exports = {
 					const uploadTask = await uploadBytes(storageRef, file);
 					const url = await getDownloadURL(uploadTask.ref);
 					screenshotsLinks.push(url); // Push the URL into screenshotsLinks array
+					console.log('in');
 					if (!thumbnailLink) {
 						thumbnailLink = url;
 					}
@@ -418,14 +416,15 @@ module.exports = {
 					console.error("Error uploading image:", error);
 				}
 			}
-		});
-		if (screenshotsLinks.length > 0) {
-			screenshotsLinks = [...screenshotsLinks, ...fileList];
-		} else {
-			screenshotsLinks = fileList;
-		}
+		}));
+		// if (screenshotsLinks.length > 0) {
+		// 	screenshotsLinks = [...screenshotsLinks, ...fileList];
+		// } else {
+		// 	screenshotsLinks = fileList;
+		// }
+		console.log('out');
 
-		if (isBase64(req.body.thumbnail, { allowMime: true })) {
+		if (!isValidUrl(req.body.thumbnail)) {
 			const file = base64ImageToBlob(req.body.thumbnail);
 			const storageRef = ref(
 				storage,
@@ -518,3 +517,16 @@ function base64ImageToBlob(str) {
 
 	return blob;
 }
+const isValidUrl = (str) => {
+	const pattern = new RegExp(
+		"^([a-zA-Z]+:\\/\\/)?" + // protocol
+			"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+			"((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+			"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+			"(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+			"(\\#[-a-z\\d_]*)?$", // fragment locator
+		"i"
+	);
+	return pattern.test(str);
+};
+

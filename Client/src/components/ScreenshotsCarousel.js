@@ -15,12 +15,14 @@ const ScreenshotsCarousel = ({ screenshots, setSSVisible }) => {
 	};
 
 	return (
-		<div class="h-full bg-black bg-opacity-80 flex justify-center items-center fixed inset-0 z-50">
+		<div class="h-full bg-black bg-opacity-80 flex justify-center items-center fixed inset-0 z-50 ">
 			<div
 				ref={carouselRef}
-				class="carousel max-w-xl flex justify-center md:w-screen md:max-w-none h-max items-center overflow-x-scroll scroll-snap snap-mandatory scroll-smooth">
+				class="carousel max-w-xl flex md:w-screen md:max-w-none h-max items-center overflow-x-scroll scroll-snap snap-mandatory scroll-smooth">
 				
-				{screenshots?.map((item) => (
+				{screenshots?.map((item) => {
+					console.log(item);
+					return (
 					<div class="carousel-item snap-start flex-[0_0_100%] h-max ">
 						<img
 							
@@ -29,7 +31,7 @@ const ScreenshotsCarousel = ({ screenshots, setSSVisible }) => {
 							class={"w-full max-h-[600px] md:w-full object-contain"}
 						/>
 					</div>
-				))}
+				)})}
 			</div>
 
 			<div class="absolute inset-y-0 left-0 flex items-center justify-start pl-4">
