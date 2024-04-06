@@ -3,6 +3,9 @@ import DeveloperCard from "./DeveloperCard";
 import { useSelector } from "react-redux";
 import DevelopersLoader from "./skelton/DevelopersLoader";
 import { Link } from "react-router-dom";
+import _ from 'lodash'
+const width = window.innerWidth
+const count = width <=400 ? 5 : 10
 
 const TopDevelopers = () => {
 	const list = useSelector((store) => store?.project?.topDevelopers);
@@ -21,8 +24,8 @@ const TopDevelopers = () => {
 				</div>
 			)}
 
-			<div className="mt-3 grid grid-cols-5 md:grid-cols-8 lg:md:grid-cols-10 xl:md:grid-cols-10 grid-flow-col md:gap-4">
-				{list?.map((item, index) => (
+			<div className="mt-3 grid grid-cols-5 md:grid-cols-8 lg:md:grid-cols-10 xl:md:grid-cols-10 gap-4">
+				{list?.slice(0,count)?.map((item, index) => (
 					<DeveloperCard
 						key={index}
 						name={item?.name}
